@@ -1,1 +1,39 @@
-<p>log-in works!</p>
+<form [formGroup]="logInForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
+  <fieldset class="border p-3 mb-3">
+    <legend>Contact Information</legend>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" required>
+        <!-- Error message for Email -->
+        <div *ngIf="logInForm.get('email')?.hasError('required') && logInForm.get('email')?.touched" class="text-danger">
+          Email is required.
+        </div>
+        <div *ngIf="logInForm.get('email')?.hasError('email') && logInForm.get('email')?.touched" class="text-danger">
+          Please enter a valid email address.
+        </div>
+      </div>
+    </div> <!-- ¡Cerramos correctamente el div! -->
+  </fieldset>
+
+  <fieldset class="border p-3 mb-3">
+    <legend>Security</legend>
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" formControlName="password" required>
+        <!-- Error message for Password -->
+        <div *ngIf="logInForm.get('password')?.hasError('required') && logInForm.get('password')?.touched" class="text-danger">
+          Password is required.
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <button type="submit" class="btn btn-primary w-100" [disabled]="logInForm.invalid">Log In</button>
+</form>
+
+<p *ngIf="errorMessage" class="text-danger mt-2">{{ errorMessage }}</p>
+
+<p>New to KidsTube? <button (click)="goToSignUp()" class="btn btn-link">Sign Up</button></p>
+

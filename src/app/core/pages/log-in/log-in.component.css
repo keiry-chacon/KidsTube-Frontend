@@ -1,0 +1,112 @@
+/* Estilos generales */
+body {
+    background-image: url('https://www.vice.com/wp-content/uploads/sites/2/2018/12/1543965647235-Collage-Cartoons.jpeg'); /* Tu imagen de fondo */
+    background-size: cover;
+    background-position: center;
+    color: #333; /* Texto oscuro para contrastar con el fondo */
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .login-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+    padding: 40px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0 auto; /* Centrar horizontalmente */
+  }
+  
+  .login-container h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #FF8C42; /* Naranja vibrante */
+  }
+  
+  /* Estilos para el formulario */
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #333; /* Texto oscuro */
+  }
+  
+  input[type="email"],
+  input[type="password"] {
+    padding: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #FFD166; /* Borde amarillo */
+    border-radius: 4px;
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Texto oscuro */
+    font-size: 16px;
+  }
+  
+  input[type="email"]::placeholder,
+  input[type="password"]::placeholder {
+    color: #999; /* Color gris para los placeholders */
+  }
+  
+  button[type="submit"] {
+    background-color: #FF8C42; /* Naranja vibrante */
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #FF7043; /* Naranja más oscuro al pasar el mouse */
+  }
+  
+  /* Estilos para el mensaje de error */
+  .error {
+    color: #FF8C42; /* Naranja vibrante */
+    font-size: 14px;
+    text-align: center;
+    margin-top: 16px;
+  }
+  
+  /* Estilos para el enlace de registro */
+  p {
+    text-align: center;
+    margin-top: 16px;
+    color: #333; /* Texto oscuro */
+  }
+  
+  p button {
+    background: none;
+    border: none;
+    color: #FF8C42; /* Naranja vibrante */
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+  
+  p button:hover {
+    color: #FF7043; /* Naranja más oscuro al pasar el mouse */
+  }
+  
+  /* Estilos para el título KidsTube */
+  .kidstube-title {
+    font-size: 48px;
+    font-weight: bold;
+    color: #FF8C42; /* Naranja vibrante */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+  }
+  
