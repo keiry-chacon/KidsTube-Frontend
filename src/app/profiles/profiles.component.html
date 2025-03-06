@@ -1,0 +1,13 @@
+<div class="profiles-container">
+    <h1>who's watching now?</h1>
+    <div class="profiles">
+        <div *ngFor="let profile of profiles" class="profile" (click)="selectProfile(profile)">
+            <img [src]="profile.image" alt="{{ profile.name }}">
+            <p>{{ profile.name }}</p>
+        </div>
+    </div>
+</div>
+
+
+  
+  

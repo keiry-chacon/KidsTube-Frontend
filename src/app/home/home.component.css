@@ -1,0 +1,203 @@
+/* Agregar fuentes desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Playfair+Display:wght@700&display=swap');
+
+.home-container {
+  background-image: url('https://th.bing.com/th/id/OIG4.uenezFilz2l.QtxbDExb?w=1024&h=1024&rs=1&pid=ImgDetMain');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3); /* Sombra interna suave */
+}
+
+/* Capa oscura semi-transparente */
+.home-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo más oscuro */
+  z-index: 1;
+  opacity: 1; /* Sin animación de cambio de opacidad */
+}
+
+/* Eliminar animaciones y efectos de desenfoque */
+.home-container {
+  background-image: url('https://th.bing.com/th/id/OIG4.uenezFilz2l.QtxbDExb?w=1024&h=1024&rs=1&pid=ImgDetMain');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3); /* Sombra interna suave */
+}
+
+
+.hero-section {
+  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para el contenedor */
+  padding: 40px;
+  border-radius: 12px;
+  max-width: 600px;
+  position: relative; /* Asegura que esté por encima de la capa oscura */
+  z-index: 2; /* Coloca el contenido por encima de la capa oscura */
+}
+
+/* Agregar animación de desvanecimiento */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.kidstube-title {
+  position: absolute;
+  top: -190px; /* Mueve el título hacia arriba */
+  left: -300px; /* Mueve el título hacia la izquierda */
+  font-size: 80px;
+  font-weight: bold;
+  color: #f77c31; /* Naranja vibrante */
+  margin-bottom: 40px;
+  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 140, 66, 0.7); /* Sombra suave y resplandor sutil */
+  transition: all 0.3s ease; /* Transición para efectos */
+  z-index: 10; /* Asegura que esté por encima del contenido */
+}
+
+.kidstube-title:hover {
+  text-shadow: 6px 6px 12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 140, 66, 0.8); /* Efecto hover con sombra más fuerte y resplandor */
+  transform: scale(1.05); /* Escala ligeramente el título */
+}
+
+
+
+.tagline {
+  font-family: 'Poppins', sans-serif; /* Fuente para el texto */
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.price {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.cta {
+  margin-bottom: 20px;
+  animation-delay: 1s;
+}
+
+.email-input {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.email-input input {
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  width: 300px;
+}
+
+.cta-button {
+  background-color: #FF8C42;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+  background-color: #FF7043;
+  transform: scale(1.1); /* Efecto de agrandamiento */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Sombra más fuerte */
+}
+
+.login-button {
+  background: linear-gradient(135deg, #FF8C42, #FF7043);
+  border: none;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-button:hover {
+  background: linear-gradient(135deg, #FF7043, #FF8C42);
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Efecto 3D más destacado */
+}
+
+.signup-link {
+  margin-top: 20px;
+  color: white;
+}
+
+.signup-link button {
+  background: none;
+  border: none;
+  color: #FF8C42;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.signup-link button:hover {
+  color: #FF7043;
+}
+
+.top-right {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 3; /* Asegura que esté por encima de la capa oscura */
+}
+
+.email-input input {
+  border-radius: 10px;
+  border: 2px solid #FF8C42;
+  padding: 12px;
+  outline: none;
+}
+
+.email-input input:focus {
+  border-color: #FF7043;
+}
+
+.email-input button {
+  padding: 12px 24px;
+  background-color: #FF8C42;
+  border: none;
+  color: white;
+  border-radius: 50px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.email-input button:hover {
+  background-color: #FF7043;
+  transform: scale(1.05);
+}

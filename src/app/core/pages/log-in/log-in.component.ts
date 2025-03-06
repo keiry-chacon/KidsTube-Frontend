@@ -30,7 +30,8 @@ export class LogInComponent {
   
       this.userService.login(formData).subscribe({
         next: (response) => {
-          alert('Login successful');
+          this.router.navigate(['/profiles']);
+
         },
         error: (err) => {
           this.errorMessage = err?.error?.message || 'Error logging in. Please try again later.';

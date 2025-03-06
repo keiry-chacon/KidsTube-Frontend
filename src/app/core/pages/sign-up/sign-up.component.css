@@ -1,0 +1,118 @@
+body {
+  background-image: url('https://source.unsplash.com/random/1920x1080');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Fija la imagen */
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Usa min-height en lugar de height */
+}
+
+.signup-container {
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+  padding: 40px;
+  border-radius: 12px;
+  width: auto;
+  max-width: 600px; /* Aumentamos el ancho máximo */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 40px auto; /* Reducimos la distancia superior para que no esté tan abajo */
+}
+
+.signup-container h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #FF8C42; /* Naranja vibrante */
+}
+
+/* Estilos para el formulario */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #333; /* Texto oscuro */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="date"] {
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #FFD166; /* Borde amarillo */
+  border-radius: 4px;
+  background-color: #fff; /* Fondo blanco */
+  color: #333; /* Texto oscuro */
+  font-size: 16px;
+}
+
+input[type="text"]::placeholder,
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="tel"]::placeholder,
+input[type="date"]::placeholder {
+  color: #999; /* Color gris para los placeholders */
+}
+
+button[type="submit"] {
+  background-color: #FF8C42; /* Naranja vibrante */
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #FF7043; /* Naranja más oscuro al pasar el mouse */
+}
+
+/* Estilos para el mensaje de error */
+.text-danger {
+  color: #FF8C42; /* Naranja vibrante */
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Estilos para el enlace de registro */
+p {
+  text-align: center;
+  margin-top: 16px;
+  color: #333; /* Texto oscuro */
+}
+
+p button {
+  background: none;
+  border: none;
+  color: #FF8C42; /* Naranja vibrante */
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+p button:hover {
+  color: #FF7043; /* Naranja más oscuro al pasar el mouse */
+}
+
+/* Estilos para el título KidsTube */
+.kidstube-title {
+  font-size: 48px;
+  font-weight: bold;
+  color: #FF8C42; /* Naranja vibrante */
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra para destacar */
+}
