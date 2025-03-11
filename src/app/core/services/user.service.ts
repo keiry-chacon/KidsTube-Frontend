@@ -18,12 +18,14 @@ export class UserService {
   login(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/user/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token) {
-          localStorage.setItem('token', response.token);
+        if (response.token && response.user) { // Asegúrate de que el backend devuelva el usuario
+          localStorage.setItem('token', response.token); // Almacena el token
+          localStorage.setItem('user', JSON.stringify(response.user)); // Almacena el usuario
         }
       })
     );
   }
+
   getToken(): string | null {
     return localStorage.getItem('token');
   }

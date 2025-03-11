@@ -11,8 +11,8 @@ export class ProfileService {
   constructor(private http: HttpClient) {}
 
  
-  getProfiles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/profile`, { headers: this.getAuthHeaders() });
+  getProfiles(): Observable<{ data: any[] }> {
+    return this.http.get<{ data: any[] }>(`${this.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
   
   getToken(): string | null {
