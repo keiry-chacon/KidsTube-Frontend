@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profiles',
@@ -7,16 +8,30 @@ import { CommonModule } from '@angular/common';
   templateUrl: './profiles.component.html',
   styleUrls: ['./profiles.component.css']
 })
-export class ProfilesComponent {
-  profiles = [
-    { name: 'Keiry', image: './assets/profiles/R (2).jpg' },
-    { name: 'Gredy', image: '/assets/profiles/OIP (7).jpg' },
-    { name: 'Bladimir', image: '/assets/profiles/9e4c756c7e183285dc5113062cf2c2b3.jpg' }
+export class ProfilesComponent implements OnInit {
+  profiles: any[] = [];
 
-  ];
+  constructor(private profileService: ProfileService) {}
+
+  ngOnInit() {
+    this.loadProfiles();
+  }
+
+  loadProfiles() {
+    this.profileService.getProfiles().subscribe({
+      next: (data: any) => {  
+        this.profiles = data;
+      },
+      error: (err: any) => {
+        console.error('Error al obtener perfiles:', err);
+      }
+    });
+  }
+  
+  
 
   selectProfile(profile: any) {
-    console.log('Perfil seleccionado:', profile.name);
+    console.log('Perfil seleccionado:', profile.fullName);
   }
 }
 
