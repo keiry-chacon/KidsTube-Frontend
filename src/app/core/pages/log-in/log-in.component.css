@@ -1,6 +1,5 @@
 .dark-background {
-  background-image: url('https://th.bing.com/th/id/OIG4.uenezFilz2l.QtxbDExb?w=1024&h=1024&rs=1&pid=ImgDetMain');
-
+  background-image: url('/assets/fondo-kids.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -49,11 +48,16 @@ body::before {
 }
 
 .login-container h1.kidstube-title {
-  font-size: 48px;
-  font-weight: bold;
-  color: #FF8C42; /* Título naranja */
-  margin-bottom: 20px;
-  text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5); 
+  position: absolute;
+    top: -103px; 
+    left: -394px; 
+    font-size: 7rem; /* Tamaño del título */
+    font-weight: bold;    
+    color: #f77c31; 
+    margin-bottom: 40px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 140, 66, 0.7); /* Sombra suave y resplandor sutil */
+    transition: all 0.3s ease; 
+    z-index: 10; 
 }
 
 /* Estilo general para el formulario */
@@ -81,13 +85,11 @@ input[type="password"] {
   font-size: 16px;
 }
 
-/* Placeholder para los campos de entrada */
 input[type="email"]::placeholder,
 input[type="password"]::placeholder {
   color: #999; 
 }
 
-/* Botón de envío */
 button[type="submit"] {
   background-color: #FF8C42; 
   color: #fff;
@@ -103,7 +105,6 @@ button[type="submit"]:hover {
   background-color: #FF7043; 
 }
 
-/* Estilo para los mensajes de error */
 .error {
   color: #FF8C42; 
   font-size: 14px;
@@ -111,14 +112,12 @@ button[type="submit"]:hover {
   margin-top: 16px;
 }
 
-/* Estilo para el texto adicional */
 p {
   text-align: center;
   margin-top: 16px;
-  color: #fff; /* Texto blanco */
+  color: #fff; 
 }
 
-/* Estilo para el botón en los párrafos */
 p button {
   background: none;
   border: none;

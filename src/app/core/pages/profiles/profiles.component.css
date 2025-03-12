@@ -1,137 +1,243 @@
 html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #fcfbfa; 
-    color: rgb(17, 17, 17); 
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #fcfbfa;
+  color: rgb(17, 17, 17);
 }
 
 .profiles-container {
-    background-color: #fcfafa;
-    color: #0c0c0c; 
-    
-    text-align: center;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    height: 100vh; 
+  background-color: #fcfafa;
+  color: #0c0c0c;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .profiles {
-    background-color: #fcfafa;
-    
-    display: flex;
-    justify-content: center; 
-    gap: 40px;
-    margin-top: 20px;
-    flex-wrap: nowrap; 
-    overflow-x: auto;
+  background-color: #fcfafa;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 .profile {
-    cursor: pointer;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    transition: transform 0.3s ease;
-    flex: 0 1 150px; 
-    padding: 20px;
-    border-radius: 50%;
-    background-color: #f7f3f3; 
-    box-sizing: border-box;
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+  flex: 0 1 150px;
+  padding: 20px;
+  border-radius: 50%;
+  background-color: #f7f3f3;
+  box-sizing: border-box;
+  position: relative;
 }
 
 .profile img {
-    width: 200px;  /* Hace la imagen mucho más grande */
-    height: 200px; /* Hace la imagen mucho más grande */
-    border-radius: 50%; /* Redondea la imagen */
-    object-fit: cover;
-    transition: transform 0.3s ease;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
-/* Efecto de ampliación al pasar el cursor */
 .profile img:hover {
-    transform: scale(1.1); 
+  transform: scale(1.1);
 }
 
-/* Estilo para el nombre del perfil */
 .profile p {
-    margin-top: 10px;
-    font-size: 2rem;  
-    color: #6b6b69; /* Color del nombre */
-    font-weight: bold;
+  margin-top: 10px;
+  font-size: 2rem;
+  color: #6b6b69;
+  font-weight: bold;
 }
 
 .manage-profiles-button {
-    background-color: #007bff; /* Color de fondo */
-    color: white; /* Color del texto */
-    border: none; /* Sin borde */
-    padding: 10px 20px; /* Espaciado interno */
-    font-size: 16px; /* Tamaño de la fuente */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    margin-top: 20px; /* Margen superior */
-    border-radius: 5px; /* Bordes redondeados */
-  }
-  
-  .manage-profiles-button:hover {
-    background-color: #0056b3; /* Cambia el color al pasar el mouse */
-  }
+  background-color: #FF8C42;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+
+.manage-profiles-button:hover {
+  background-color: #f87a2c;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.add-profile {
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 150px;
+  padding: 20px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  box-sizing: border-box;
+}
+
+.add-circle {
+  font-size: 3rem;
+  color: #6b6b69;
+}
+
+.pin-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pin-dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.pin-dialog-content input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+.pin-dialog-content button {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
 
 
-  .profile {
-    position: relative; /* Para posicionar el ícono de edición */
-    cursor: pointer;
-  }
+.edit-profile select {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+}
+.edit-profile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+}
+
+.custom-dropdown {
+  position: relative;
+  margin: 10px 0;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.avatar-preview {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.dropdown-option:hover {
+  background-color: #f0f0f0;
+}
+.settings-button {
+  position: fixed; /* Fijar en la posición deseada */
+  bottom: 20px; /* Distancia desde el borde inferior */
+  right: 20px; /* Distancia desde el borde derecho */
+  padding: 12px 20px; /* Espaciado dentro del botón */
+  background-color: #FF8C42; /* Color de fondo */
+  color: white; /* Color de texto */
+  font-size: 18px; /* Tamaño de la fuente */
+  border: none; /* Sin bordes */
+  border-radius: 50px; /* Esquinas redondeadas */
+  cursor: pointer; /* Cursor pointer para indicar que es interactivo */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
+
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   
-  .edit-icon {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente */
-    padding: 5px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  
-  .edit-icon:hover {
-    background-color: rgba(255, 255, 255, 1); /* Fondo más sólido al pasar el mouse */
+  &:hover {
+    background-color: #f87a2c; 
+    transform: scale(1.05); 
   }
 
-  .pin-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .settings-icon {
+    margin-right: 8px; 
   }
-  
-  .pin-dialog-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  .pin-dialog-content input {
-    margin: 10px 0;
-    padding: 5px;
-    width: 100%;
-  }
-  
-  .pin-dialog-content button {
-    margin: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .error-message {
-    color: red;
-    margin-top: 10px;
-  }
+}

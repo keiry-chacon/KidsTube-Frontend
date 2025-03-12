@@ -1,19 +1,22 @@
 <div class="profiles-container">
+  <button class="settings-button" (click)="goToSettings()">⚙️</button>
   <h1>Who's watching now?</h1>
   <div class="profiles">
     <div *ngFor="let profile of profiles" class="profile" (click)="selectProfile(profile)">
       <img [src]="profile.avatar" alt="{{ profile.fullName }}">
       <p>{{ profile.fullName }}</p>
+      <button *ngIf="showManageProfiles" class="edit-icon" (click)="openEditProfile(profile)">✏️</button>
+    </div>
+    <div *ngIf="showManageProfiles" class="add-profile" (click)="addProfile()">
+      <div class="add-circle">+</div>
     </div>
   </div>
 
-  <!-- Botón "Administrar perfiles" -->
   <button class="manage-profiles-button" (click)="openPinDialog()">
     Administrar perfiles
   </button>
 </div>
 
-<!-- Diálogo para solicitar el PIN -->
 <div *ngIf="showPinDialog" class="pin-dialog">
   <div class="pin-dialog-content">
     <h2>Ingresa tu PIN</h2>
@@ -21,5 +24,33 @@
     <button (click)="verifyPin()">Aceptar</button>
     <button (click)="closePinDialog()">Cancelar</button>
     <p *ngIf="pinError" class="error-message">PIN incorrecto. Inténtalo de nuevo.</p>
+  </div>
+</div>
+
+<div *ngIf="showEditProfile" class="edit-profile">
+  <h2>Editar perfil</h2>
+  <input [(ngModel)]="editedProfile.fullName" placeholder="Nombre completo" />
+  <input [(ngModel)]="editedProfile.pin" placeholder="PIN" type="password" /> <!-- Campo para editar el PIN -->
+
+  <div class="custom-dropdown">
+    <div class="selected-option" (click)="toggleDropdown()">
+      <img [src]="editedProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
+      <span>{{ editedProfile.avatar }}</span>
+    </div>
+    <div *ngIf="dropdownOpen" class="dropdown-options">
+      <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectImage(img)">
+        <img [src]="img" alt="Avatar" class="avatar-preview" />
+        <span>{{ img }}</span>
+      </div>
+    </div>
+  </div>
+
+  <button (click)="saveProfile()">Guardar</button>
+  <button (click)="cancelEdit()">Cancelar</button>
+  <button (click)="confirmDelete()">Eliminar perfil</button>
+  <div *ngIf="showConfirmDelete" class="confirm-delete">
+    <h3>¿Estás seguro de que quieres eliminar este perfil?</h3>
+    <button (click)="deleteProfile()">Sí, eliminar</button>
+    <button (click)="cancelDelete()">Cancelar</button>
   </div>
 </div>

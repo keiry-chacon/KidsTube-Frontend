@@ -1,8 +1,6 @@
-/* Agregar fuentes desde Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Playfair+Display:wght@700&display=swap');
 
 .home-container {
-  background-image: url('https://th.bing.com/th/id/OIG4.uenezFilz2l.QtxbDExb?w=1024&h=1024&rs=1&pid=ImgDetMain');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -13,10 +11,9 @@
   text-align: center;
   position: relative;
   overflow: hidden;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3); /* Sombra interna suave */
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
 }
 
-/* Capa oscura semi-transparente */
 .home-container::before {
   content: '';
   position: absolute;
@@ -31,7 +28,7 @@
 
 /* Eliminar animaciones y efectos de desenfoque */
 .home-container {
-  background-image: url('https://th.bing.com/th/id/OIG4.uenezFilz2l.QtxbDExb?w=1024&h=1024&rs=1&pid=ImgDetMain');
+  background-image: url('../../assets/fondo-kids.jpg');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -43,18 +40,34 @@
   position: relative;
   overflow: hidden;
   box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3); /* Sombra interna suave */
-}
+} 
 
 
 .hero-section {
-  background-color: rgba(255, 255, 255, 0.1); /* Fondo semi-transparente para el contenedor */
   padding: 40px;
   border-radius: 12px;
   max-width: 600px;
   position: relative; /* Asegura que esté por encima de la capa oscura */
   z-index: 2; /* Coloca el contenido por encima de la capa oscura */
-}
+  h1 {
+    font-size: 7rem; /* Tamaño del título */
+    font-weight: bold;
+    color: #f77c31; /* Color llamativo */
+  }
 
+  .tagline {
+    font-size: 3rem; /* Tamaño del texto */
+    color: #fff; /* Ajusta el color si es necesario */
+    line-height: 1.5; /* Espaciado entre líneas */
+    width: 100%; /* Hace que el texto se extienda */
+    margin-top: 70px; 
+  }
+}
+.logo {
+  width: 50px;
+  margin-bottom: 10px;
+  
+}
 /* Agregar animación de desvanecimiento */
 @keyframes fadeIn {
   0% {
@@ -70,15 +83,15 @@
 
 .kidstube-title {
   position: absolute;
-  top: -190px; /* Mueve el título hacia arriba */
-  left: -300px; /* Mueve el título hacia la izquierda */
+  top: -60px; 
+  left: -300px; 
   font-size: 80px;
   font-weight: bold;
-  color: #f77c31; /* Naranja vibrante */
+  color: #f77c31; 
   margin-bottom: 40px;
   text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 140, 66, 0.7); /* Sombra suave y resplandor sutil */
-  transition: all 0.3s ease; /* Transición para efectos */
-  z-index: 10; /* Asegura que esté por encima del contenido */
+  transition: all 0.3s ease; 
+  z-index: 10; 
 }
 
 .kidstube-title:hover {
@@ -154,6 +167,7 @@
 .signup-link {
   margin-top: 20px;
   color: white;
+
 }
 
 .signup-link button {
