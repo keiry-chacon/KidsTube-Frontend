@@ -1,0 +1,43 @@
+<div class="dark-background">
+
+    <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
+      
+      <fieldset class="border p-3 mb-3">
+        <legend>Playlist Information</legend>
+        <div class="mb-3">
+          <label class="form-label">Playlist Name</label>
+          <input type="text" class="form-control" formControlName="name" required>
+          <div *ngIf="playlistForm.get('name')?.hasError('required') && playlistForm.get('name')?.touched" class="text-danger">
+            Playlist name is required.
+          </div>
+        </div>
+      </fieldset>
+    
+      <fieldset class="border p-3 mb-3">
+        <legend>Associated Profiles</legend>
+        <div class="mb-3">
+          <label class="form-label">Select Profiles</label>
+          <select multiple class="form-control" formControlName="associatedProfiles">
+            <option *ngFor="let profile of profiles" [value]="profile._id">{{ profile.fullName }}</option>
+          </select>
+          <div *ngIf="playlistForm.get('associatedProfiles')?.hasError('required') && playlistForm.get('associatedProfiles')?.touched" class="text-danger">
+            At least one profile must be selected.
+          </div>
+        </div>
+      </fieldset>
+    
+      <fieldset class="border p-3 mb-3">
+        <legend>Videos</legend>
+        <div class="mb-3">
+          <label class="form-label">Select Videos</label>
+          <select multiple class="form-control" formControlName="videos">
+            <option *ngFor="let video of videos" [value]="video._id">{{ video.name }}</option>
+          </select>
+        </div>
+      </fieldset>
+    
+      <button type="submit" class="btn btn-primary w-100" [disabled]="playlistForm.invalid">Create Playlist</button>
+    
+    </form>
+    </div>
+  

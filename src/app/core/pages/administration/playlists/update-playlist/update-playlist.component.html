@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2>Edit Playlist</h2>
+  <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="border p-4 rounded bg-light shadow-sm">
+
+    <!-- Playlist Name -->
+    <div class="mb-3">
+      <label for="name" class="form-label">Playlist Name</label>
+      <input type="text" class="form-control" id="name" formControlName="name" required>
+      <div *ngIf="playlistForm.get('name')?.invalid && playlistForm.get('name')?.touched" class="text-danger">
+        Playlist name is required.
+      </div>
+    </div>
+
+    <!-- Associated Profiles -->
+    <div class="mb-3">
+      <label for="profiles" class="form-label">Associated Profiles</label>
+      <select multiple class="form-control" id="profiles" formControlName="associatedProfiles">
+        <option *ngFor="let profile of profiles" [value]="profile._id">{{ profile.fullName }}</option>
+      </select>
+      <div *ngIf="playlistForm.get('associatedProfiles')?.invalid && playlistForm.get('associatedProfiles')?.touched" class="text-danger">
+        At least one profile must be selected.
+      </div>
+    </div>
+
+    <!-- Videos -->
+    <div class="mb-3">
+      <label for="videos" class="form-label">Videos</label>
+      <select multiple class="form-control" id="videos" formControlName="videos">
+        <option *ngFor="let video of videos" [value]="video._id">{{ video.name }}</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100" [disabled]="playlistForm.invalid">Update Playlist</button>
+
+    <!-- Cancel Button -->
+    <button type="button" class="btn btn-secondary mt-2 w-100" (click)="cancel()">Cancel</button>
+  </form>
+</div>

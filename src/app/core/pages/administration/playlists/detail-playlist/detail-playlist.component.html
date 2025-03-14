@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h2>Playlist Details</h2>
+
+  <!-- Loading State -->
+  <div *ngIf="!playlist._id" class="text-center mt-5">
+    <p>Loading playlist...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="playlist && !playlist.name" class="text-danger text-center mt-5">
+    <p>Failed to load playlist details.</p>
+  </div>
+
+  <!-- Playlist Information -->
+  <div *ngIf="playlist._id">
+    <div class="mb-3">
+      <strong>Name:</strong> {{ playlist.name }}
+    </div>
+    <div class="mb-3">
+      <strong>Associated Profiles:</strong>
+      <ul>
+        <li *ngFor="let profile of playlist.associatedProfiles">{{ profile.fullName }}</li>
+      </ul>
+    </div>
+    <div class="mb-3">
+      <strong>Videos:</strong>
+      <ul>
+        <li *ngFor="let video of playlist.videos">{{ video.name }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Back Button -->
+  <button type="button" class="btn btn-secondary mt-3" (click)="goBack()">Back</button>
+</div>

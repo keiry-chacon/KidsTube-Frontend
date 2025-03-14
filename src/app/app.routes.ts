@@ -1,19 +1,41 @@
 import { Routes } from '@angular/router';
 import { LogInComponent } from '../app/core/pages/log-in/log-in.component';
 import { SignUpComponent } from '../app/core/pages/sign-up/sign-up.component';
-import { VideoFormComponent } from '../app/core/videos/pages/video-form/video-form.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilesComponent } from './core/pages/profiles/profiles.component';
 import { AdministrationComponent } from './core/pages/administration/administration.component';
+
+// Playlist Routes
+import { CreatePlaylistComponent } from './core/pages/administration/playlists/create-playlist/create-playlist.component';
+import { UpdatePlaylistComponent } from './core/pages/administration/playlists/update-playlist/update-playlist.component';
+import { DetailPlaylistComponent } from './core/pages/administration/playlists/detail-playlist/detail-playlist.component';
+import { ListPlaylistComponent }   from './core/pages/administration/playlists/list-playlist/list-playlist.component';
+
+// Video Routes
+import { CreateVideoComponent } from './core/pages/administration/videos/create-video/create-video.component';
+import { UpdateVideoComponent } from './core/pages/administration/videos/update-video/update-video.component';
+import { DetailVideoComponent } from './core/pages/administration/videos/detail-video/detail-video.component';
+import { VideoListComponent } from './core/pages/administration/videos/video-list/video-list.component';
 
 
 export const routes: Routes = [
   { path: '', component: HomeComponent  }, 
   { path: 'login', component: LogInComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'video-form', component: VideoFormComponent },
   { path: 'profiles', component: ProfilesComponent },
   { path: 'administration', component: AdministrationComponent },
 
+
+  // Playlist Routes
+  { path: 'createPlaylist', component: CreatePlaylistComponent },
+  { path: 'updatePlaylist/:id', component: UpdatePlaylistComponent },
+  { path: 'detailPlaylist/:id', component: DetailPlaylistComponent },
+  { path: 'listPlaylist', component: ListPlaylistComponent },
+
+  // Video Routes
+  { path: 'createVideo', component: CreateVideoComponent },
+  { path: 'updateVideo/:id', component: UpdateVideoComponent },
+  { path: 'detailVideo/:id', component: DetailVideoComponent },
+  { path: 'videoList', component: VideoListComponent },
 
 ];

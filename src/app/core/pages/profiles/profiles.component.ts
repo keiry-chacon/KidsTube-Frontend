@@ -91,6 +91,7 @@ export class ProfilesComponent implements OnInit {
       }
     });
   }
+  
   goToSettings() {
     this.router.navigate(['/administration']);  // Esto redirige al componente de configuración
   }

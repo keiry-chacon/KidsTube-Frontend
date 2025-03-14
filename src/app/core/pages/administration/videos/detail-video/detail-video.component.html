@@ -1,0 +1,9 @@
+<div class="container mt-4">
+    <h2>Video Details</h2>
+    <div *ngIf="video">
+      <p><strong>Name:</strong> {{ video.name }}</p>
+      <p><strong>URL:</strong> <a [href]="video.url" target="_blank">{{ video.url }}</a></p>
+      <p><strong>Description:</strong> {{ video.description || 'No description' }}</p>
+      <button class="btn btn-secondary" (click)="goBack()">Back to List</button>
+    </div>
+  </div>

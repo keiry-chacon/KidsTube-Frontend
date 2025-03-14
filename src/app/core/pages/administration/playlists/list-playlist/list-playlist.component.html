@@ -1,0 +1,40 @@
+<div class="dark-background">
+  <div class="container p-4 border rounded bg-light shadow-sm">
+
+    <!-- Header -->
+    <h2 class="mb-4">Playlist List</h2>
+
+    <!-- Create New Playlist Button -->
+    <button class="btn btn-success mb-3" (click)="createNewPlaylist()">Create New Playlist</button>
+
+    <!-- Playlist List -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Associated Profiles</th>
+          <th>Videos</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let playlist of playlists">
+          <td>{{ playlist.name }}</td>
+          <td>{{ playlist.associatedProfiles.length }} profiles</td>
+          <td>{{ playlist.videos.length }} videos</td>
+          <td>
+            <button class="btn btn-info btn-sm me-2" (click)="viewDetails(playlist._id)">Details</button>
+            <button class="btn btn-primary btn-sm me-2" (click)="editPlaylist(playlist._id)">Edit</button>
+            <button class="btn btn-danger btn-sm" (click)="deletePlaylist(playlist._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- No Playlists Message -->
+    <div *ngIf="playlists.length === 0" class="text-center">
+      <p>No playlists found. Click "Create New Playlist" to add one.</p>
+    </div>
+
+  </div>
+</div>
