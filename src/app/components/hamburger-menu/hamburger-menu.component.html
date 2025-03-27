@@ -1,0 +1,17 @@
+<div class="dark-background">
+    <div class="menu-icon" (click)="toggleMenu()">
+    ☰ <!-- Ícono de hamburguesa -->
+  </div>
+  
+  <!-- Contenedor del menú lateral -->
+  <div class="hamburger-menu" [class.closed]="isMenuClosed">
+    <div class="menu-items">
+      <a href="#" (click)="navigateTo('home')">
+        <i class="fas fa-home"></i> Inicio
+      </a>
+      <a (click)="navigateTo('listPlaylistProfile')">
+        <i class="fas fa-list"></i> Playlist
+      </a>
+    </div>
+  </div>
+</div>

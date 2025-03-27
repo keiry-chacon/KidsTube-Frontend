@@ -1,23 +1,30 @@
 <div class="dark-background">
-    <div class="container p-4 border rounded bg-light shadow-sm text-center">
-  
-      <!-- Title -->
-      <h2 class="mb-4">Administration</h2>
-  
-      <!-- Buttons -->
-      <div class="d-grid gap-3">
-  
-        <!-- List Playlists -->
-        <a routerLink="/listPlaylist" class="btn btn-secondary">
-          <i class="bi bi-list-ul"></i> List Playlists
-        </a>
-
-        <!-- create Video -->
-        <a routerLink="/videoList" class="btn btn-secondary">
-          <i class="bi bi-list-ul"></i> Video
-        </a>
-  
-      </div>
-  
-    </div>
+  <div class="back-button-container">
+    <button class="back-button" (click)="goBackToProfiles()">
+      ← Volver
+    </button>
   </div>
+  <div class="user-profile-container">
+    <img [src]="'assets/profiles/hellokitty.jpg'" alt="keiry" class="user-avatar">
+    <span>Keiry </span>
+  </div>
+  <div class="header-container text-center">
+    <h2 class="title">Administration</h2>
+    <p class="subtitle">Manage your content with ease</p>
+  </div>
+
+  <div class="button-grid text-center">
+    <!-- Botón para "Video Edit" -->
+    <a routerLink="/videoList" class="btn btn-video-edit">
+      <i class="bi bi-pencil-square"></i>
+      <span>Videos</span>
+    </a>
+
+    <!-- Botón para "Photo Video" -->
+    <a routerLink="/listPlaylist" class="btn btn-photo-video">
+      <i class="bi bi-camera-video"></i>
+      <span>Playlist</span>
+    </a>
+
+
+</div>

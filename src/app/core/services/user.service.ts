@@ -18,22 +18,22 @@ export class UserService {
   login(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/user/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token && response.user) { // Asegúrate de que el backend devuelva el usuario
-          localStorage.setItem('token', response.token); // Almacena el token
-          localStorage.setItem('user', JSON.stringify(response.user)); // Almacena el usuario
+        if (response.token && response.user) { 
+          sessionStorage.setItem('token', response.token);
         }
       })
     );
   }
 
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
-  // Método para agregar el token al encabezado de las solicitudes
   getAuthHeaders(): { [header: string]: string } {
     const token = this.getToken();
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
-  
+  validateUserPin(pin: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/user/validateUserPin`, {pin}, { headers: this.getAuthHeaders() });
+  }
 }

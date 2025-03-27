@@ -6,13 +6,27 @@ import { CommonModule } from '@angular/common';
 import { ageValidator } from '../../../Validators/age.validator'; 
 import { phoneNumberValidator } from '../../../Validators/phone-number.validator'; 
 import { pinValidator } from '../../../Validators/pin.validator'; 
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.css'],
+  animations: [
+    trigger('slideIn', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateX(100%)' // Comienza fuera de la pantalla (a la derecha)
+      })),
+      state('*', style({
+        opacity: 1,
+        transform: 'translateX(0)' // Finaliza en su posición original
+      })),
+      transition('void => *', animate('0.6s ease')) // Duración y tipo de animación
+    ])
+  ]
 })
 export class SignUpComponent  {
   signUpForm: FormGroup;

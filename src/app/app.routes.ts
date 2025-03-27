@@ -5,11 +5,15 @@ import { HomeComponent } from './home/home.component';
 import { ProfilesComponent } from './core/pages/profiles/profiles.component';
 import { AdministrationComponent } from './core/pages/administration/administration.component';
 
+//Profiles
+import { ChildScreenComponent } from './core/pages/child-screen/child-screen.component';
+import { ListProfileComponent } from './core/pages/list-profile/list-profile.component';
 // Playlist Routes
 import { CreatePlaylistComponent } from './core/pages/administration/playlists/create-playlist/create-playlist.component';
 import { UpdatePlaylistComponent } from './core/pages/administration/playlists/update-playlist/update-playlist.component';
 import { DetailPlaylistComponent } from './core/pages/administration/playlists/detail-playlist/detail-playlist.component';
 import { ListPlaylistComponent }   from './core/pages/administration/playlists/list-playlist/list-playlist.component';
+import { ListPlaylistProfileComponent }   from './core/pages/administration/playlists/list-playlist-profile/list-playlist-profile.component';
 
 // Video Routes
 import { CreateVideoComponent } from './core/pages/administration/videos/create-video/create-video.component';
@@ -25,12 +29,16 @@ export const routes: Routes = [
   { path: 'profiles', component: ProfilesComponent },
   { path: 'administration', component: AdministrationComponent },
 
+  //Profiles
+  {  path: 'child-screen/:profileId', component: ChildScreenComponent },
+  { path: 'list-profile', component: ListProfileComponent }, // Nueva ruta
 
   // Playlist Routes
   { path: 'createPlaylist', component: CreatePlaylistComponent },
   { path: 'updatePlaylist/:id', component: UpdatePlaylistComponent },
   { path: 'detailPlaylist/:id', component: DetailPlaylistComponent },
   { path: 'listPlaylist', component: ListPlaylistComponent },
+  { path: 'listPlaylistProfile', component: ListPlaylistProfileComponent },
 
   // Video Routes
   { path: 'createVideo', component: CreateVideoComponent },

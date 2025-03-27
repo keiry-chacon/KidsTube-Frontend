@@ -4,10 +4,121 @@ html, body {
   padding: 0;
   background-color: #fcfbfa;
   color: rgb(17, 17, 17);
+  font-family: 'Arial', sans-serif;
 }
 
+/* Contenedor del carrusel */
+.carousel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 80%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Carrusel de perfiles */
+.profiles-carousel {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.5s ease;
+  padding: 0 20px;
+}
+
+/* Estilo de cada perfil */
+.profile {
+  text-align: center;
+  flex: 0 0 150px;
+}
+
+.profile img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profile img:hover {
+  transform: scale(1.1);
+}
+
+.profile p {
+  margin-top: 10px;
+  font-size: 16px;
+  color: #fff;
+}
+
+/* Botones de navegación */
+.carousel-nav {
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #FF8C42; /* Color naranja brillante */
+  cursor: pointer;
+  padding: 15px; /* Espacio adicional alrededor del ícono */
+  border-radius: 50%; /* Forma circular */
+  width: 50px; /* Tamaño fijo */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 4;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para dar profundidad */
+}
+
+.carousel-nav:hover {
+  background-color: #FF8C42; /* Cambia el fondo al pasar el mouse */
+  color: white; /* Cambia el color del ícono */
+  transform: translateY(-50%) scale(1.1); /* Efecto de escala al pasar el mouse */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+}
+
+.carousel-nav:disabled {
+  background-color: rgba(0, 0, 0, 0.3); /* Fondo opaco cuando está deshabilitado */
+  color: #ccc; /* Color gris claro */
+  cursor: not-allowed;
+  transform: none; /* Elimina la escala */
+  box-shadow: none; /* Elimina la sombra */
+}
+
+.prev {
+  left: 10px; /* Posición en el lado izquierdo */
+}
+
+.next {
+  right: 10px; /* Posición en el lado derecho */
+}
+#background-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  opacity: 0.8;
+ }
+
+/* Overlay de gradiente */
+#background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Contenedor principal */
 .profiles-container {
-  background-color: #fcfafa;
+  position: relative;
   color: #0c0c0c;
   text-align: center;
   padding: 30px;
@@ -16,15 +127,27 @@ html, body {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  z-index: 3;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .profiles {
-  background-color: #fcfafa;
   display: flex;
   justify-content: center;
   gap: 40px;
   margin-top: 20px;
   flex-wrap: wrap;
+  animation: slideIn 1s ease-in-out;
+
+}
+
+@keyframes slideIn {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
 }
 
 .profile {
@@ -33,14 +156,15 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex: 0 1 150px;
   padding: 20px;
   border-radius: 50%;
-  background-color: #f7f3f3;
   box-sizing: border-box;
   position: relative;
 }
+
+
 
 .profile img {
   width: 200px;
@@ -57,8 +181,13 @@ html, body {
 .profile p {
   margin-top: 10px;
   font-size: 2rem;
-  color: #6b6b69;
+  color: #faf9f7;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.profile:hover p {
+  color: #FF8C42;
 }
 
 .manage-profiles-button {
@@ -70,10 +199,12 @@ html, body {
   cursor: pointer;
   margin-top: 20px;
   border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .manage-profiles-button:hover {
   background-color: #f87a2c;
+  transform: scale(1.05);
 }
 
 .edit-icon {
@@ -84,10 +215,12 @@ html, body {
   padding: 5px;
   border-radius: 50%;
   cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .edit-icon:hover {
   background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
 }
 
 .add-profile {
@@ -102,11 +235,22 @@ html, body {
   border-radius: 50%;
   background-color: #e0e0e0;
   box-sizing: border-box;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.add-profile:hover {
+  transform: scale(1.05);
+  background-color: #d0d0d0;
 }
 
 .add-circle {
   font-size: 3rem;
   color: #6b6b69;
+  transition: color 0.3s ease;
+}
+
+.add-profile:hover .add-circle {
+  color: #FF8C42;
 }
 
 .pin-dialog {
@@ -119,6 +263,8 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: fadeIn 0.5s ease-in-out;
+  z-index: 3;
 }
 
 .pin-dialog-content {
@@ -126,118 +272,76 @@ html, body {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: popIn 0.5s ease-in-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 .pin-dialog-content input {
   margin: 10px 0;
   padding: 5px;
   width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.pin-dialog-content input:focus {
+  border-color: #FF8C42;
+  box-shadow: 0 0 5px rgba(255, 140, 66, 0.5);
 }
 
 .pin-dialog-content button {
   margin: 5px;
   padding: 10px 20px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pin-dialog-content button:hover {
+  transform: scale(1.05);
 }
 
 .error-message {
   color: red;
   margin-top: 10px;
+  animation: shake 0.5s ease-in-out;
 }
 
-
-.edit-profile select {
-  margin: 10px 0;
-  padding: 5px;
-  width: 100%;
-}
-.edit-profile {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
 }
 
-.edit-profile input {
-  margin: 10px 0;
-  padding: 5px;
-  width: 100%;
-}
-
-.custom-dropdown {
-  position: relative;
-  margin: 10px 0;
-}
-
-.selected-option {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.avatar-preview {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.dropdown-options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  z-index: 1000;
-  max-height: 200px;
-  overflow-y: auto;
-}
-
-.dropdown-option {
-  display: flex;
-  align-items: center;
-  padding: 5px;
-  cursor: pointer;
-}
-
-.dropdown-option:hover {
-  background-color: #f0f0f0;
-}
 .settings-button {
-  position: fixed; /* Fijar en la posición deseada */
-  bottom: 20px; /* Distancia desde el borde inferior */
-  right: 20px; /* Distancia desde el borde derecho */
-  padding: 12px 20px; /* Espaciado dentro del botón */
-  background-color: #FF8C42; /* Color de fondo */
-  color: white; /* Color de texto */
-  font-size: 18px; /* Tamaño de la fuente */
-  border: none; /* Sin bordes */
-  border-radius: 50px; /* Esquinas redondeadas */
-  cursor: pointer; /* Cursor pointer para indicar que es interactivo */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Transición suave */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 20px;
+  background-color: #FF8C42;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+}
 
-  display: flex; 
-  align-items: center; 
-  justify-content: center; 
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  
-  &:hover {
-    background-color: #f87a2c; 
-    transform: scale(1.05); 
-  }
-
-  .settings-icon {
-    margin-right: 8px; 
-  }
+.settings-button:hover {
+  background-color: #f87a2c;
+  transform: scale(1.05);
 }

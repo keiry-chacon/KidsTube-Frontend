@@ -29,4 +29,13 @@ export class PlaylistService {
   deletePlaylist(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/playlist/${id}`);
   }
+  getPlaylistsByProfileId(profileId: string): Observable<any> {
+    const url = `${this.apiUrl}/playlist/profile/${profileId}`;
+    return this.http.get(url);
+  }
+
+  getRecommendedVideos(): Observable<any> {
+    const url = `${this.apiUrl}/videos/recommended`;
+    return this.http.get(url);
+  }
 }

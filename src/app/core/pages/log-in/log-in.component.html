@@ -1,9 +1,7 @@
 <div class="dark-background">
-  <div class="login-container">
+  <div class="login-container" [@slideIn]>
     <h1 class="kidstube-title">KidsTube</h1>
-    <!-- Login Form -->
     <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
-      <!-- Email Field -->
       <div class="form-group">
         <label for="email">Email or phone number</label>
         <input
@@ -14,7 +12,6 @@
           required
           placeholder="Email or phone number"
         />
-        <!-- Error Messages for Email -->
         <div *ngIf="logInForm.get('email')?.hasError('required') && logInForm.get('email')?.touched" class="error">
           Email is required.
         </div>
@@ -22,7 +19,6 @@
           Please enter a valid email address.
         </div>
       </div>
-      <!-- Password Field -->
       <div class="form-group">
         <label for="password">Password</label>
         <input
@@ -33,19 +29,15 @@
           required
           placeholder="Password"
         />
-        <!-- Error Messages for Password -->
         <div *ngIf="logInForm.get('password')?.hasError('required') && logInForm.get('password')?.touched" class="error">
           Password is required.
         </div>
       </div>
-      <!-- Submit Button -->
       <button type="submit" class="submit-button" [disabled]="logInForm.invalid">Log In</button>
     </form>
 
-    <!-- Sign Up Link -->
     <p class="signup-link">New to KidsTube? <button (click)="goToSignUp()" class="btn btn-link">Sign up now</button></p>
 
-    <!-- Error Message Display -->
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </div>

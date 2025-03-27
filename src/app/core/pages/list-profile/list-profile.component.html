@@ -1,0 +1,82 @@
+<div id="background-overlay"></div>
+
+<div class="profiles-container">
+   <button class="back-button" (click)="goBackToProfiles()">
+    ← Volver
+  </button>
+  <h1>Manage Profiles</h1>
+  <div class="profiles">
+    <div *ngFor="let profile of profiles" class="profile">
+      <img [src]="profile.avatar" alt="{{ profile.fullName }}">
+      <p>{{ profile.fullName }}</p>
+      <button *ngIf="showManageProfiles" class="edit-icon" (click)="openEditProfile(profile)">✏️</button>
+    </div>
+    <div *ngIf="showManageProfiles" class="add-profile" (click)="openAddProfileDialog()">
+      <div class="add-circle">+</div>
+    </div>
+  </div>
+
+  <div *ngIf="showUserPinDialog" class="pin-dialog">
+    <div class="pin-dialog-content">
+      <h2>Ingresa tu PIN user</h2>
+      <input type="password" [(ngModel)]="enteredUserPin" placeholder="PIN" />
+      <button (click)="validateUserPin()">Aceptar</button>
+      <button (click)="goBackToProfiles()">Cancelar</button>
+      <p *ngIf="pinError" class="error-message">PIN incorrecto. Inténtalo de nuevo.</p>
+
+    </div>
+  </div>
+
+  <div *ngIf="showEditProfile" class="edit-profile">
+    <span class="close-icon" (click)="cancelEdit()">×</span>
+    <h2>Editar perfil</h2>
+    <input [(ngModel)]="editedProfile.fullName" placeholder="Nombre completo" />
+    <input [(ngModel)]="editedProfile.pin" placeholder="PIN" type="password" />
+
+    <div class="custom-dropdown">
+      <div class="selected-option" (click)="toggleDropdown()">
+        <img [src]="editedProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
+        <span>{{ editedProfile.avatar }}</span>
+      </div>
+      <div *ngIf="dropdownOpen" class="dropdown-options">
+        <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectImage(img)">
+          <img [src]="img" alt="Avatar" class="avatar-preview" />
+          <span>{{ img }}</span>
+        </div>
+      </div>
+    </div>
+
+    <button (click)="saveProfile()">Guardar</button>
+    <button (click)="confirmDelete()">Eliminar perfil</button>
+    <div *ngIf="showConfirmDelete" class="confirm-delete">
+      <h3>¿Estás seguro de que quieres eliminar este perfil?</h3>
+      <button (click)="deleteProfile()">Sí, eliminar</button>
+      <button (click)="cancelDelete()">Cancelar</button>
+    </div>
+  </div>
+  <div *ngIf="showAddProfileDialog" class="add-profile-dialog">
+    <div class="add-profile-dialog-content">
+      <span class="close-icon" (click)="closeAddProfileDialog()">×</span>
+      <h2>Agregar nuevo perfil</h2>
+  
+      <input [(ngModel)]="newProfile.fullName" placeholder="Nombre completo" />
+      <input [(ngModel)]="newProfile.pin" placeholder="PIN" type="password" />
+  
+      <div class="custom-dropdown">
+        <div class="selected-option" (click)="toggleDropdown()">
+          <img [src]="newProfile.avatar || predefinedImages[0]" alt="Selected Avatar" class="avatar-preview" />
+          <span>{{ newProfile.avatar || 'Seleccionar avatar' }}</span>
+        </div>
+        <div *ngIf="dropdownOpen" class="dropdown-options">
+          <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectNewProfileImage(img)">
+            <img [src]="img" alt="Avatar" class="avatar-preview" />
+            <span>{{ img }}</span>
+          </div>
+        </div>
+      </div>
+  
+      <button (click)="saveNewProfile()">Guardar</button>
+      <button (click)="closeAddProfileDialog()">Cancelar</button>
+    </div>
+  </div>
+</div>

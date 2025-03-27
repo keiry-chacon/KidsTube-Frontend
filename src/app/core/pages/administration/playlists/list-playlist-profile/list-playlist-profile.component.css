@@ -1,0 +1,157 @@
+/* Fondo oscuro */
+.dark-background {
+    background-color: #f3952a;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Arial', sans-serif;
+  }
+
+  /* Encabezado */
+  .header-container {
+    margin-bottom: 40px;
+  }
+  
+  .title {
+    font-size: 3rem;
+    color: #ecf0f1;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: fadeInDown 1s ease-in-out;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: #bdc3c7;
+    margin-top: 10px;
+    animation: fadeInUp 1s ease-in-out;
+  }
+  
+  /* Botón "Create New Playlist" */
+  .create-playlist-button {
+    background: linear-gradient(135deg, #ff9f43, #ff7f00);
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+  }
+  
+  .create-playlist-button:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Cuadrícula de playlists */
+  .playlist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Tarjeta de playlist */
+  .playlist-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .playlist-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Miniatura de la playlist */
+  .playlist-thumbnail {
+    height: 150px;
+    overflow: hidden;
+  }
+  
+  .thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Información de la playlist */
+  .playlist-info {
+    padding: 15px;
+  }
+  
+  .playlist-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #df6909;
+  }
+  
+  .playlist-details {
+    font-size: 0.9rem;
+    color: #7f8c8d;
+  }
+  
+  .playlist-details span {
+    margin-right: 15px;
+  }
+  
+  /* Acciones de la playlist */
+  .playlist-actions {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+  }
+  
+  .playlist-actions .btn {
+    font-size: 0.9rem;
+    padding: 5px 10px;
+  }
+  
+  /* Animaciones */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .hamburger-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 150px;
+    height: calc(100vh - 70px);
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* Menú por encima de otros elementos */
+    transition: transform 0.3s ease;
+  }
+  
+  .hamburger-menu.closed {
+    transform: translateX(-100%);
+  }

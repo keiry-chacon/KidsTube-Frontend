@@ -3,13 +3,27 @@ import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-log-in',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css']
+  styleUrls: ['./log-in.component.css'],
+  animations: [
+    trigger('slideIn', [
+      state('void', style({
+        opacity: 0,
+        transform: 'translateX(100%)' 
+      })),
+      state('*', style({
+        opacity: 1,
+        transform: 'translateX(0)' 
+      })),
+      transition('void => *', animate('0.6s ease')) 
+    ])
+  ]
 })
 export class LogInComponent {
   logInForm: FormGroup;

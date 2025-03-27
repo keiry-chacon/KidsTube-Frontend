@@ -1,0 +1,373 @@
+#background-video {
+  background: linear-gradient(135deg, #f3952a, #fcb126);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1; 
+}
+
+#background-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #f3952a, #fcb126);
+  z-index: 1; /* Por encima del video */
+}
+
+.profiles-container {
+  position: relative;
+  color: #fdf8f8;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: 2; 
+  
+}
+.h1{
+  color: #fdf8f8;
+
+
+}
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #aaa; /* Color gris claro */
+  transition: color 0.3s ease;
+}
+
+.close-icon:hover {
+  color: #FF8C42; /* Cambiar a naranja al pasar el mouse */
+}
+
+/* Posición absoluta para los cuadros de diálogo */
+.pin-dialog-content,
+.edit-profile {
+  position: relative;
+}
+/* Estilo para el cuadro de diálogo de agregar perfil */
+.add-profile-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 4;
+}
+
+.add-profile-dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.add-profile-dialog-content input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-profile-dialog-content button {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.add-profile-dialog-content button:hover {
+  transform: scale(1.05);
+}
+
+/* Estilo para el botón de regreso */
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #FF8C42; /* Color naranja */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre la flecha y el texto */
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #f87a2c; /* Cambiar a un tono más claro al pasar el mouse */
+}
+
+/* Ajustes generales para el contenedor principal */
+.profiles-container {
+  position: relative; /* Necesario para posicionar el botón de regreso */
+  color: #0c0c0c;
+  text-align: center;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  z-index: 3;
+}
+.profiles {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+  animation: slideIn 1s ease-in-out;
+}
+
+/* Animación de entrada */
+@keyframes slideIn {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilo de cada perfil */
+.profile {
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 0 1 150px;
+  padding: 20px;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Imagen de perfil */
+.profile img {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+
+
+/* Imágenes en el cuadro de edición (avatar seleccionado) */
+.avatar-preview {
+  width: 100px; /* Tamaño estándar para los avatares pequeños */
+  height: 100px;
+  border-radius: 50%; /* Hacerlas circulares */
+  object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+}
+
+/* Imágenes en el menú desplegable de avatares */
+.dropdown-option img {
+  width: 80px; /* Tamaño más pequeño para opciones de avatar */
+  height: 80px;
+  border-radius: 50%; /* Hacerlas circulares */
+  object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+}
+
+/* Efecto hover en la imagen */
+.profile img:hover {
+  transform: scale(1.1);
+}
+
+/* Nombre del perfil */
+.profile p {
+  margin-top: 10px;
+  font-size: 2rem;
+  color: #6b6b69;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+/* Cambio de color al hacer hover */
+.profile:hover p {
+  color: #FF8C42;
+}
+
+/* Botón de edición */
+.edit-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-icon:hover {
+  background-color: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+/* Botón "Agregar perfil" */
+.add-profile {
+  cursor: pointer;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 1 150px;
+  padding: 20px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.add-profile:hover {
+  transform: scale(1.05);
+  background-color: #d0d0d0;
+}
+
+.add-circle {
+  font-size: 3rem;
+  color: #6b6b69;
+  transition: color 0.3s ease;
+}
+
+.add-profile:hover .add-circle {
+  color: #FF8C42;
+}
+
+/* Cuadro de diálogo de PIN */
+.pin-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.pin-dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.pin-dialog-content input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.pin-dialog-content input:focus {
+  border-color: #FF8C42;
+  box-shadow: 0 0 5px rgba(255, 140, 66, 0.5);
+}
+
+.pin-dialog-content button {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pin-dialog-content button:hover {
+  transform: scale(1.05);
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Diálogo de edición */
+.edit-profile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 4;
+}
+
+.edit-profile input {
+  margin: 10px 0;
+  padding: 5px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.edit-profile button {
+  margin: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-profile button:hover {
+  transform: scale(1.05);
+}

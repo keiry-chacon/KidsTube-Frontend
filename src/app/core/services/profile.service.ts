@@ -23,7 +23,7 @@ export class ProfileService {
   }
   
   getToken(): string | null {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 
   getAuthHeaders(): { [header: string]: string } {
@@ -33,12 +33,15 @@ export class ProfileService {
   updateProfile(profile: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/profile/${profile._id}`, profile,  { headers: this.getAuthHeaders() });
   }
-  addProfile(profile: any): Observable<any> {
+  createProfile(profile: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/profile`, profile, { headers: this.getAuthHeaders() });
   }
   deleteProfile(id: string): Observable<any> {
     console.log(`Eliminando perfil con ID: ${id}`); 
-
     return this.http.delete<any>(`${this.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() } );
+  }
+  validatePin(profileId: string, pin: string): Observable<any> {
+    const url = `${this.apiUrl}/profile/validatePin/${profileId}`; 
+    return this.http.post(url, { pin }, { headers: this.getAuthHeaders() }); 
   }
 }
