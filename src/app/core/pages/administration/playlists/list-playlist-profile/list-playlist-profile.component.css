@@ -1,157 +1,239 @@
-/* Fondo oscuro */
 .dark-background {
-    background-color: #f3952a;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Arial', sans-serif;
-  }
+  background: 
+    linear-gradient(135deg, #fff3e0, #ffe0b2),
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.08"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23fb8c00"/></svg>');
+  background-size: 100% 100%, 70px 70px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  font-family: 'Nunito', 'Arial Rounded MT Bold', sans-serif;
+}
 
-  /* Encabezado */
-  .header-container {
-    margin-bottom: 40px;
-  }
-  
-  .title {
-    font-size: 3rem;
-    color: #ecf0f1;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    animation: fadeInDown 1s ease-in-out;
-  }
-  
-  .subtitle {
-    font-size: 1.2rem;
-    color: #bdc3c7;
-    margin-top: 10px;
-    animation: fadeInUp 1s ease-in-out;
-  }
-  
-  /* Botón "Create New Playlist" */
-  .create-playlist-button {
-    background: linear-gradient(135deg, #ff9f43, #ff7f00);
-    border: none;
-    padding: 15px 30px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: transform 0.3s ease;
-  }
-  
-  .create-playlist-button:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Cuadrícula de playlists */
-  .playlist-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    width: 80%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  /* Tarjeta de playlist */
-  .playlist-card {
-    background-color: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-  
-  .playlist-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Miniatura de la playlist */
-  .playlist-thumbnail {
-    height: 150px;
-    overflow: hidden;
-  }
-  
-  .thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  /* Información de la playlist */
-  .playlist-info {
-    padding: 15px;
-  }
-  
-  .playlist-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #df6909;
-  }
-  
-  .playlist-details {
-    font-size: 0.9rem;
-    color: #7f8c8d;
-  }
-  
-  .playlist-details span {
-    margin-right: 15px;
-  }
-  
-  /* Acciones de la playlist */
-  .playlist-actions {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border-top: 1px solid #ddd;
-  }
-  
-  .playlist-actions .btn {
-    font-size: 0.9rem;
-    padding: 5px 10px;
-  }
-  
-  /* Animaciones */
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  .hamburger-menu {
-    position: fixed;
-    top: 70px;
-    left: 0;
-    width: 150px;
-    height: calc(100vh - 70px);
-    background-color: black;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000; /* Menú por encima de otros elementos */
-    transition: transform 0.3s ease;
-  }
-  
-  .hamburger-menu.closed {
-    transform: translateX(-100%);
-  }
+.header-container {
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+}
+
+.title {
+  font-size: 4rem;
+  color: #e65100;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-shadow: 3px 3px 0 #ffcc80;
+  margin-bottom: 15px;
+  position: relative;
+  display: inline-block;
+}
+
+.title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, #ff9800, #fb8c00, #ff9800);
+  border-radius: 10px;
+}
+
+.subtitle {
+  font-size: 1.6rem;
+  color: #fb8c00;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.playlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 85%;
+  max-width: 1300px;
+  margin-left: 180px;
+  perspective: 1000px;
+}
+
+.playlist-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  box-shadow: 0 10px 20px rgba(251, 140, 0, 0.2);
+  position: relative;
+  border: 3px solid #ffe0b2;
+}
+
+.playlist-card:hover {
+  transform: translateY(-15px) rotate(2deg) scale(1.03);
+  box-shadow: 0 20px 40px rgba(251, 140, 0, 0.3);
+}
+
+.playlist-card::before {
+  content: '★';
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 50px;
+  height: 50px;
+  background: #ff9800;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.8rem;
+  z-index: 2;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.playlist-thumbnail {
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.playlist-thumbnail::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(255,152,0,0.1), rgba(251,140,0,0.3));
+  z-index: 1;
+}
+
+.playlist-thumbnail::after {
+  content: '♪ ♫ ♪';
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  color: white;
+  font-size: 2rem;
+  text-shadow: 2px 2px 0 #e65100;
+  z-index: 2;
+  opacity: 0.8;
+}
+
+.thumbnail {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.5s ease;
+  filter: brightness(0.95);
+}
+
+.playlist-card:hover .thumbnail {
+  transform: scale(1.1) rotate(1deg);
+  filter: brightness(1);
+}
+
+.playlist-info {
+  padding: 20px;
+  background: linear-gradient(to bottom, #ffffff, #fff3e0);
+  position: relative;
+}
+
+.playlist-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, #ffb74d, #ff9800, #ffb74d);
+}
+
+.playlist-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  color: #e65100;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 35px;
+}
+
+.playlist-title::before {
+  content: '🎵';
+  position: absolute;
+  left: 0;
+  font-size: 1.8rem;
+  transform: rotate(-15deg);
+}
+
+.playlist-details {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.playlist-details span {
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  background: #ffcc80;
+  border-radius: 25px;
+  color: #bf360c;
+  font-weight: 600;
+  font-size: 0.95rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.playlist-details i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+.playlist-actions {
+  display: flex;
+  border-top: 3px dotted #ffcc80;
+  padding: 15px;
+  background: #fff8e1;
+  justify-content: space-around;
+}
+
+.playlist-actions .btn {
+  padding: 10px 15px;
+  color: white;
+  background: #fb8c00;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+  border: none;
+  box-shadow: 0 4px 8px rgba(251,140,0,0.3);
+  display: flex;
+  align-items: center;
+}
+
+.playlist-actions .btn:hover {
+  background: #ff9800;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(251,140,0,0.4);
+}
+
+.playlist-actions .btn i {
+  margin-right: 8px;
+  font-size: 1.1rem;
+}
+
+@keyframes floatIn {
+  0% { transform: translateY(30px) scale(0.9); opacity: 0; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.playlist-card {
+  animation: floatIn 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+.playlist-card:nth-child(1) { animation-delay: 0.1s; }
+.playlist-card:nth-child(2) { animation-delay: 0.2s; }
+.playlist-card:nth-child(3) { animation-delay: 0.3s; }
+.playlist-card:nth-child(4) { animation-delay: 0.4s; }
+.playlist-card:nth-child(5) { animation-delay: 0.5s; }

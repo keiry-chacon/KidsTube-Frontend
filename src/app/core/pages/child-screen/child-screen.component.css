@@ -12,6 +12,7 @@
   left: 0;
   z-index: -1;
   animation: floatingStars 30s linear infinite;
+  overflow-y: auto;
 }
 
 @keyframes floatingStars {

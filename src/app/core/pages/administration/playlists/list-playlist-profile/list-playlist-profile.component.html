@@ -1,23 +1,27 @@
+<!-- list-playlist-profile.component.html -->
 <div class="dark-background">
-    <!-- Encabezado -->
-    <div class="header-container text-center">
-      <h2 class="title">Playlist List</h2>
-      <p class="subtitle">Manage your playlists with ease</p>
-    </div>
-    <app-hamburger-menu></app-hamburger-menu>
+  <div class="header-container text-center">
+    <h2 class="title">Playlist List</h2>
+  </div>
+  <app-hamburger-menu></app-hamburger-menu>
 
-    <div class="playlist-grid">
-      <div *ngFor="let playlist of playlists" class="playlist-card shadow-sm">
-        <div class="playlist-thumbnail">
-          <img [src]="playlist.thumbnail || 'assets/images/default-thumbnail.jpg'" alt="{{ playlist.name }}" class="thumbnail">
-        </div>
-        <div class="playlist-info">
-          <h5 class="playlist-title">{{ playlist.name }}</h5>
-          <p class="playlist-details">
-            <span><i class="bi bi-people me-1"></i>{{ playlist.associatedProfiles.length }} profiles</span>
-            <span><i class="bi bi-camera-video me-1"></i>{{ playlist.videos.length }} videos</span>
-          </p>
+  <div class="playlist-grid">
+    <div *ngFor="let playlist of playlists" 
+         class="playlist-card shadow-sm"
+         (click)="navigateToPlaylist(playlist.id)">
+      <div class="playlist-thumbnail">
+        <img [src]="playlist.thumbnail" 
+             alt="{{ playlist.name }}" 
+             class="thumbnail"
+             (error)="onImageError($event)">
+      </div>
+      <div class="playlist-info">
+        <h5 class="playlist-title">{{ playlist.name }}</h5>
+        <div class="playlist-details">
+          <span><i class="bi bi-people me-1"></i>{{ playlist.associatedProfiles.length }} profiles</span>
+          <span><i class="bi bi-camera-video me-1"></i>{{ playlist.videos.length }} videos</span>
         </div>
       </div>
     </div>
   </div>
+</div>

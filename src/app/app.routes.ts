@@ -30,6 +30,7 @@ export const routes: Routes = [
   { path: 'administration', component: AdministrationComponent },
 
   //Profiles
+  {  path: 'child-screen', component: ChildScreenComponent },
   {  path: 'child-screen/:profileId', component: ChildScreenComponent },
   { path: 'list-profile', component: ListProfileComponent }, // Nueva ruta
 
