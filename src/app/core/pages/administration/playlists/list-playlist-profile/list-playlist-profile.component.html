@@ -8,7 +8,7 @@
   <div class="playlist-grid">
     <div *ngFor="let playlist of playlists" 
          class="playlist-card shadow-sm"
-         (click)="navigateToPlaylist(playlist.id)">
+         (click)="navigateToPlaylist(playlist._id)">
       <div class="playlist-thumbnail">
         <img [src]="playlist.thumbnail" 
              alt="{{ playlist.name }}" 

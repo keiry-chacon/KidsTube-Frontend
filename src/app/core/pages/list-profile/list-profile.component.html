@@ -30,18 +30,18 @@
   <div *ngIf="showEditProfile" class="edit-profile">
     <span class="close-icon" (click)="cancelEdit()">×</span>
     <h2>Editar perfil</h2>
-    <input [(ngModel)]="editedProfile.fullName" placeholder="Nombre completo" />
+    <input [(ngModel)]="editedProfile.fullName" placeholder="fullName" />
     <input [(ngModel)]="editedProfile.pin" placeholder="PIN" type="password" />
 
     <div class="custom-dropdown">
       <div class="selected-option" (click)="toggleDropdown()">
-        <img [src]="editedProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
-        <span>{{ editedProfile.avatar }}</span>
+        <img *ngIf="editedProfile.avatar" [src]="editedProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
+        <span>{{ getFileNameWithoutExtension(editedProfile.avatar)  || 'Seleccionar avatar' }}</span>
       </div>
       <div *ngIf="dropdownOpen" class="dropdown-options">
-        <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectImage(img)">
-          <img [src]="img" alt="Avatar" class="avatar-preview" />
-          <span>{{ img }}</span>
+        <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectImage(img.fullPath)">
+          <img [src]="img.fullPath" alt="Avatar" class="avatar-preview" />
+          <span>{{ getFileNameWithoutExtension(img.fileName) }}</span>
         </div>
       </div>
     </div>
@@ -64,13 +64,13 @@
   
       <div class="custom-dropdown">
         <div class="selected-option" (click)="toggleDropdown()">
-          <img [src]="newProfile.avatar || predefinedImages[0]" alt="Selected Avatar" class="avatar-preview" />
-          <span>{{ newProfile.avatar || 'Seleccionar avatar' }}</span>
+          <img *ngIf="newProfile.avatar" [src]="newProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
+          <span>{{ newProfile.avatarName || 'Seleccionar avatar' }}</span>
         </div>
         <div *ngIf="dropdownOpen" class="dropdown-options">
-          <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectNewProfileImage(img)">
-            <img [src]="img" alt="Avatar" class="avatar-preview" />
-            <span>{{ img }}</span>
+          <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectNewProfileImage(img.fullPath)">
+            <img [src]="img.fullPath" alt="Avatar" class="avatar-preview" />
+            <span>{{ getFileNameWithoutExtension(img.fileName) }}</span>
           </div>
         </div>
       </div>

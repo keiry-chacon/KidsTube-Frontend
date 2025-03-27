@@ -3,6 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { PlaylistService } from '../../../../services/playlist.service';
+import { ProfileService } from '../../../../services/profile.service';
+
 import { HamburgerMenuComponent } from '../../../../../components/hamburger-menu/hamburger-menu.component'; // Importa el componente
 interface Video {
   url?: string;
@@ -13,7 +15,7 @@ interface Video {
 
 // Define la interfaz para las playlists
 interface Playlist {
-  id: string;
+  _id: string;
   name: string;
   thumbnail?: string;
   videos: Video[];
@@ -30,23 +32,34 @@ export class ListPlaylistProfileComponent {
   playlists: Playlist[] = []; // Usa la interfaz Playlist
   loading: boolean = true;
   error: string = '';
+  profileId: string | null = null;
 
   constructor(
     private playlistService: PlaylistService,
+        private profileService: ProfileService,
+    
     private router: Router
   ) {}
 
   ngOnInit() {
+    this.profileId = this.profileService.getProfileId();
     this.loadPlaylists();
   }
-
+ 
   loadPlaylists() {
-    this.playlistService.getPlaylists().subscribe({
-      next: (data: Playlist[]) => { // Especifica el tipo de data
-        this.playlists = data.map((playlist: Playlist) => ({ // Tipo explícito
+    if (!this.profileId) {
+      this.router.navigate(['/profiles']);
+      return;
+    }
+    this.playlistService.getPlaylistsByProfileId(this.profileId).subscribe({
+      next: (data: Playlist[]) => {
+        console.log('Data received from service:', data); // Inspecciona los datos
+  
+        this.playlists = data.map((playlist: Playlist) => ({
           ...playlist,
           thumbnail: this.getFirstVideoThumbnail(playlist) || 'assets/images/default-thumbnail.jpg'
         }));
+  
         this.loading = false;
       },
       error: (err: any) => {
@@ -85,7 +98,13 @@ export class ListPlaylistProfileComponent {
     imgElement.alt = 'Imagen por defecto';
   }
   navigateToPlaylist(playlistId: string): void {
-    this.router.navigate(['/child-screen', playlistId]).then(nav => {
+    if (!playlistId) {
+      console.error('Playlist ID is missing or invalid.');
+      return;
+    }
+  
+    console.log('Navigating to playlist with ID:', playlistId); // Inspecciona el ID
+    this.router.navigate(['/child-screen-playlist', playlistId]).then(nav => {
       console.log('Navigation success:', nav);
     }, err => {
       console.error('Navigation error:', err);

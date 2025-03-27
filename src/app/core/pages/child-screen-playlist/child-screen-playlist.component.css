@@ -1,0 +1,320 @@
+/* Fondo oscuro */
+/* Fondo mágico para niños */
+.dark-background {
+    background: 
+      linear-gradient(135deg, #f9f0d2, #f8d6a3),
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
+    background-size: 100% 100%, 60px 60px;
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    animation: floatingStars 30s linear infinite;
+    overflow-y: auto;
+  }
+  
+  @keyframes floatingStars {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 0 0, 60px 60px; }
+  }
+  
+  /* Estilo global del body */
+  body {
+      overflow-y: scroll !important;
+    color: #b6720c;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; 
+  }
+  
+  .video-container {
+    max-width: 1000px; 
+    margin: auto;
+    padding: 20px;
+    position: relative; 
+    z-index: 1; 
+    margin-left: 200px; 
+    min-height: calc(100vh - 100px); /* Altura mínima completa */
+    overflow: visible; /* Permite que el contenido fluya */
+    padding-bottom: 300px !important; }
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: white;
+  }
+  
+  
+  .search-bar {
+    margin-top: 20px;
+    margin-bottom: 30px; /* Aumenté el margen inferior */
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .search-input-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px; /* Un poco más ancha */
+    perspective: 1000px; /* Para efectos 3D */
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 18px 50px 18px 25px; /* Más padding para mejor tacto */
+    font-size: 18px; /* Tamaño de fuente aumentado */
+    border: none;
+    border-radius: 50px; /* Bordes completamente redondeados */
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px); /* Efecto vidrio esmerilado */
+    color: #f3952a; /* Cambiado a un dorado más vibrante */
+    outline: none;
+    box-shadow: 
+      0 5px 15px rgba(0, 0, 0, 0.3),
+      inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    transform-style: preserve-3d;
+  }
+  
+  .search-input::placeholder {
+    color:#fda239;
+    font-weight: 300;
+  }
+  
+  .search-input:focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 
+      0 10px 25px rgba(255, 165, 0, 0.4),
+      inset 0 1px 3px rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px) scale(1.02);
+    border: 1px solid rgba(255, 215, 0, 0.6);
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    font-size: 20px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  /* Lupa minimalista pero profesional */
+  .search-icon::before {
+    content: "⌕"; /* Símbolo de lupa Unicode */
+    font-size: 24px;
+    font-weight: bold;
+    display: inline-block;
+    transition: all 0.3s ease;
+  }
+  
+  .search-input:focus + .search-icon::before {
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.7);
+    transform: scale(1.2);
+  }
+  @keyframes auraPulse {
+    0% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.4; }
+  }
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* Más pequeñas */
+    gap: 15px; /* Espacio más ajustado */
+    padding: 10px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    padding-bottom: 50px; /* Espacio al final */
+  
+  }
+  
+  .video-item {
+    background: linear-gradient(145deg, #ffffff, #fff9e6);
+    padding: 10px; /* Padding reducido */
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 4px 8px rgba(0, 0, 0, 0.1),
+      0 0 0 2px #f8d6a3; /* Borde más fino */
+    border: 1px solid #f1c40f;
+  }
+  
+  .video-item:hover {
+    transform: translateY(-5px) rotate(1deg); /* Movimiento más sutil */
+    box-shadow: 
+      0 8px 16px rgba(241, 196, 15, 0.3),
+      0 0 0 3px #f8d6a3;
+  }
+  
+  .thumbnail-wrapper {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+  }
+  
+  .video-item:hover .video-thumbnail {
+    transform: scale(1.05); /* Zoom más pequeño */
+    filter: brightness(1.03) saturate(1.05);
+  }
+  
+  .video-info {
+    color: #7f8c8d;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-size: 13px; /* Texto más pequeño */
+    margin-top: 8px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  /* Efecto sticker más pequeño */
+  .video-item::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 30px;
+    height: 30px;
+    background: #e74c3c;
+    transform: rotate(45deg);
+    z-index: 1;
+    opacity: 0.8;
+  }
+  
+  /* Animación de flotación más corta */
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+  }
+  
+  .video-item {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .video-item:nth-child(2n) {
+    animation-delay: 0.2s;
+  }
+  
+  .video-item:nth-child(3n) {
+    animation-delay: 0.4s;
+  }
+  .video-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    z-index: 1; /* Menor que el z-index del menú */
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    z-index: 10;
+  }
+  
+  /* Estilo del ícono de hamburguesa */
+  .menu-icon {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    font-size: 24px;
+    color: white;
+    background-color: black;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1001; /* Asegura que esté por encima de todo */
+  }
+  
+  .menu-icon:hover {
+    transform: scale(1.1);
+  }
+  
+  /* Estilo general del menú */
+  .hamburger-menu {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    width: 150px;
+    height: calc(100vh - 70px);
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000; /* Menú por encima de otros elementos */
+    transition: transform 0.3s ease;
+  }
+  
+  .hamburger-menu.closed {
+    transform: translateX(-100%);
+  }
+  
+  .menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    overflow-y: auto;
+    flex-grow: 1;
+  }
+  
+  .menu-items a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .menu-items a:hover {
+    background-color: #333;
+    transform: scale(1.05);
+  }
+  
+  .fas {
+    font-size: 18px;
+  }
+  

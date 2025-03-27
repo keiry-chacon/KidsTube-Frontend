@@ -3,11 +3,12 @@ import { LogInComponent } from '../app/core/pages/log-in/log-in.component';
 import { SignUpComponent } from '../app/core/pages/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilesComponent } from './core/pages/profiles/profiles.component';
-import { AdministrationComponent } from './core/pages/administration/administration.component';
 
 //Profiles
 import { ChildScreenComponent } from './core/pages/child-screen/child-screen.component';
 import { ListProfileComponent } from './core/pages/list-profile/list-profile.component';
+import { ChildScreenPlaylistComponent } from './core/pages/child-screen-playlist/child-screen-playlist.component';
+
 // Playlist Routes
 import { CreatePlaylistComponent } from './core/pages/administration/playlists/create-playlist/create-playlist.component';
 import { UpdatePlaylistComponent } from './core/pages/administration/playlists/update-playlist/update-playlist.component';
@@ -27,12 +28,11 @@ export const routes: Routes = [
   { path: 'login', component: LogInComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'profiles', component: ProfilesComponent },
-  { path: 'administration', component: AdministrationComponent },
 
   //Profiles
   {  path: 'child-screen', component: ChildScreenComponent },
-  {  path: 'child-screen/:profileId', component: ChildScreenComponent },
   { path: 'list-profile', component: ListProfileComponent }, // Nueva ruta
+  {  path: 'child-screen-playlist/:playlistId', component: ChildScreenPlaylistComponent },
 
   // Playlist Routes
   { path: 'createPlaylist', component: CreatePlaylistComponent },

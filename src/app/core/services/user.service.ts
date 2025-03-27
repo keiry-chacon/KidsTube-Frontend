@@ -10,7 +10,9 @@ export class UserService {
   private apiUrl = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) {}
-
+  logout() {
+    sessionStorage.removeItem('token'); // Eliminar token de autenticación
+  }
   signup(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/user`, userData);
   }

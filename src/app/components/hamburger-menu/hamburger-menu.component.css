@@ -1,107 +1,177 @@
+/* Estructura principal */
+.dark-background {
+  position: relative;
+  height: 70px;
+  background-color: transparent;
+}
+
+/* Ícono Hamburguesa */
 .menu-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px; 
-    font-size: 24px;
-    color: #f3952a;
-    background: 
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #f3952a;
+  background: 
     linear-gradient(135deg, #f9f0d2, #f8d6a3),
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
-  background-size: 100% 100%, 60px 60px;    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    z-index: 1001; 
-  }
-  
-  .menu-icon:hover {
-    transform: scale(1.1);
-  }
-  
-  .hamburger-menu {
-    position: fixed;
-    top: 70px; 
-    left: 0;
-    width: 150px; 
-    height: calc(100vh - 70px); 
-    background: 
+  background-size: 100% 100%, 60px 60px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 1001;
+}
+
+.menu-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Menú Lateral */
+.hamburger-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 150px;
+  height: calc(100vh - 70px);
+  background: 
     linear-gradient(135deg, #f9f0d2, #f8d6a3),
     url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
-  background-size: 100% 100%, 60px 60px;    color: #f3952a;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-  }
-  
-  .hamburger-menu.closed {
-    transform: translateX(-100%); 
-  }
-  
-  .menu-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-    overflow-y: auto; 
-    flex-grow: 1;
-  }
-  
-  .menu-items a {
-    text-decoration: none;
-    color: #f3952a; /* Cambiado a un dorado más vibrante */
-    font-size: 16px;
-    padding: 12px 15px; /* Un poco más de padding vertical */
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente más moderna */
-    font-weight: 500; /* Peso intermedio para mejor legibilidad */
-    letter-spacing: 0.5px; /* Pequeño espaciado entre letras */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Sombra para mejor contraste */
-    position: relative;
-    overflow: hidden;
-    background: rgba(255, 165, 0, 0.1); /* Fondo sutil */
-    border: 1px solid transparent;
+  background-size: 100% 100%, 60px 60px;
+  color: #f3952a;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.hamburger-menu.closed {
+  transform: translateX(-100%);
+}
+
+/* Items del Menú */
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.menu-items a {
+  text-decoration: none;
+  color: #f3952a;
+  font-size: 16px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid transparent;
 }
 
 .menu-items a:hover {
-    color: #FFFFFF;
-    background: rgba(255, 165, 0, 0.3);
-    transform: translateX(5px) scale(1.02);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #FFFFFF;
+  background: rgba(255, 165, 0, 0.3);
+  transform: translateX(5px) scale(1.02);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-items a i {
+  font-size: 18px;
+}
+
+/* Avatar en el Menú */
+.menu-avatar-container {
+  width: 60px;
+  height: 60px;
+  margin: 20px auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f8d6a3, #f3952a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  border: 2px solid #f3952a;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-avatar-container:hover {
+  transform: scale(1.1);
+}
+
+.profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Efecto de subrayado animado */
 .menu-items a::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    transition: all 0.4s ease;
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+  transition: all 0.4s ease;
 }
 
 .menu-items a:hover::after {
-    left: 100%;
+  left: 100%;
+}
+.back-button {
+  position: absolute;
+  top: 500px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #FF8C42;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Efecto suave */
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px); /* Se mueve hacia la izquierda */
+  }
 }
 
-/* Efecto de brillo al pasar el mouse */
-.menu-items a:hover {
-    background: linear-gradient(
-        to right,
-        rgba(255, 215, 0, 0.1) 0%,
-        rgba(255, 165, 0, 0.3) 50%,
-        rgba(255, 215, 0, 0.1) 100%
-    );
+/* Clase para activar la animación */
+.animate-out {
+  animation: fadeOut 0.3s ease forwards;
 }
-  
-  .fas {
-    font-size: 18px;
-  }
+.back-button:hover {
+  color: #f87a2c; 
+}

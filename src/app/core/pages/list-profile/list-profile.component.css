@@ -1,6 +1,8 @@
 #background-video {
-  background: linear-gradient(135deg, #f3952a, #fcb126);
-  position: fixed;
+  background: 
+  linear-gradient(135deg, #f9f0d2, #f8d6a3),
+  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
+background-size: 100% 100%, 60px 60px;  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -15,8 +17,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #f3952a, #fcb126);
-  z-index: 1; /* Por encima del video */
+  background: 
+  linear-gradient(135deg, #f9f0d2, #f8d6a3),
+  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
+background-size: 100% 100%, 60px 60px;  z-index: 1; /* Por encima del video */
 }
 
 .profiles-container {
@@ -101,7 +105,6 @@
   transform: scale(1.05);
 }
 
-/* Estilo para el botón de regreso */
 .back-button {
   position: absolute;
   top: 20px;
@@ -110,21 +113,20 @@
   border: none;
   font-size: 18px;
   font-weight: bold;
-  color: #FF8C42; /* Color naranja */
+  color: #FF8C42;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px; /* Espacio entre la flecha y el texto */
+  gap: 5px; 
   transition: color 0.3s ease;
 }
 
 .back-button:hover {
-  color: #f87a2c; /* Cambiar a un tono más claro al pasar el mouse */
+  color: #f87a2c; 
 }
 
-/* Ajustes generales para el contenedor principal */
 .profiles-container {
-  position: relative; /* Necesario para posicionar el botón de regreso */
+  position: relative; 
   color: #0c0c0c;
   text-align: center;
   padding: 30px;
@@ -144,7 +146,6 @@
   animation: slideIn 1s ease-in-out;
 }
 
-/* Animación de entrada */
 @keyframes slideIn {
   from {
     transform: translateY(50px);
@@ -156,7 +157,6 @@
   }
 }
 
-/* Estilo de cada perfil */
 .profile {
   cursor: pointer;
   text-align: center;
@@ -171,7 +171,6 @@
   position: relative;
 }
 
-/* Imagen de perfil */
 .profile img {
   width: 200px;
   height: 200px;
@@ -182,28 +181,70 @@
 
 
 
-/* Imágenes en el cuadro de edición (avatar seleccionado) */
 .avatar-preview {
-  width: 100px; /* Tamaño estándar para los avatares pequeños */
+  width: 100px; 
   height: 100px;
-  border-radius: 50%; /* Hacerlas circulares */
-  object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+  border-radius: 50%; 
+  object-fit: cover; 
 }
 
-/* Imágenes en el menú desplegable de avatares */
+.custom-dropdown {
+  position: relative;
+  width: 100%;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.selected-option img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dropdown-options {
+  position: absolute;
+  top: 100%; /* Colocar debajo del selected-option */
+  left: 0;
+  width: 100%;
+  max-height: 200px; /* Altura máxima */
+  overflow-y: auto; /* Scroll vertical */
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para mejor estética */
+}
+
+.dropdown-option {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
 .dropdown-option img {
-  width: 80px; /* Tamaño más pequeño para opciones de avatar */
-  height: 80px;
-  border-radius: 50%; /* Hacerlas circulares */
-  object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-/* Efecto hover en la imagen */
+.dropdown-option:hover {
+  background-color: #f0f0f0;
+}
+
 .profile img:hover {
   transform: scale(1.1);
 }
 
-/* Nombre del perfil */
 .profile p {
   margin-top: 10px;
   font-size: 2rem;
@@ -212,12 +253,10 @@
   transition: color 0.3s ease;
 }
 
-/* Cambio de color al hacer hover */
 .profile:hover p {
   color: #FF8C42;
 }
 
-/* Botón de edición */
 .edit-icon {
   position: absolute;
   top: 10px;
@@ -234,7 +273,6 @@
   transform: scale(1.1);
 }
 
-/* Botón "Agregar perfil" */
 .add-profile {
   cursor: pointer;
   text-align: center;
@@ -246,7 +284,7 @@
   padding: 20px;
   border-radius: 50%;
   background-color: #e0e0e0;
-  box-sizing: border-box;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
@@ -265,7 +303,6 @@
   color: #FF8C42;
 }
 
-/* Cuadro de diálogo de PIN */
 .pin-dialog {
   position: fixed;
   top: 0;
@@ -338,7 +375,6 @@
   }
 }
 
-/* Diálogo de edición */
 .edit-profile {
   position: fixed;
   top: 50%;

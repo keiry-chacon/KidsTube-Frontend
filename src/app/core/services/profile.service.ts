@@ -25,7 +25,11 @@ export class ProfileService {
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }
+ 
+  getProfileId(): string | null {
+    return localStorage.getItem('currentProfileId');
 
+  }
   getAuthHeaders(): { [header: string]: string } {
     const token = this.getToken();
     return token ? { Authorization: `Bearer ${token}` } : {};
@@ -37,8 +41,10 @@ export class ProfileService {
     return this.http.post<any>(`${this.apiUrl}/profile`, profile, { headers: this.getAuthHeaders() });
   }
   deleteProfile(id: string): Observable<any> {
-    console.log(`Eliminando perfil con ID: ${id}`); 
     return this.http.delete<any>(`${this.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() } );
+  }
+  getProfileById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() } );
   }
   validatePin(profileId: string, pin: string): Observable<any> {
     const url = `${this.apiUrl}/profile/validatePin/${profileId}`; 

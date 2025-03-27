@@ -20,22 +20,21 @@ interface Video {
 }
 
 interface Playlist {
-  _id: string;
+  id: string;
   name: string;
   videos: Video[];
   thumbnail?: string;
 }
 
 @Component({
-  selector: 'app-child-screen',
+  selector: 'app-child-screen-playlist',
   standalone: true,
   imports: [CommonModule, FormsModule, HamburgerMenuComponent],
-  templateUrl: './child-screen.component.html',
-  styleUrls: ['./child-screen.component.css']
+  templateUrl: './child-screen-playlist.component.html',
+  styleUrls: ['./child-screen-playlist.component.css']
 })
-export class ChildScreenComponent implements OnInit {
+export class ChildScreenPlaylistComponent implements OnInit {
   playlistId: string | null = null;
-  profileId: string | null = null;
   playlists: Playlist[] = [];
   playlistVideos: Video[] = [];
   filteredVideos: Video[] = [];
@@ -44,6 +43,8 @@ export class ChildScreenComponent implements OnInit {
   searchQuery: string = '';
   fadeOut: boolean = false;
   isLoading: boolean = true;
+  profileId: string | null = null;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -55,45 +56,38 @@ export class ChildScreenComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.profileId = this.profileService.getProfileId();
       this.initializeComponent();
- 
+    
   }
 
   initializeComponent(): void {
     this.isLoading = true;
     this.searchQuery = '';
-    
-   if (this.profileId) {
-      this.loadAllProfilePlaylists();
-    } else {
-      this.router.navigate(['/']);
-    }
+    this.playlistId = this.route.snapshot.paramMap.get('playlistId') || '';
+      this.loadSinglePlaylist();
+   
   }
+  loadSinglePlaylist(): void {
+    if (!this.playlistId) return;
   
-  loadAllProfilePlaylists(): void {
-    if (!this.profileId) return;
-
-    this.playlistService.getPlaylistsByProfileId(this.profileId).subscribe({
-      next: (playlists: Playlist[]) => {
-        this.playlists = playlists;
-        const allVideos = playlists.flatMap((playlist: Playlist) => 
-          this.prepareVideos(playlist.videos, playlist.name)
-        );
-        this.playlistVideos = allVideos;
-        this.filteredVideos = [...allVideos];
+    this.playlistService.getPlaylistById(this.playlistId).subscribe({
+      next: (playlist: Playlist) => { 
+        const videos = this.prepareVideos(playlist.videos, playlist.name);
+        this.currentPlaylist = playlist; 
+        this.playlistVideos = videos;
+        this.filteredVideos = [...videos];
         this.isLoading = false;
         this.cdr.detectChanges();
       },
       error: (err) => {
-        console.error('Error loading playlists:', err);
+        console.error('Error loading playlist:', err); 
         this.isLoading = false;
       }
     });
   }
 
   prepareVideos(videos: Video[], playlistName: string): Video[] {
-    return videos.map((video: Video) => ({
+    return videos.map(video => ({
       ...video,
       playlistName,
       isPlaying: false,
@@ -114,7 +108,6 @@ export class ChildScreenComponent implements OnInit {
     }
   }
 
-  // Búsqueda y filtrado
   filterVideos(): void {
     this.fadeOut = true;
     setTimeout(() => {

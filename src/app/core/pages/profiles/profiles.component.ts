@@ -138,16 +138,14 @@ export class ProfilesComponent implements OnInit {
   }
 
   validateUserPin(): void {
-    const pinToValidate = this.enteredUserPin.trim(); // Elimina espacios en blanco
+    const pinToValidate = this.enteredUserPin.trim(); 
   
-    // Validación inicial: Verificar si el PIN está vacío
     if (!pinToValidate) {
       console.error('El PIN está vacío.');
       this.userPinError = true;
       return;
     }
   
-    // Validación adicional: Verificar longitud mínima (por ejemplo, 4 dígitos)
     if (pinToValidate.length < 4) {
       console.error('El PIN debe tener al menos 4 dígitos.');
       this.userPinError = true;
@@ -159,7 +157,7 @@ export class ProfilesComponent implements OnInit {
         if (response.user) {
           console.log('PIN válido. Redirigiendo al usuario...');
           this.closeUserPinDialog(); 
-          this.router.navigate(['/administration']); 
+          this.router.navigate(['/videoList']); 
         } else {
           console.error('El PIN no coincide con ningún usuario.');
           this.userPinError = true; 
@@ -182,7 +180,8 @@ validateProfilePin(): void {
     next: (response) => {
       if (response.profile) {
         this.closePinDialog();
-        this.router.navigate(['/child-screen', this.selectedProfile._id]);
+        localStorage.setItem('currentProfileId', this.selectedProfile._id);
+        this.router.navigate(['/child-screen']); 
       } else {
         this.pinError = true; 
       }

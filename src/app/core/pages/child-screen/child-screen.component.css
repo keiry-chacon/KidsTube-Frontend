@@ -14,6 +14,25 @@
   animation: floatingStars 30s linear infinite;
   overflow-y: auto;
 }
+.back-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: #FF8C42;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #f87a2c; 
+}
 
 @keyframes floatingStars {
   0% { background-position: 0 0, 0 0; }

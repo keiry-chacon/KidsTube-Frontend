@@ -5,7 +5,10 @@ import { ProfileService } from '../../services/profile.service';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 
-
+interface PredefinedImage {
+  fullPath: string; // Ruta completa de la imagen
+  fileName: string; // Nombre del archivo
+}
 @Component({
   selector: 'app-list-profile',
   standalone: true,
@@ -23,8 +26,7 @@ export class ListProfileComponent implements OnInit {
   showEditProfile = false;
   editedProfile: any = {};
   showManageProfiles = false;
-  predefinedImages: string[] = []; 
-  dropdownOpen: boolean = false; 
+predefinedImages: PredefinedImage[] = [];  dropdownOpen: boolean = false; 
   profileToDelete: any = null;  
   showConfirmDelete = false;
   selectedProfile: any = null; 
@@ -48,45 +50,48 @@ export class ListProfileComponent implements OnInit {
 
   }
   openAddProfileDialog() {
-    this.newProfile = { fullName: '', pin: '', avatar: '' }; // Reiniciar el formulario
+    this.newProfile = {
+      fullName: '',
+      pin: '',
+      avatar: this.predefinedImages[0]?.fullPath || '', // Avatar predeterminado
+      avatarName: this.getFileNameWithoutExtension(this.predefinedImages[0]?.fileName) || 'Seleccionar avatar', // Nombre del archivo
+    };
     this.showAddProfileDialog = true;
   }
 
   closeAddProfileDialog() {
   this.showAddProfileDialog = false;
   }
+  
   goBackToProfiles() {
   this.router.navigate(['/profiles']); 
   }
-  selectNewProfileImage(img: string) {
-  this.newProfile.avatar = img;
-  this.toggleDropdown();
+  selectNewProfileImage(fullPath: string) {
+    const fileName = fullPath.split('/').pop() || 'Seleccionar avatar'; // Extraer el nombre del archivo
+
+    this.newProfile.avatar = fullPath; // Para el cuadro de edición
+    this.newProfile.avatarName = fileName; 
+    this.dropdownOpen = false; // Cerrar el menú desplegable
+
   }
-
-  saveNewProfile() {
-  if (!this.newProfile.fullName || !this.newProfile.pin || !this.newProfile.avatar) {
-    console.error('Todos los campos son obligatorios.');
-    return;
-  }
-
-  const newProfileData = {
-    fullName: this.newProfile.fullName,
-    pin: this.newProfile.pin,
-    avatar: this.newProfile.avatar.split('/').pop(), 
-  };
-
-  this.profileService.createProfile(newProfileData).subscribe({
-    next: (response) => {
-      console.log('Perfil creado exitosamente:', response);
-      this.loadProfiles(); 
-      this.closeAddProfileDialog(); 
-    },
-    error: (err) => {
-      console.error('Error al crear el perfil:', err);
-    }
-  });
+  getFileNameWithoutExtension(fileName: string): string {
+    return fileName.split('.').slice(0, -1).join('.');
   }
   
+  saveNewProfile() {
+    const avatarName = this.newProfile.avatar.split('/').pop();
+    this.newProfile.avatar = avatarName;
+    this.profileService.createProfile(this.newProfile).subscribe({
+      next: (response) => {
+        this.loadProfiles();
+        this.closeAddProfileDialog();
+
+      },
+      error: (err) => {
+        console.error('Error al guardar el perfil:', err);
+      }
+    });
+  }
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
@@ -101,13 +106,14 @@ export class ListProfileComponent implements OnInit {
     if (this.profileToDelete) {
       this.profileService.deleteProfile(this.profileToDelete._id).subscribe({
         next: () => {
+          alert('Perfil eliminado exitosamente.');
           this.profiles = this.profiles.filter(p => p._id !== this.profileToDelete._id);
-          this.showConfirmDelete = false;
-          this.profileToDelete = null;
+          this.cancelDelete();
         },
-        error: (err: any) => {
-          console.error('Error al eliminar el perfil:', err);
-        }
+        error: (err) => {
+          alert('Error al eliminar el perfil. Por favor, inténtalo de nuevo.');
+          console.error(err);
+        },
       });
     }
   }
@@ -115,9 +121,13 @@ export class ListProfileComponent implements OnInit {
   selectProfileToDelete(profile: any) {
     this.profileToDelete = profile;
   }
-  selectImage(img: string) {
-    this.editedProfile.avatar = img;
-    this.dropdownOpen = false; 
+  selectImage(fullPath: string) {
+    const fileName = fullPath.split('/').pop() || 'Seleccionar avatar'; 
+    
+      this.editedProfile.avatar = fullPath; 
+      this.editedProfile.avatarName = fileName; 
+    
+    this.dropdownOpen = false;
   }
   loadProfiles() {
     this.profileService.getProfiles().subscribe({
@@ -204,11 +214,12 @@ export class ListProfileComponent implements OnInit {
       'peppa.jpg',
       'dora.jpg',
       'hellokitty.jpg',
-
-
     ];
-
-    this.predefinedImages = imageNames.map(name => `.../../../../assets/profiles/${name}`);
+  
+    this.predefinedImages = imageNames.map(name => ({
+      fullPath: `../../../assets/profiles/${name}`, // Ruta completa
+      fileName: name, // Solo el nombre del archivo
+    }));
   }
   saveProfile() {
     const avatarName = this.editedProfile.avatar.split('/').pop();
@@ -233,8 +244,7 @@ export class ListProfileComponent implements OnInit {
     this.showEditProfile = false;
   }
 
-  addProfile() {
-  }
+  
   openEditProfile(profile: any) {
     this.editedProfile = { ...profile };
     this.showEditProfile = true;

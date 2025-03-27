@@ -1,17 +1,27 @@
 <div class="dark-background">
-    <div class="menu-icon" (click)="toggleMenu()">
+  <div class="menu-icon" (click)="toggleMenu()">
     ☰ <!-- Ícono de hamburguesa -->
   </div>
-  
+
   <!-- Contenedor del menú lateral -->
   <div class="hamburger-menu" [class.closed]="isMenuClosed">
     <div class="menu-items">
-      <a href="#" (click)="navigateTo('home')">
+      <a (click)="navigateTo('/child-screen')">
         <i class="fas fa-home"></i> Inicio
       </a>
-      <a (click)="navigateTo('listPlaylistProfile')">
+      <a (click)="navigateTo('/listPlaylistProfile')">
         <i class="fas fa-list"></i> Playlist
       </a>
+      
+      <!-- Avatar movido aquí dentro -->
+      <div class="menu-avatar-container" (click)="navigateTo('/profiles')">
+        <img *ngIf="profileAvatar" [src]="profileAvatar" class="profile-avatar" alt="Avatar del perfil">
+        <div *ngIf="!profileAvatar" class="avatar-placeholder">
+        </div>
+      </div>
+      <button class="back-button" (click)="goBackToProfiles()">
+        ← Volver
+      </button>
     </div>
   </div>
 </div>
