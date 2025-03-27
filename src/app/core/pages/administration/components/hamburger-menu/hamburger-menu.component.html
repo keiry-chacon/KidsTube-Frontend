@@ -1,7 +1,4 @@
-<div class="dark-background">
-
-  <!-- Menú de Hamburguesa -->
-  <div class="hamburger-menu">
+<div class="hamburger-menu" [class.closed]="isMenuClosed">
     <!-- Ícono del menú -->
     <div class="menu-icon">
       ☰ <!-- Ícono de hamburguesa -->
@@ -24,13 +21,3 @@
       </a>
     </div>
   </div>
-  <div class="container p-4 border rounded bg-light shadow-sm">
-    <h2>Video Details</h2>
-    <div *ngIf="video">
-      <p><strong>Name:</strong> {{ video.name }}</p>
-      <p><strong>URL:</strong> <a [href]="video.url" target="_blank">{{ video.url }}</a></p>
-      <p><strong>Description:</strong> {{ video.description || 'No description' }}</p>
-      <button class="btn btn-secondary mt-3" (click)="goBack()">Back to List</button>
-    </div>
-  </div>
-</div>

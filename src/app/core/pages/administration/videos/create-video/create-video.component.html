@@ -1,36 +1,66 @@
 <div class="dark-background">
-    <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
-      
-      <fieldset class="border p-3 mb-3">
-        <legend>Video Information</legend>
-        
-        <!-- Name Field -->
-        <div class="mb-3">
-          <label class="form-label">Video Name</label>
-          <input type="text" class="form-control" formControlName="name" required>
-          <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
-            Video name is required.
-          </div>
-        </div>
+
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
+    </div>
   
-        <!-- URL Field -->
-        <div class="mb-3">
-          <label class="form-label">Video URL</label>
-          <input type="url" class="form-control" formControlName="url" required>
-          <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
-            Video URL is required.
-          </div>
-        </div>
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
+    </div>
   
-        <!-- Description Field -->
-        <div class="mb-3">
-          <label class="form-label">Description</label>
-          <textarea class="form-control" formControlName="description"></textarea>
-        </div>
-      </fieldset>
-  
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
-      
-    </form>
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
   </div>
+
+  <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
+    <fieldset class="border p-3 mb-3">
+      <legend>Video Information</legend>
+
+      <!-- Name Field -->
+      <div class="mb-3">
+        <label class="form-label">Video Name</label>
+        <input type="text" class="form-control" formControlName="name" required>
+        <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
+          Video name is required.
+        </div>
+      </div>
+
+      <!-- URL Field -->
+      <div class="mb-3">
+        <label class="form-label">Video URL</label>
+        <input type="url" class="form-control" formControlName="url" required>
+        <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
+          Video URL is required.
+        </div>
+      </div>
+
+      <!-- Preview Thumbnail -->
+      <div *ngIf="thumbnailUrl" class="mb-3">
+        <label class="form-label">Preview Thumbnail</label>
+        <img [src]="thumbnailUrl" alt="Video Thumbnail" class="img-thumbnail w-100" />
+      </div>
+
+      <!-- Description Field -->
+      <div class="mb-3">
+        <label class="form-label">Description</label>
+        <textarea class="form-control" formControlName="description"></textarea>
+      </div>
+    </fieldset>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
+  </form>
+</div>

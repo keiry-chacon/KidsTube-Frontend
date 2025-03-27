@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlaylistService } from '../../../../services/playlist.service';
 
 @Component({
   selector: 'app-detail-playlist',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './detail-playlist.component.html',
   styleUrls: ['./detail-playlist.component.css']
 })
@@ -16,7 +16,8 @@ export class DetailPlaylistComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playlistService: PlaylistService
+    private playlistService: PlaylistService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -42,5 +43,21 @@ export class DetailPlaylistComponent implements OnInit {
 
   goBack() {
     window.history.back(); // Regresar a la página anterior
+  }
+
+  navigateToVideoList(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/videoList']);
+  }
+
+  navigateToListPlaylist(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/listPlaylist']);
+  }
+
+  logout(event: Event): void {
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']); 
   }
 }

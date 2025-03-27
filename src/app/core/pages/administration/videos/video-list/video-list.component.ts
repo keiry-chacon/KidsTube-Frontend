@@ -63,4 +63,38 @@ export class VideoListComponent implements OnInit {
   createNewVideo() {
     this.router.navigate(['/createVideo']);
   }
+
+  // Función para obtener la miniatura del video
+  getVideoThumbnail(url: string): string {
+    const videoId = this.extractVideoIdFromUrl(url); // Extraemos el ID del video
+    if (videoId) {
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+    }
+    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no hay ID válido
+  }
+
+  // Función para extraer el ID del video de YouTube
+  extractVideoIdFromUrl(url: string): string | null {
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+
+
+  navigateToVideoList(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/videoList']);
+  }
+
+  navigateToListPlaylist(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/listPlaylist']);
+  }
+
+  logout(event: Event): void {
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']); 
+  }
 }

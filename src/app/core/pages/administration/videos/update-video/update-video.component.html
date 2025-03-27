@@ -1,19 +1,74 @@
-<div class="container mt-4">
-    <h2>Edit Video</h2>
-    <form (ngSubmit)="updateVideo()">
+<div class="dark-background">
+
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
+    </div>
+  
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
+    </div>
+  
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+  </div>
+  <div class="container p-4 border rounded bg-light shadow-sm">
+    <h2 class="mb-4">Edit Video</h2>
+    <form [formGroup]="videoForm" (ngSubmit)="updateVideo()">
+      <!-- Name Field -->
       <div class="mb-3">
         <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" [(ngModel)]="video.name" name="name" required>
+        <input type="text" class="form-control" id="name" formControlName="name" required>
+        <div *ngIf="videoForm.get('name')?.invalid && videoForm.get('name')?.touched" class="text-danger">
+          Video name is required.
+        </div>
       </div>
+
+      <!-- URL Field -->
       <div class="mb-3">
         <label for="url" class="form-label">URL</label>
-        <input type="url" class="form-control" id="url" [(ngModel)]="video.url" name="url" required>
+        <input type="url" class="form-control" id="url" formControlName="url" required>
+        <div *ngIf="videoForm.get('url')?.invalid && videoForm.get('url')?.touched" class="text-danger">
+          Video URL is required.
+        </div>
       </div>
+
+      <!-- Thumbnail Preview -->
+      <div class="mb-3">
+        <label class="form-label">Thumbnail Preview</label>
+        <div>
+          <img 
+            [src]="getVideoThumbnail(videoForm.get('url')?.value)" 
+            alt="Video Thumbnail" 
+            class="thumbnail me-3" 
+            onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+          />
+        </div>
+      </div>
+
+      <!-- Description Field -->
       <div class="mb-3">
         <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" [(ngModel)]="video.description" name="description"></textarea>
+        <textarea class="form-control" id="description" formControlName="description"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary">Update Video</button>
-      <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Cancel</button>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Update Video</button>
+
+      <!-- Cancel Button -->
+      <button type="button" class="btn btn-secondary mt-2 w-100" (click)="cancel()">Cancel</button>
     </form>
   </div>
+</div>

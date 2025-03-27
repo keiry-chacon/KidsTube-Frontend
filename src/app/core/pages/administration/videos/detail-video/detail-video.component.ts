@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { VideoService } from '../../../../services/video.service';
 
 @Component({
   selector: 'app-detail-video',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './detail-video.component.html',
   styleUrls: ['./detail-video.component.css']
 })
@@ -16,7 +17,8 @@ export class DetailVideoComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private videoService: VideoService
+    private videoService: VideoService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -40,5 +42,23 @@ export class DetailVideoComponent implements OnInit {
 
   goBack() {
     window.history.back();
+  }
+
+
+
+  navigateToVideoList(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/videoList']);
+  }
+
+  navigateToListPlaylist(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/listPlaylist']);
+  }
+
+  logout(event: Event): void {
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']); 
   }
 }

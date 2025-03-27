@@ -1,40 +1,75 @@
 <div class="dark-background">
-    <div class="container p-4 border rounded bg-light shadow-sm">
+
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
+    </div>
   
-      <!-- Header -->
-      <h2 class="mb-4">Video List</h2>
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
+    </div>
   
-      <!-- Create New Video Button -->
-      <button class="btn btn-success mb-3" (click)="createNewVideo()">Create New Video</button>
-  
-      <!-- Video List -->
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>URL</th>
-            <th>Description</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let video of videos">
-            <td>{{ video.name }}</td>
-            <td><a [href]="video.url" target="_blank">{{ video.url }}</a></td>
-            <td>{{ video.description || 'No description' }}</td>
-            <td>
-              <button class="btn btn-primary btn-sm me-2" (click)="editVideo(video._id)">Edit</button>
-              <button class="btn btn-info btn-sm me-2" (click)="viewDetails(video._id)">Details</button>
-              <button class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-  
-      <!-- No Videos Message -->
-      <div *ngIf="videos.length === 0" class="text-center">
-        <p>No videos found. Click "Create New Video" to add one.</p>
-      </div>
-  
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
     </div>
   </div>
+  <div class="container p-4 border rounded bg-light shadow-sm">
+
+    <!-- Header -->
+    <h2 class="mb-4">Video List</h2>
+
+    <!-- Create New Video Button -->
+    <button class="btn btn-success mb-3" (click)="createNewVideo()">Create New Video</button>
+
+    <!-- Video List -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Thumbnail</th> <!-- Nueva columna para miniaturas -->
+          <th>Name</th>
+          <th>URL</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let video of videos">
+          <td>
+            <!-- Miniatura del video o imagen predeterminada -->
+            <img 
+              [src]="getVideoThumbnail(video.url)" 
+              alt="Video Thumbnail" 
+              class="thumbnail me-3" 
+              onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+            />
+          </td>
+          <td>{{ video.name }}</td>
+          <td><a [href]="video.url" target="_blank">{{ video.url }}</a></td>
+          <td>{{ video.description || 'No description' }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm me-2" (click)="editVideo(video._id)">Edit</button>
+            <button class="btn btn-info btn-sm me-2" (click)="viewDetails(video._id)">Details</button>
+            <button class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- No Videos Message -->
+    <div *ngIf="videos.length === 0" class="text-center">
+      <p>No videos found. Click "Create New Video" to add one.</p>
+    </div>
+
+  </div>
+</div>

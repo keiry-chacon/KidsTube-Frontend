@@ -1,4 +1,30 @@
 <div class="dark-background">
+
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
+    </div>
+  
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
+    </div>
+  
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+  </div>
+
   <div class="container p-4 border rounded bg-light shadow-sm">
 
     <!-- Header -->
@@ -11,16 +37,24 @@
     <table class="table table-bordered">
       <thead>
         <tr>
+          <th>Thumbnail</th> <!-- Nueva columna para miniaturas -->
           <th>Name</th>
-          <th>Associated Profiles</th>
           <th>Videos</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let playlist of playlists">
+          <td>
+            <!-- Miniatura del primer video o imagen predeterminada -->
+            <img 
+              [src]="getPlaylistThumbnail(playlist.videos)" 
+              alt="Playlist Thumbnail" 
+              class="thumbnail me-3" 
+              onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+            />
+          </td>
           <td>{{ playlist.name }}</td>
-          <td>{{ playlist.associatedProfiles.length }} profiles</td>
           <td>{{ playlist.videos.length }} videos</td>
           <td>
             <button class="btn btn-info btn-sm me-2" (click)="viewDetails(playlist._id)">Details</button>

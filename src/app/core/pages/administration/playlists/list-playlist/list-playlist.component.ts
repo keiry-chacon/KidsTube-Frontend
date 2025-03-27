@@ -66,4 +66,39 @@ export class ListPlaylistComponent implements OnInit {
       });
     }
   }
+
+  getPlaylistThumbnail(videos: any[]): string {
+    if (videos && videos.length > 0) {
+      const firstVideoUrl = videos[0].url; // Obtenemos la URL del primer video
+      const videoId = this.extractVideoIdFromUrl(firstVideoUrl); // Extraemos el ID del video
+      if (videoId) {
+        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      }
+    }
+    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no hay videos
+  }
+
+  extractVideoIdFromUrl(url: string): string | null {
+    const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  }
+
+
+
+  navigateToVideoList(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/videoList']);
+  }
+
+  navigateToListPlaylist(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/listPlaylist']);
+  }
+
+  logout(event: Event): void {
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']); 
+  }
 }

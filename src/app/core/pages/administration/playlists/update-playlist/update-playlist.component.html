@@ -1,38 +1,100 @@
-<div class="container mt-4">
-  <h2>Edit Playlist</h2>
-  <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="border p-4 rounded bg-light shadow-sm">
+<div class="dark-background">
 
-    <!-- Playlist Name -->
-    <div class="mb-3">
-      <label for="name" class="form-label">Playlist Name</label>
-      <input type="text" class="form-control" id="name" formControlName="name" required>
-      <div *ngIf="playlistForm.get('name')?.invalid && playlistForm.get('name')?.touched" class="text-danger">
-        Playlist name is required.
-      </div>
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
     </div>
+  
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
+    </div>
+  
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
+    </div>
+  </div>  <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
+    <!-- Playlist Name -->
+    <fieldset class="border p-3 mb-3">
+      <legend>Playlist Information</legend>
+      <div class="mb-3">
+        <label class="form-label">Playlist Name</label>
+        <input type="text" class="form-control" formControlName="name" required>
+        <div *ngIf="playlistForm.get('name')?.hasError('required') && playlistForm.get('name')?.touched" class="text-danger">
+          Playlist name is required.
+        </div>
+      </div>
+    </fieldset>
 
     <!-- Associated Profiles -->
-    <div class="mb-3">
-      <label for="profiles" class="form-label">Associated Profiles</label>
-      <select multiple class="form-control" id="profiles" formControlName="associatedProfiles">
-        <option *ngFor="let profile of profiles" [value]="profile._id">{{ profile.fullName }}</option>
-      </select>
-      <div *ngIf="playlistForm.get('associatedProfiles')?.invalid && playlistForm.get('associatedProfiles')?.touched" class="text-danger">
+    <fieldset class="border p-3 mb-3">
+      <legend>Associated Profiles</legend>
+      <div class="profiles-container">
+        <div *ngFor="let profile of profiles" class="profile-item d-flex align-items-center mb-2">
+          <!-- Avatar -->
+          <img [src]="getAvatarUrl(profile.avatar)" alt="Profile Avatar" class="avatar me-3" />
+          <!-- Nombre del perfil -->
+          <div class="flex-grow-1">
+            <label class="form-check-label">{{ profile.fullName }}</label>
+          </div>
+          <!-- Checkbox -->
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [value]="profile._id"
+            [checked]="isSelected(profile._id)"
+            (change)="toggleProfileSelection(profile._id)"
+          >
+        </div>
+      </div>
+      <div *ngIf="playlistForm.get('associatedProfiles')?.hasError('required') && playlistForm.get('associatedProfiles')?.touched" class="text-danger">
         At least one profile must be selected.
       </div>
-    </div>
+    </fieldset>
 
     <!-- Videos -->
-    <div class="mb-3">
-      <label for="videos" class="form-label">Videos</label>
-      <select multiple class="form-control" id="videos" formControlName="videos">
-        <option *ngFor="let video of videos" [value]="video._id">{{ video.name }}</option>
-      </select>
-    </div>
+    <fieldset class="border p-3 mb-3">
+      <legend>Videos</legend>
+      <div class="videos-container">
+        <div *ngFor="let video of videos" class="video-item d-flex align-items-center mb-2">
+          <!-- Miniatura -->
+          <img 
+            [src]="getYoutubeThumbnail(video.url)" 
+            alt="Video Thumbnail" 
+            class="thumbnail me-3" 
+            onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+          />
+          <!-- Nombre del video -->
+          <div class="flex-grow-1">
+            <label class="form-check-label">{{ video.name }}</label>
+          </div>
+          <!-- Checkbox -->
+          <input
+            type="checkbox"
+            class="form-check-input"
+            [value]="video._id"
+            [checked]="isVideoSelected(video._id)"
+            (change)="toggleVideoSelection(video._id)"
+          >
+        </div>
+      </div>
+      <div *ngIf="playlistForm.get('videos')?.hasError('required') && playlistForm.get('videos')?.touched" class="text-danger">
+        At least one video must be selected.
+      </div>
+    </fieldset>
 
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary w-100" [disabled]="playlistForm.invalid">Update Playlist</button>
-
     <!-- Cancel Button -->
     <button type="button" class="btn btn-secondary mt-2 w-100" (click)="cancel()">Cancel</button>
   </form>

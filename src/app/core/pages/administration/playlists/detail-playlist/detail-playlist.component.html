@@ -1,35 +1,63 @@
-<div class="container mt-4">
-  <h2>Playlist Details</h2>
+<div class="dark-background">
 
-  <!-- Loading State -->
-  <div *ngIf="!playlist._id" class="text-center mt-5">
-    <p>Loading playlist...</p>
-  </div>
-
-  <!-- Error State -->
-  <div *ngIf="playlist && !playlist.name" class="text-danger text-center mt-5">
-    <p>Failed to load playlist details.</p>
-  </div>
-
-  <!-- Playlist Information -->
-  <div *ngIf="playlist._id">
-    <div class="mb-3">
-      <strong>Name:</strong> {{ playlist.name }}
+  <!-- Menú de Hamburguesa -->
+  <div class="hamburger-menu">
+    <!-- Ícono del menú -->
+    <div class="menu-icon">
+      ☰ <!-- Ícono de hamburguesa -->
     </div>
-    <div class="mb-3">
-      <strong>Associated Profiles:</strong>
-      <ul>
-        <li *ngFor="let profile of playlist.associatedProfiles">{{ profile.fullName }}</li>
-      </ul>
+  
+    <!-- Contenido del menú -->
+    <div class="menu-items">
+      <a class="menu-link" (click)="navigateToVideoList($event)">
+        <i class="fas fa-home"></i> Videos
+      </a>
+      <a class="menu-link" (click)="navigateToListPlaylist($event)">
+        <i class="fas fa-list"></i> Playlists
+      </a>
     </div>
-    <div class="mb-3">
-      <strong>Videos:</strong>
-      <ul>
-        <li *ngFor="let video of playlist.videos">{{ video.name }}</li>
-      </ul>
+  
+    <!-- Opción de cerrar sesión -->
+    <div class="menu-footer">
+      <a class="menu-link" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+      </a>
     </div>
   </div>
 
-  <!-- Back Button -->
-  <button type="button" class="btn btn-secondary mt-3" (click)="goBack()">Back</button>
+  <div class="container p-4 border rounded bg-light shadow-sm">
+    <h2>Playlist Details</h2>
+
+    <!-- Loading State -->
+    <div *ngIf="!playlist._id" class="text-center mt-5">
+      <p>Loading playlist...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="playlist && !playlist.name" class="text-danger text-center mt-5">
+      <p>Failed to load playlist details.</p>
+    </div>
+
+    <!-- Playlist Information -->
+    <div *ngIf="playlist._id">
+      <div class="mb-3">
+        <strong>Name:</strong> {{ playlist.name }}
+      </div>
+      <div class="mb-3">
+        <strong>Associated Profiles:</strong>
+        <ul>
+          <li *ngFor="let profile of playlist.associatedProfiles">{{ profile.fullName }}</li>
+        </ul>
+      </div>
+      <div class="mb-3">
+        <strong>Videos:</strong>
+        <ul>
+          <li *ngFor="let video of playlist.videos">{{ video.name }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <button type="button" class="btn btn-secondary mt-3" (click)="goBack()">Back</button>
+  </div>
 </div>
