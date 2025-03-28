@@ -1,91 +1,86 @@
-/* Fondo oscuro */
+/* Dark background with playful gradient */
 .dark-background {
     background: 
     linear-gradient(135deg, #f9f0d2, #f8d6a3),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    color: black;
+    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    
+    color: black;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-  }
+}
   
-  /* Contenido principal */
-  .main-content {
-    margin-left: 250px; /* Igual al ancho del menú lateral */
-    padding: 20px;
-    transition: margin-left 0.3s ease; /* Animación suave */
-    max-width: 600px; /* Ancho máximo del contenido */
-    width: 100%;
-  }
+/* Main content area - Increased size for better visibility */
+.main-content {
+  padding: 40px;
+  transition: margin-left 0.3s ease;
+  max-width: 1100px;
+  width: 100%;
+}
   
-  .container {
-    max-width: 600px;
-    margin-top: 20px;
-  }
+.container {
+  margin-right: 60px !important; /* Fuerza este valor */
+    max-width: 1100px;
+    margin-top: 30px;
+}
   
-  .profiles-container {
-    max-height: 200px;
+/* Enlarged profile section for better interaction */
+.profiles-container {
+    max-height: 400px; /* Increased height */
     overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-  }
+    border: 2px solid #ddd;
+    padding: 20px;
+    border-radius: 12px;
+}
   
-  .profile-item {
+.profile-item {
     cursor: pointer;
-    padding: 8px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
+    padding: 15px; /* Increased padding */
+    border-radius: 12px;
+    transition: background-color 0.3s, transform 0.2s;
+    font-size: 20px; /* Larger font for readability */
+}
   
-  .profile-item:hover {
+.profile-item:hover {
     background-color: #f1f1f1;
-  }
+    transform: scale(1.08); /* More noticeable zoom effect on hover */
+}
   
-  .avatar {
-    width: 40px;
-    height: 40px;
+.avatar {
+    width: 80px; /* Bigger avatar */
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
-  }
+}
   
-  .form-check-input {
-    margin-left: auto;
-  }
-
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Hace que la imagen sea circular */
-    object-fit: cover; /* Ajusta la imagen al tamaño del contenedor */
-  }
-
-  /* Estilos para las miniaturas de los videos */
+/* Enlarged video thumbnails */
 .thumbnail {
-    width: 64px; /* Tamaño deseado para las miniaturas */
-    height: auto; /* Mantener proporción */
-    border-radius: 8px; /* Bordes redondeados opcionales */
-    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
-  }
-
-  /* Estilo para hacer que las filas sean clickeables */
+    width: 100px; /* Bigger thumbnails */
+    height: auto;
+    border-radius: 14px;
+    object-fit: cover;
+}
+  
+/* Clickable row effect for better interaction */
 .clickable-row {
-    cursor: pointer; /* Cambia el cursor al pasar sobre la fila */
-    padding: 8px; /* Espaciado interno para mejorar la experiencia */
-    border-radius: 8px; /* Bordes redondeados opcionales */
-  }
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 20px; /* Increased font size */
+    transition: background-color 0.3s, transform 0.2s;
+}
   
-  .clickable-row:hover {
-    background-color: #f0f4f8; /* Color de fondo al pasar el mouse */
-  }
+.clickable-row:hover {
+    background-color: #f0f4f8;
+    transform: scale(1.08);
+}
   
-  /* Ocultar visualmente los checkboxes */
-  .visually-hidden {
+/* Hide checkboxes visually but keep them accessible */
+.visually-hidden {
     position: absolute;
     opacity: 0;
     pointer-events: none;
-  }
-
+}
 
 
   .menu-icon {

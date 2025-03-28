@@ -1,197 +1,177 @@
-/* Fondo oscuro */
 .dark-background {
-    background: 
-    linear-gradient(135deg, #f9f0d2, #f8d6a3),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    color: black;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-  }
-  
-  /* Contenido principal */
-  .main-content {
-    margin-left: 250px; /* Igual al ancho del menú lateral */
-    padding: 20px;
-    transition: margin-left 0.3s ease; /* Animación suave */
-    max-width: 600px; /* Ancho máximo del contenido */
-    width: 100%;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin-top: 20px;
-  }
-  
-  .profiles-container {
-    max-height: 200px;
-    overflow-y: auto;
-    border: 1px solid #ddd;
-    padding: 10px;
-    border-radius: 5px;
-  }
-  
-  .profile-item {
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-  }
-  
-  .profile-item:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .form-check-input {
-    margin-left: auto;
-  }
+  background: 
+  linear-gradient(135deg, #f9f0d2, #f8d6a3),
+  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    
+  color: black;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
 
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%; /* Hace que la imagen sea circular */
-    object-fit: cover; /* Ajusta la imagen al tamaño del contenedor */
-  }
+.main-content {
+  margin-left: 250px;
+  padding: 40px;
+  transition: margin-left 0.3s ease;
+  max-width: 1100px;
+  width: 100%;
+}
 
-  /* Estilos para las miniaturas de los videos */
+.container {
+  margin-right: 60px !important; /* Fuerza este valor */
+  max-width: 1100px;
+  margin-top: 60px;
+}
+
+.videos-container {
+  max-height: 600px;
+  overflow-y: auto;
+  border: 2px solid #ddd;
+  padding: 20px;
+  border-radius: 12px;
+}
+
+.video-item {
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 12px;
+  transition: background-color 0.3s, transform 0.2s;
+  font-size: 18px;
+}
+
+.video-item:hover {
+  background-color: #f1f1f1;
+  transform: scale(1.03);
+}
+
 .thumbnail {
-    width: 64px; /* Tamaño deseado para las miniaturas */
-    height: auto; /* Mantener proporción */
-    border-radius: 8px; /* Bordes redondeados opcionales */
-    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
-  }
+  width: 120px;
+  height: 90px;
+  border-radius: 8px;
+  object-fit: cover;
+}
 
-  /* Estilo para hacer que las filas sean clickeables */
 .clickable-row {
-    cursor: pointer; /* Cambia el cursor al pasar sobre la fila */
-    padding: 8px; /* Espaciado interno para mejorar la experiencia */
-    border-radius: 8px; /* Bordes redondeados opcionales */
-  }
-  
-  .clickable-row:hover {
-    background-color: #f0f4f8; /* Color de fondo al pasar el mouse */
-  }
-  
-  /* Ocultar visualmente los checkboxes */
-  .visually-hidden {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-  }
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
 
+.clickable-row:hover {
+  background-color: #f0f4f8;
+}
 
+.visually-hidden {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
 
-  .menu-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px; 
-    font-size: 24px;
-    color: #f3952a;
-    background: 
-    linear-gradient(135deg, #f9f0d2, #f8d6a3),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
-  background-size: 100% 100%, 60px 60px;    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    z-index: 1001; 
-  }
-  
-  .menu-icon:hover {
-    transform: scale(1.1);
-  }
-  
-  .hamburger-menu {
-    position: fixed;
-    top: 70px; 
-    left: 0;
-    width: 150px; 
-    height: calc(100vh - 70px); 
-    background: 
-    linear-gradient(135deg, #f9f0d2, #f8d6a3),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
-  background-size: 100% 100%, 60px 60px;    color: #f3952a;
-    display: flex;
-    flex-direction: column;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-  }
-  
-  .hamburger-menu.closed {
-    transform: translateX(-100%); 
-  }
-  
-  .menu-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 20px;
-    overflow-y: auto; 
-    flex-grow: 1;
-  }
-  
-  .menu-items a {
-    text-decoration: none;
-    color: #f3952a; /* Cambiado a un dorado más vibrante */
-    font-size: 16px;
-    padding: 12px 15px; /* Un poco más de padding vertical */
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fuente más moderna */
-    font-weight: 500; /* Peso intermedio para mejor legibilidad */
-    letter-spacing: 0.5px; /* Pequeño espaciado entre letras */
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Sombra para mejor contraste */
-    position: relative;
-    overflow: hidden;
-    background: rgba(255, 165, 0, 0.1); /* Fondo sutil */
-    border: 1px solid transparent;
+.menu-icon {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  font-size: 24px;
+  color: #f3952a;
+  background: 
+  linear-gradient(135deg, #f9f0d2, #f8d6a3),
+  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
+  background-size: 100% 100%, 60px 60px;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 1001;
+}
+
+.menu-icon:hover {
+  transform: scale(1.1);
+}
+
+.hamburger-menu {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  width: 150px;
+  height: calc(100vh - 70px);
+  background: 
+  linear-gradient(135deg, #f9f0d2, #f8d6a3),
+  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');
+  background-size: 100% 100%, 60px 60px;
+  color: #f3952a;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.hamburger-menu.closed {
+  transform: translateX(-100%);
+}
+
+.menu-items {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.menu-items a {
+  text-decoration: none;
+  color: #f3952a;
+  font-size: 16px;
+  padding: 12px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 165, 0, 0.1);
+  border: 1px solid transparent;
 }
 
 .menu-items a:hover {
-    color: #FFFFFF;
-    background: rgba(255, 165, 0, 0.3);
-    transform: translateX(5px) scale(1.02);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #FFFFFF;
+  background: rgba(255, 165, 0, 0.3);
+  transform: translateX(5px) scale(1.02);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Efecto de subrayado animado */
 .menu-items a::after {
-    content: '';
-    position: absolute;
-    bottom: 8px;
-    left: -100%;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #FFD700, transparent);
-    transition: all 0.4s ease;
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+  transition: all 0.4s ease;
 }
 
 .menu-items a:hover::after {
-    left: 100%;
+  left: 100%;
 }
 
-/* Efecto de brillo al pasar el mouse */
 .menu-items a:hover {
-    background: linear-gradient(
-        to right,
-        rgba(255, 215, 0, 0.1) 0%,
-        rgba(255, 165, 0, 0.3) 50%,
-        rgba(255, 215, 0, 0.1) 100%
-    );
+  background: linear-gradient(
+      to right,
+      rgba(255, 215, 0, 0.1) 0%,
+      rgba(255, 165, 0, 0.3) 50%,
+      rgba(255, 215, 0, 0.1) 100%
+  );
 }
-  
-  .fas {
-    font-size: 18px;
-  }
+
+.fas {
+  font-size: 18px;
+}
