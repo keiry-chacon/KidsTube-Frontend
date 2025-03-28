@@ -28,37 +28,39 @@ export class DetailVideoComponent implements OnInit {
     }
   }
 
+  // Loads the video data by its ID
   loadVideo() {
     this.videoService.getVideoById(this.videoId).subscribe({
       next: (data) => {
         this.video = data;
       },
       error: (err) => {
-        console.error('Error loading video:', err);
         alert('Failed to load video. Check the console for details.');
       }
     });
   }
 
+  // Navigates back to the previous page
   goBack() {
     window.history.back();
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

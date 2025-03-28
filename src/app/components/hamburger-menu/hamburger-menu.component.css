@@ -1,11 +1,9 @@
-/* Estructura principal */
 .dark-background {
   position: relative;
   height: 70px;
   background-color: transparent;
 }
 
-/* Ícono Hamburguesa */
 .menu-icon {
   position: fixed;
   top: 20px;
@@ -27,7 +25,6 @@
   transform: scale(1.1);
 }
 
-/* Menú Lateral */
 .hamburger-menu {
   position: fixed;
   top: 70px;
@@ -49,7 +46,6 @@
   transform: translateX(-100%);
 }
 
-/* Items del Menú */
 .menu-items {
   display: flex;
   flex-direction: column;
@@ -92,7 +88,6 @@
   font-size: 18px;
 }
 
-/* Avatar en el Menú */
 .menu-avatar-container {
   width: 60px;
   height: 60px;
@@ -127,7 +122,6 @@
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-/* Efecto de subrayado animado */
 .menu-items a::after {
   content: '';
   position: absolute;
@@ -155,7 +149,7 @@
   display: flex;
   align-items: center;
   gap: 5px; 
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Efecto suave */
+  transition: opacity 0.3s ease, transform 0.3s ease; 
 }
 @keyframes fadeOut {
   from {
@@ -164,11 +158,10 @@
   }
   to {
     opacity: 0;
-    transform: translateX(-20px); /* Se mueve hacia la izquierda */
+    transform: translateX(-20px); 
   }
 }
 
-/* Clase para activar la animación */
 .animate-out {
   animation: fadeOut 0.3s ease forwards;
 }

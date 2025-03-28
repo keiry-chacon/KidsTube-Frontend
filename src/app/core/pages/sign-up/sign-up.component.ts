@@ -18,17 +18,17 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     trigger('slideIn', [
       state('void', style({
         opacity: 0,
-        transform: 'translateX(100%)' // Comienza fuera de la pantalla (a la derecha)
+        transform: 'translateX(100%)' // Starts off-screen to the right
       })),
       state('*', style({
         opacity: 1,
-        transform: 'translateX(0)' // Finaliza en su posición original
+        transform: 'translateX(0)' // Ends in its original position
       })),
-      transition('void => *', animate('0.6s ease')) // Duración y tipo de animación
+      transition('void => *', animate('0.6s ease')) // Duration and easing for the animation
     ])
   ]
 })
-export class SignUpComponent  {
+export class SignUpComponent {
   signUpForm: FormGroup;
 
   constructor(private fb: FormBuilder, private userService: UserService) {
@@ -44,15 +44,14 @@ export class SignUpComponent  {
     });
   }
 
+  // Handles form submission to register a new user
   onSubmit() {
     if (this.signUpForm.valid) {
       const formData = { ...this.signUpForm.value, status: 'active' };
-      console.log('Sending data:', formData);  
-  
+
       this.userService.signup(formData).subscribe({
         next: (response) => {
           alert('Registration successful');
-          // You can redirect the user to another page or do something else with the response
         },
         error: (err) => {
           const errorMessage = err?.error?.message || 'Error registering. Please try again later.';

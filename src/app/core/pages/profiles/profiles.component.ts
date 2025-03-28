@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { firstValueFrom } from 'rxjs';
 
-
 @Component({
   selector: 'app-profiles',
   standalone: true,
@@ -14,7 +13,6 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './profiles.component.html',
   styleUrls: ['./profiles.component.css']
 })
-
 export class ProfilesComponent implements OnInit {
   profiles: any[] = [];
   showPinDialog: boolean = false;
@@ -24,70 +22,76 @@ export class ProfilesComponent implements OnInit {
   showEditProfile = false;
   editedProfile: any = {};
   showManageProfiles = false;
-  predefinedImages: string[] = []; 
-  dropdownOpen: boolean = false; 
-  profileToDelete: any = null;  
+  predefinedImages: string[] = [];
+  dropdownOpen: boolean = false;
+  profileToDelete: any = null;
   showConfirmDelete = false;
-  selectedProfile: any = null; 
+  selectedProfile: any = null;
   isUserPinValidation: boolean = false;
-  showUserPinDialog: boolean = false; 
-  enteredUserPin: string = ''; 
-  userPinError: boolean = false; 
+  showUserPinDialog: boolean = false;
+  enteredUserPin: string = '';
+  userPinError: boolean = false;
   postValidationAction: boolean = false;
   visibleProfiles: any[] = [];
   currentPage: number = 0;
-  profilesPerPage: number = 4; 
+  profilesPerPage: number = 4;
   totalPages: number = 0;
 
   constructor(
-    private profileService: ProfileService, 
-    private userService: UserService, 
+    private profileService: ProfileService,
+    private userService: UserService,
     private router: Router
   ) {}
 
   ngOnInit() {
     this.loadProfiles();
-    this.loadPredefinedImages(); 
-
+    this.loadPredefinedImages();
   }
 
- 
+  // Toggles the dropdown menu
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
+
+  // Confirms the deletion of a profile
   confirmDelete() {
     this.showConfirmDelete = true;
   }
 
+  // Cancels the deletion of a profile
   cancelDelete() {
     this.showConfirmDelete = false;
   }
+
+  // Deletes a profile
   deleteProfile() {
     if (this.profileToDelete) {
-      console.log('Eliminando perfil:', this.profileToDelete); 
       this.profileService.deleteProfile(this.profileToDelete._id).subscribe({
         next: () => {
           this.profiles = this.profiles.filter(p => p._id !== this.profileToDelete._id);
           this.showConfirmDelete = false;
-          console.log('Perfil eliminado exitosamente');
         },
         error: (err: any) => {
-          console.error('Error al eliminar el perfil:', err);
         }
       });
     }
   }
-  
+
+  // Selects a profile for deletion
   selectProfileToDelete(profile: any) {
     this.profileToDelete = profile;
   }
+
+  // Selects an image for the profile
   selectImage(img: string) {
     this.editedProfile.avatar = img;
-    this.dropdownOpen = false; 
+    this.dropdownOpen = false;
   }
+
+  // Loads all profiles
   loadProfiles() {
     this.profileService.getProfiles().subscribe({
-      next: (response: { data: any[] }) => {  
+      next: (response: { data: any[] }) => {
         this.profiles = response.data.map(profile => {
           return {
             ...profile,
@@ -97,169 +101,174 @@ export class ProfilesComponent implements OnInit {
         this.calculatePages();
       },
       error: (err: any) => {
-        console.error('Error al obtener perfiles:', err);
       }
     });
   }
-  
-   goToSettings() {
-    this.openUserPinDialog();
 
+  // Navigates to the settings page
+  goToSettings() {
+    this.openUserPinDialog();
   }
 
+  // Navigates to the manage profiles page
   ManageProfiles() {
     this.router.navigate(['/list-profile']);
   }
 
+  // Opens the user PIN dialog
   openUserPinDialog() {
     this.showUserPinDialog = true;
     this.enteredUserPin = '';
     this.userPinError = false;
   }
-  
+
+  // Closes the user PIN dialog
   closeUserPinDialog() {
     this.showUserPinDialog = false;
     this.postValidationAction = false;
   }
 
+  // Selects a profile
   selectProfile(profile: any) {
     if (!this.showManageProfiles) {
       this.selectedProfile = profile;
       this.openProfilePinDialog();
     } else {
-      console.warn('No se puede seleccionar un perfil mientras se gestionan perfiles.');
+      console.warn('Cannot select a profile while managing profiles.');
     }
   }
 
+  // Opens the profile PIN dialog
   openProfilePinDialog() {
     this.showPinDialog = true;
     this.enteredPin = '';
     this.pinError = false;
   }
 
+  // Validates the user PIN
   validateUserPin(): void {
-    const pinToValidate = this.enteredUserPin.trim(); 
-  
+    const pinToValidate = this.enteredUserPin.trim();
+
     if (!pinToValidate) {
-      console.error('El PIN está vacío.');
       this.userPinError = true;
       return;
     }
-  
+
     if (pinToValidate.length < 4) {
-      console.error('El PIN debe tener al menos 4 dígitos.');
       this.userPinError = true;
       return;
     }
-  
+
     this.userService.validateUserPin(pinToValidate).subscribe({
       next: (response) => {
         if (response.user) {
-          console.log('PIN válido. Redirigiendo al usuario...');
-          this.closeUserPinDialog(); 
-          this.router.navigate(['/videoList']); 
+          this.closeUserPinDialog();
+          this.router.navigate(['/videoList']);
         } else {
-          console.error('El PIN no coincide con ningún usuario.');
-          this.userPinError = true; 
+          this.userPinError = true;
         }
       },
       error: (err) => {
-        console.error('Error al validar el PIN del usuario:', err);
-        this.userPinError = true; 
+        this.userPinError = true;
       }
     });
   }
 
-validateProfilePin(): void {
-  const pinToValidate = this.enteredPin;
-  if (!this.selectedProfile) {
-    console.error('No hay un perfil seleccionado.');
-    return;
-  }
-  this.profileService.validatePin(this.selectedProfile._id, pinToValidate).subscribe({
-    next: (response) => {
-      if (response.profile) {
-        this.closePinDialog();
-        localStorage.setItem('currentProfileId', this.selectedProfile._id);
-        this.router.navigate(['/child-screen']); 
-      } else {
-        this.pinError = true; 
+  // Validates the profile PIN
+  validateProfilePin(): void {
+    const pinToValidate = this.enteredPin;
+    if (!this.selectedProfile) {
+      return;
+    }
+    this.profileService.validatePin(this.selectedProfile._id, pinToValidate).subscribe({
+      next: (response) => {
+        if (response.profile) {
+          this.closePinDialog();
+          localStorage.setItem('currentProfileId', this.selectedProfile._id);
+          this.router.navigate(['/child-screen']);
+        } else {
+          this.pinError = true;
+        }
+      },
+      error: (err) => {
+        this.pinError = true;
       }
-    },
-    error: (err) => {
-      console.error('Error al validar el PIN del perfil:', err);
-      this.pinError = true; 
-    }
-  });
-}
-  
-closePinDialog() {
-  this.showPinDialog = false;
-}
-
-
-editProfile(profile: any) {
-  if (!this.showManageProfiles) {
-    this.editedProfile = { ...profile };
-    this.showEditProfile = true;
-  } else {
-    console.warn('La edición de perfiles está deshabilitada mientras se gestionan perfiles.');
+    });
   }
-}
-loadPredefinedImages() {
-  const imageNames = [
-    'rapunzel.png',
-    'cocomelon.jpg',
-    'gato.png',
-  ];
 
-  this.predefinedImages = imageNames.map(name => `.../../../../assets/profiles/${name}`);
-}
-saveProfile() {
-  const avatarName = this.editedProfile.avatar.split('/').pop();
-  this.editedProfile.avatar = avatarName;
-  this.profileService.updateProfile(this.editedProfile).subscribe({
-    next: (response) => {
-      const index = this.profiles.findIndex(p => p._id === this.editedProfile._id);
-      if (index !== -1) {
-        this.editedProfile.avatar = `../../../../assets/profiles/${avatarName}`;
-        this.profiles[index] = { ...this.editedProfile }; 
-      }      
-    this.showEditProfile = false; 
+  // Closes the PIN dialog
+  closePinDialog() {
+    this.showPinDialog = false;
+  }
 
-    },
-    error: (err) => {
-      console.error('Error al guardar el perfil:', err);
+  // Edits a profile
+  editProfile(profile: any) {
+    if (!this.showManageProfiles) {
+      this.editedProfile = { ...profile };
+      this.showEditProfile = true;
+    } else {
+      console.warn('Profile editing is disabled while managing profiles.');
     }
-  });
-}
-  
-cancelEdit() {
-  this.showEditProfile = false;
-}
+  }
 
+  // Loads predefined images for avatars
+  loadPredefinedImages() {
+    const imageNames = [
+      'rapunzel.png',
+      'cocomelon.jpg',
+      'gato.png',
+    ];
+
+    this.predefinedImages = imageNames.map(name => `.../../../../assets/profiles/${name}`);
+  }
+
+  // Saves the edited profile
+  saveProfile() {
+    const avatarName = this.editedProfile.avatar.split('/').pop();
+    this.editedProfile.avatar = avatarName;
+    this.profileService.updateProfile(this.editedProfile).subscribe({
+      next: (response) => {
+        const index = this.profiles.findIndex(p => p._id === this.editedProfile._id);
+        if (index !== -1) {
+          this.editedProfile.avatar = `../../../../assets/profiles/${avatarName}`;
+          this.profiles[index] = { ...this.editedProfile };
+        }
+        this.showEditProfile = false;
+      },
+      error: (err) => {
+      }
+    });
+  }
+
+  // Cancels profile editing
+  cancelEdit() {
+    this.showEditProfile = false;
+  }
+
+  // Adds a new profile (placeholder)
   addProfile() {
   }
+
+  // Opens the profile edit dialog
   openEditProfile(profile: any) {
     this.editedProfile = { ...profile };
     this.showEditProfile = true;
   }
 
-
-  // Calcular el número total de páginas
+  // Calculates the total number of pages
   calculatePages() {
     this.totalPages = Math.ceil(this.profiles.length / this.profilesPerPage);
     this.updateVisibleProfiles();
   }
 
-  // Actualizar los perfiles visibles según la página actual
+  // Updates the visible profiles based on the current page
   updateVisibleProfiles() {
     const start = this.currentPage * this.profilesPerPage;
     const end = start + this.profilesPerPage;
     this.visibleProfiles = this.profiles.slice(start, end);
   }
 
-  // Navegar a la página anterior
+  // Navigates to the previous page
   prevPage() {
     if (this.currentPage > 0) {
       this.currentPage--;
@@ -267,12 +276,11 @@ cancelEdit() {
     }
   }
 
-  // Navegar a la siguiente página
+  // Navigates to the next page
   nextPage() {
     if (this.currentPage < this.totalPages - 1) {
       this.currentPage++;
       this.updateVisibleProfiles();
     }
   }
-  
 }

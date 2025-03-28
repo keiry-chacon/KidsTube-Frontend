@@ -13,7 +13,7 @@ import { VideoService } from '../../../../services/video.service';
 })
 export class CreateVideoComponent implements OnInit {
   videoForm: FormGroup;
-  thumbnailUrl: string | null = null; // Variable para almacenar la URL de la miniatura
+  thumbnailUrl: string | null = null; // Variable to store the thumbnail URL
 
   constructor(
     private fb: FormBuilder,
@@ -28,16 +28,17 @@ export class CreateVideoComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Escuchar cambios en el campo de URL
+    // Listen for changes in the URL field
     this.videoForm.get('url')?.valueChanges.subscribe((url) => {
       if (url) {
-        this.thumbnailUrl = this.getYoutubeThumbnail(url); // Actualizar la miniatura
+        this.thumbnailUrl = this.getYoutubeThumbnail(url); // Update the thumbnail
       } else {
-        this.thumbnailUrl = null; // Limpiar la miniatura si no hay URL
+        this.thumbnailUrl = null; // Clear the thumbnail if no URL is provided
       }
     });
   }
 
+  // Handles form submission to create a new video
   onSubmit() {
     if (this.videoForm.valid) {
       const formData = this.videoForm.value;
@@ -57,45 +58,38 @@ export class CreateVideoComponent implements OnInit {
     }
   }
 
-  /**
-   * Genera la URL de la miniatura de YouTube a partir de una URL de video.
-   * @param youtubeUrl - La URL del video de YouTube.
-   * @returns La URL de la miniatura o una imagen predeterminada si no se puede extraer el ID.
-   */
+  // Generates the YouTube thumbnail URL from a video URL
   getYoutubeThumbnail(youtubeUrl: string): string | null {
     const videoId = this.extractVideoIdFromUrl(youtubeUrl);
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Medium-sized thumbnail (320x180)
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada
+    return '/assets/videos/default-thumbnail.jpg'; // Default image
   }
 
-  /**
-   * Extrae el ID del video de una URL de YouTube.
-   * @param url - La URL del video de YouTube.
-   * @returns El ID del video o `null` si no se puede extraer.
-   */
+  // Extracts the video ID from a YouTube URL
   extractVideoIdFromUrl(url: string): string | null {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

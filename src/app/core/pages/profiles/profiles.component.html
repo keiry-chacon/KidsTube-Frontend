@@ -1,6 +1,6 @@
 <video autoplay muted loop id="background-video">
   <source src="assets/video/background2.mp4" type="video/mp4">
-  Tu navegador no soporta videos.
+  Your browser does not support videos.
 </video>
 <div id="background-overlay"></div>
 
@@ -28,22 +28,30 @@
 
 <div *ngIf="showPinDialog" class="pin-dialog">
   <div class="pin-dialog-content">
-    <h2>Ingresa tu PIN</h2>
+    <h2>Enter your PIN</h2>
+    <p class="pin-instruction">Please insert your PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredPin" placeholder="PIN" />
-    <button (click)="validateProfilePin()">Aceptar</button>
-    <button (click)="closePinDialog()">Cancelar</button>
-    <p *ngIf="pinError" class="error-message">PIN incorrecto. Inténtalo de nuevo.</p>
+    <div class="pin-dialog-actions">
+      <button (click)="closePinDialog()">Cancel</button>
+      <button class="accept-button" (click)="validateProfilePin()">Accept</button>
+    </div>
+    <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>
 </div>
+
 <div *ngIf="userPinError" class="text-danger mt-3">
-  El PIN ingresado es incorrecto. Inténtalo de nuevo.
+  The entered PIN is incorrect. Please try again.
 </div>
+
 <div *ngIf="showUserPinDialog" class="pin-dialog">
   <div class="pin-dialog-content">
-    <h2>Ingresa tu PIN user</h2>
+    <h2>Enter your user PIN</h2>
+    <p class="pin-instruction">Please insert your user PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredUserPin" placeholder="PIN" />
-    <button (click)="validateUserPin()">Aceptar</button>
-    <button (click)="closeUserPinDialog()">Cancelar</button>
-    <p *ngIf="pinError" class="error-message">PIN incorrecto. Inténtalo de nuevo.</p>
+    <div class="pin-dialog-actions">
+      <button (click)="closeUserPinDialog()">Cancel</button>
+      <button class="accept-button" (click)="validateUserPin()">Accept</button>
+    </div>
+    <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>
 </div>

@@ -31,6 +31,7 @@ export class UpdateVideoComponent implements OnInit {
     this.initializeForm();
   }
 
+  // Initializes the form with default values and validators
   initializeForm() {
     this.videoForm = this.fb.group({
       name: ['', Validators.required],
@@ -39,18 +40,19 @@ export class UpdateVideoComponent implements OnInit {
     });
   }
 
+  // Loads the video data by its ID
   loadVideo() {
     this.videoService.getVideoById(this.videoId).subscribe({
       next: (data) => {
         this.videoForm.patchValue(data);
       },
       error: (err) => {
-        console.error('Error loading video:', err);
         alert('Failed to load video. Check the console for details.');
       }
     });
   }
 
+  // Handles form submission to update the video
   updateVideo() {
     if (this.videoForm.valid) {
       this.videoService.updateVideo(this.videoId, this.videoForm.value).subscribe({
@@ -59,48 +61,49 @@ export class UpdateVideoComponent implements OnInit {
           this.router.navigate(['/videoList']);
         },
         error: (err) => {
-          console.error('Error updating video:', err);
           alert('Failed to update video. Check the console for details.');
         }
       });
     }
   }
 
+  // Cancels the update and navigates back to the video list
   cancel() {
     this.router.navigate(['/videoList']);
   }
 
-  // Función para obtener la miniatura del video
+  // Generates the YouTube thumbnail URL from a video URL
   getVideoThumbnail(url: string): string {
-    const videoId = this.extractVideoIdFromUrl(url); // Extraemos el ID del video
+    const videoId = this.extractVideoIdFromUrl(url);
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Medium-sized thumbnail (320x180)
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no hay ID válido
+    return '/assets/videos/default-thumbnail.jpg'; // Default image if no valid ID is found
   }
 
-  // Función para extraer el ID del video de YouTube
+  // Extracts the video ID from a YouTube URL
   extractVideoIdFromUrl(url: string): string | null {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

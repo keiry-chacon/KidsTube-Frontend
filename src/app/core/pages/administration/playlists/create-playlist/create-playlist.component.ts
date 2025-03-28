@@ -17,8 +17,8 @@ export class CreatePlaylistComponent implements OnInit {
   playlistForm: FormGroup;
   profiles: any[] = [];
   videos: any[] = [];
-  selectedProfiles: string[] = []; // Array para almacenar los IDs de los perfiles seleccionados
-  selectedVideos: string[] = [];   // Array para almacenar los IDs de los videos seleccionados
+  selectedProfiles: string[] = []; // Array to store selected profile IDs
+  selectedVideos: string[] = [];   // Array to store selected video IDs
 
   constructor(
     private fb: FormBuilder,
@@ -29,8 +29,8 @@ export class CreatePlaylistComponent implements OnInit {
   ) {
     this.playlistForm = this.fb.group({
       name: ['', Validators.required],
-      associatedProfiles: [[], Validators.required], // Array vacío inicial
-      videos: [[], Validators.required]              // Array vacío inicial
+      associatedProfiles: [[], Validators.required], // Empty array initially
+      videos: [[], Validators.required]              // Empty array initially
     });
   }
 
@@ -39,78 +39,85 @@ export class CreatePlaylistComponent implements OnInit {
     this.loadVideos();
   }
 
+  // Loads all available profiles
   loadProfiles() {
     this.profileService.getProfiles().subscribe({
       next: (response) => {
         this.profiles = response.data || response;
       },
       error: (err) => {
-        console.error('Error loading profiles:', err);
         alert('Failed to load profiles. Check the console for details.');
       }
     });
   }
 
+  // Loads all available videos
   loadVideos() {
     this.videoService.getVideos().subscribe({
       next: (data) => {
-        console.log('Videos loaded:', data); // Inspecciona los datos en la consola
+        console.log('Videos loaded:', data); // Inspect data in the console
         this.videos = data;
       },
-      error: (err) => console.error('Error loading videos:', err)
     });
   }
 
+  // Toggles the selection of a profile
   toggleProfileSelection(profileId: string): void {
     const index = this.selectedProfiles.indexOf(profileId);
     if (index === -1) {
-      this.selectedProfiles.push(profileId); // Agregar perfil si no está seleccionado
+      this.selectedProfiles.push(profileId);
     } else {
-      this.selectedProfiles.splice(index, 1); // Eliminar perfil si ya está seleccionado
+      this.selectedProfiles.splice(index, 1);
     }
-    this.playlistForm.patchValue({ associatedProfiles: this.selectedProfiles }); // Actualizar el formulario
+    this.playlistForm.patchValue({ associatedProfiles: this.selectedProfiles });
   }
 
+  // Checks if a profile is selected
   isSelected(profileId: string): boolean {
     return this.selectedProfiles.includes(profileId);
   }
 
+  // Toggles the selection of a video
   toggleVideoSelection(videoId: string): void {
     const index = this.selectedVideos.indexOf(videoId);
     if (index === -1) {
-      this.selectedVideos.push(videoId); // Agregar video si no está seleccionado
+      this.selectedVideos.push(videoId);
     } else {
-      this.selectedVideos.splice(index, 1); // Eliminar video si ya está seleccionado
+      this.selectedVideos.splice(index, 1);
     }
-    this.playlistForm.patchValue({ videos: this.selectedVideos }); // Actualizar el formulario
+    this.playlistForm.patchValue({ videos: this.selectedVideos });
   }
 
+  // Checks if a video is selected
   isVideoSelected(videoId: string): boolean {
     return this.selectedVideos.includes(videoId);
   }
 
+  // Returns the URL of the avatar image
   getAvatarUrl(avatarFileName: string): string {
     if (!avatarFileName) {
-      return '/assets/profiles/default-avatar.jpg'; // Imagen predeterminada si no hay avatar
+      return '/assets/profiles/default-avatar.jpg'; // Default image if no avatar exists
     }
-    return `/assets/profiles/${avatarFileName}`; // Ruta basada en el nombre del archivo
+    return `/assets/profiles/${avatarFileName}`;
   }
 
+  // Returns the YouTube thumbnail URL for a given video URL
   getYoutubeThumbnail(youtubeUrl: string): string {
     const videoId = this.extractVideoIdFromUrl(youtubeUrl);
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Medium-sized thumbnail (320x180)
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no se puede extraer el ID
+    return '/assets/videos/default-thumbnail.jpg'; // Default image if video ID cannot be extracted
   }
 
+  // Extracts the video ID from a YouTube URL
   extractVideoIdFromUrl(url: string): string | null {
-    // Expresión regular para extraer el ID del video de YouTube
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
+  // Handles form submission to create a new playlist
   onSubmit() {
     if (this.playlistForm.valid) {
       const formData = this.playlistForm.value;
@@ -130,19 +137,22 @@ export class CreatePlaylistComponent implements OnInit {
     }
   }
 
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
-    event.preventDefault(); // Previene el comportamiento predeterminado del enlace
-    sessionStorage.clear(); // Limpia todo el contenido del sessionStorage
-    this.router.navigate(['/login']); // Redirige al usuario a la página de inicio de sesión
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

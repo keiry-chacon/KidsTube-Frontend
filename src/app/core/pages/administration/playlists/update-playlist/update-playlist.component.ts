@@ -21,7 +21,7 @@ export class UpdatePlaylistComponent implements OnInit {
   playlistId: string = '';
   currentPlaylist: any = null;
 
-  // Arrays para mantener los IDs de los perfiles y videos seleccionados
+  // Arrays to store selected profile and video IDs
   selectedProfiles: string[] = [];
   selectedVideos: string[] = [];
 
@@ -44,105 +44,109 @@ export class UpdatePlaylistComponent implements OnInit {
     this.loadProfiles();
     this.loadVideos();
 
-    // Obtener el ID de la playlist desde los parámetros de la URL
     this.playlistId = this.route.snapshot.paramMap.get('id') || '';
     if (this.playlistId) {
       this.loadPlaylist();
     }
   }
 
+  // Loads all available profiles
   loadProfiles() {
     this.profileService.getProfiles().subscribe({
       next: (response) => {
         this.profiles = response.data || response;
       },
       error: (err) => {
-        console.error('Error loading profiles:', err);
         alert('Failed to load profiles. Check the console for details.');
       }
     });
   }
 
+  // Loads all available videos
   loadVideos() {
     this.videoService.getVideos().subscribe({
       next: (data) => this.videos = data,
-      error: (err) => console.error('Error loading videos:', err)
     });
   }
 
+  // Loads the current playlist data by its ID
   loadPlaylist() {
     this.playlistService.getPlaylistById(this.playlistId).subscribe({
       next: (playlist) => {
         this.currentPlaylist = playlist;
 
-        // Cargar los valores iniciales en el formulario
         this.playlistForm.patchValue({
           name: playlist.name,
-          associatedProfiles: playlist.associatedProfiles.map((profile: any) => profile._id),
+          associatedProfiles: playlist.associatedProfiles,
           videos: playlist.videos.map((video: any) => video._id)
         });
 
-        // Actualizar los arrays de selección
-        this.selectedProfiles = playlist.associatedProfiles.map((profile: any) => profile._id);
+        this.selectedProfiles = playlist.associatedProfiles || [];
         this.selectedVideos = playlist.videos.map((video: any) => video._id);
       },
       error: (err) => {
-        console.error('Error loading playlist:', err);
         alert('Failed to load playlist. Check the console for details.');
       }
     });
   }
 
+  // Toggles the selection of a profile
   toggleProfileSelection(profileId: string): void {
     const index = this.selectedProfiles.indexOf(profileId);
     if (index === -1) {
-      this.selectedProfiles.push(profileId); // Agregar perfil si no está seleccionado
+      this.selectedProfiles.push(profileId);
     } else {
-      this.selectedProfiles.splice(index, 1); // Eliminar perfil si ya está seleccionado
+      this.selectedProfiles.splice(index, 1);
     }
-    this.playlistForm.patchValue({ associatedProfiles: this.selectedProfiles }); // Actualizar el formulario
+    this.playlistForm.patchValue({ associatedProfiles: this.selectedProfiles });
   }
 
+  // Checks if a profile is selected
   isSelected(profileId: string): boolean {
     return this.selectedProfiles.includes(profileId);
   }
 
+  // Toggles the selection of a video
   toggleVideoSelection(videoId: string): void {
     const index = this.selectedVideos.indexOf(videoId);
     if (index === -1) {
-      this.selectedVideos.push(videoId); // Agregar video si no está seleccionado
+      this.selectedVideos.push(videoId);
     } else {
-      this.selectedVideos.splice(index, 1); // Eliminar video si ya está seleccionado
+      this.selectedVideos.splice(index, 1);
     }
-    this.playlistForm.patchValue({ videos: this.selectedVideos }); // Actualizar el formulario
+    this.playlistForm.patchValue({ videos: this.selectedVideos });
   }
 
+  // Checks if a video is selected
   isVideoSelected(videoId: string): boolean {
     return this.selectedVideos.includes(videoId);
   }
 
+  // Returns the URL of the avatar image
   getAvatarUrl(avatarFileName: string): string {
     if (!avatarFileName) {
-      return '/assets/profiles/default-avatar.jpg'; // Imagen predeterminada si no hay avatar
+      return '/assets/profiles/default-avatar.jpg'; // Default image if no avatar exists
     }
-    return `/assets/profiles/${avatarFileName}`; // Ruta basada en el nombre del archivo
+    return `/assets/profiles/${avatarFileName}`;
   }
-  
+
+  // Returns the YouTube thumbnail URL for a given video URL
   getYoutubeThumbnail(youtubeUrl: string): string {
     const videoId = this.extractVideoIdFromUrl(youtubeUrl);
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Medium-sized thumbnail (320x180)
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no se puede extraer el ID
+    return '/assets/videos/default-thumbnail.jpg'; // Default image if video ID cannot be extracted
   }
-  
+
+  // Extracts the video ID from a YouTube URL
   extractVideoIdFromUrl(url: string): string | null {
-    // Expresión regular para extraer el ID del video de YouTube
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
+  // Handles form submission to update the playlist
   onSubmit() {
     if (this.playlistForm.valid) {
       const formData = this.playlistForm.value;
@@ -150,10 +154,9 @@ export class UpdatePlaylistComponent implements OnInit {
       this.playlistService.updatePlaylist(this.playlistId, formData).subscribe({
         next: () => {
           alert('Playlist updated successfully!');
-          this.router.navigate(['/playlists']); // Redirigir a la lista de playlists
+          this.router.navigate(['/playlists']); // Redirect to the playlist list
         },
         error: (err) => {
-          console.error('Error updating playlist:', err);
           alert('Failed to update playlist. Check the console for details.');
         }
       });
@@ -162,25 +165,27 @@ export class UpdatePlaylistComponent implements OnInit {
     }
   }
 
+  // Cancels the update and navigates back to the playlist list
   cancel() {
     this.router.navigate(['/playlists']);
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

@@ -3,19 +3,19 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  standalone: true, 
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
   constructor(private router: Router) {}
 
-  // Navegar a la página de Log In
+  // Navigates to the Log In page
   goToLogin() {
     this.router.navigate(['/login']);
   }
 
-  // Navegar a la página de Sign Up
+  // Navigates to the Sign Up page
   goToSignUp() {
     this.router.navigate(['/signup']);
   }

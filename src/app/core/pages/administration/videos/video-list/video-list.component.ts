@@ -23,78 +23,80 @@ export class VideoListComponent implements OnInit {
     this.loadVideos();
   }
 
+  // Loads all videos
   loadVideos() {
     this.videoService.getVideos().subscribe({
       next: (data) => {
         this.videos = data;
       },
       error: (err) => {
-        console.error('Error loading videos:', err);
         alert('Failed to load videos. Check the console for details.');
       }
     });
   }
 
+  // Navigates to the edit page for a specific video
   editVideo(id: string) {
-    console.log('Editing video with ID:', id); // Verifica que el ID sea correcto
-    this.router.navigate(['/updateVideo', id]); // Navegar a la página de edición
+    this.router.navigate(['/updateVideo', id]);
   }
 
+  // Navigates to the detail page of a specific video
   viewDetails(id: string) {
-    console.log('Viewing details for video with ID:', id); // Verifica que el ID sea correcto
-    this.router.navigate(['/detailVideo', id]); // Navegar a la página de detalles
+    this.router.navigate(['/detailVideo', id]);
   }
 
+  // Deletes a video after confirmation
   deleteVideo(id: string) {
     if (confirm('Are you sure you want to delete this video?')) {
       this.videoService.deleteVideo(id).subscribe({
         next: () => {
           alert('Video deleted successfully!');
-          this.loadVideos(); // Recargar la lista después de eliminar
+          this.loadVideos(); // Reload the list after deletion
         },
         error: (err) => {
-          console.error('Error deleting video:', err);
           alert('Failed to delete video. Check the console for details.');
         }
       });
     }
   }
 
+  // Navigates to the create video page
   createNewVideo() {
     this.router.navigate(['/createVideo']);
   }
 
-  // Función para obtener la miniatura del video
+  // Generates the YouTube thumbnail URL from a video URL
   getVideoThumbnail(url: string): string {
-    const videoId = this.extractVideoIdFromUrl(url); // Extraemos el ID del video
+    const videoId = this.extractVideoIdFromUrl(url);
     if (videoId) {
-      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+      return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Medium-sized thumbnail (320x180)
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no hay ID válido
+    return '/assets/videos/default-thumbnail.jpg'; // Default image if no valid ID is found
   }
 
-  // Función para extraer el ID del video de YouTube
+  // Extracts the video ID from a YouTube URL
   extractVideoIdFromUrl(url: string): string | null {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

@@ -25,6 +25,7 @@ export class ListPlaylistComponent implements OnInit {
     this.loadPlaylists();
   }
 
+  // Loads all playlists
   loadPlaylists() {
     this.playlistService.getPlaylists().subscribe({
       next: (data) => {
@@ -32,73 +33,77 @@ export class ListPlaylistComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Error loading playlists:', err);
         this.error = 'Failed to load playlists. Check the console for details.';
         this.loading = false;
       }
     });
   }
 
+  // Navigates to the create playlist page
   createNewPlaylist() {
     this.router.navigate(['/createPlaylist']);
   }
 
+  // Navigates to the update playlist page for a specific playlist
   editPlaylist(id: string) {
     this.router.navigate(['/updatePlaylist', id]);
   }
 
+  // Navigates to the detail page of a specific playlist
   viewDetails(id: string) {
-    console.log('Viewing details for Playlist with ID:', id); // Verifica que el ID sea correcto
     this.router.navigate(['/detailPlaylist', id]);
   }
 
+  // Deletes a playlist after confirmation
   deletePlaylist(id: string) {
     if (confirm('Are you sure you want to delete this playlist?')) {
       this.playlistService.deletePlaylist(id).subscribe({
         next: () => {
           alert('Playlist deleted successfully!');
-          this.loadPlaylists(); // Recargar la lista después de eliminar
+          this.loadPlaylists(); // Reload the list after deletion
         },
         error: (err) => {
-          console.error('Error deleting playlist:', err);
           alert('Failed to delete playlist. Check the console for details.');
         }
       });
     }
   }
 
+  // Returns the thumbnail URL of the first video in the playlist
   getPlaylistThumbnail(videos: any[]): string {
     if (videos && videos.length > 0) {
-      const firstVideoUrl = videos[0].url; // Obtenemos la URL del primer video
-      const videoId = this.extractVideoIdFromUrl(firstVideoUrl); // Extraemos el ID del video
+      const firstVideoUrl = videos[0].url;
+      const videoId = this.extractVideoIdFromUrl(firstVideoUrl);
       if (videoId) {
-        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`; // Miniatura mediana (320x180)
+        return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
       }
     }
-    return '/assets/videos/default-thumbnail.jpg'; // Imagen predeterminada si no hay videos
+    return '/assets/videos/default-thumbnail.jpg'; // Default image if no videos exist
   }
 
+  // Extracts the YouTube video ID from a URL
   extractVideoIdFromUrl(url: string): string | null {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
   }
 
-
-
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

@@ -56,21 +56,22 @@ export class ChildScreenComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileId = this.profileService.getProfileId();
-      this.initializeComponent();
- 
+    this.initializeComponent();
   }
 
+  // Initializes the component by loading playlists and videos
   initializeComponent(): void {
     this.isLoading = true;
     this.searchQuery = '';
-    
-   if (this.profileId) {
+
+    if (this.profileId) {
       this.loadAllProfilePlaylists();
     } else {
       this.router.navigate(['/']);
     }
   }
-  
+
+  // Loads all playlists associated with the current profile
   loadAllProfilePlaylists(): void {
     if (!this.profileId) return;
 
@@ -92,6 +93,7 @@ export class ChildScreenComponent implements OnInit {
     });
   }
 
+  // Prepares video data for display, including thumbnails and playlist names
   prepareVideos(videos: Video[], playlistName: string): Video[] {
     return videos.map((video: Video) => ({
       ...video,
@@ -102,19 +104,19 @@ export class ChildScreenComponent implements OnInit {
     }));
   }
 
-
-  // Navegación
+  // Navigates to a specific playlist page
   navigateToPlaylist(playlistId: string): void {
     this.router.navigate(['/child', playlistId]);
   }
 
+  // Navigates to the all videos page
   navigateToAllVideos(): void {
     if (this.profileId) {
       this.router.navigate(['/child', { profileId: this.profileId }]);
     }
   }
 
-  // Búsqueda y filtrado
+  // Filters videos based on the search query
   filterVideos(): void {
     this.fadeOut = true;
     setTimeout(() => {
@@ -128,41 +130,46 @@ export class ChildScreenComponent implements OnInit {
     }, 300);
   }
 
-  // Manejo de videos
+  // Plays the selected video
   playVideo(video: any): void {
     this.selectedVideo = video;
     video.isPlaying = true;
     video.isLoaded = false;
   }
 
+  // Closes the currently playing video
   closeVideo(video: any): void {
     video.isPlaying = false;
     this.selectedVideo = null;
   }
 
+  // Handles iframe load events for videos
   onIframeLoad(video: any): void {
     video.isLoaded = true;
     this.cdr.detectChanges();
   }
 
-  // Helpers para videos
+  // Generates a safe YouTube URL for embedding
   getSafeYouTubeUrl(url: string): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
     const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 
+  // Extracts the YouTube video ID from a URL
   extractVideoId(url: string): string {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?]+)/;
     const match = url.match(regex);
     return match ? match[1] : '';
   }
 
+  // Retrieves the thumbnail URL for a video
   getThumbnail(url: string): string {
     const videoId = this.extractVideoId(url);
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   }
 
+  // Retrieves the thumbnail of the first video in a playlist
   getFirstVideoThumbnail(playlist: any): string {
     if (!playlist.videos?.length) return 'assets/images/default-thumbnail.jpg';
     return playlist.videos[0].thumbnail || this.getThumbnail(playlist.videos[0].url);

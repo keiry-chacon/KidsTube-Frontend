@@ -31,7 +31,7 @@ export const routes: Routes = [
 
   //Profiles
   {  path: 'child-screen', component: ChildScreenComponent },
-  { path: 'list-profile', component: ListProfileComponent }, // Nueva ruta
+  { path: 'list-profile', component: ListProfileComponent },
   {  path: 'child-screen-playlist/:playlistId', component: ChildScreenPlaylistComponent },
 
   // Playlist Routes

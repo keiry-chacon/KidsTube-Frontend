@@ -11,8 +11,8 @@ import { PlaylistService } from '../../../../services/playlist.service';
   styleUrls: ['./detail-playlist.component.css']
 })
 export class DetailPlaylistComponent implements OnInit {
-  playlist: any = {}; // Almacena los datos de la playlist
-  playlistId: string = ''; // ID de la playlist actual
+  playlist: any = {}; // Stores playlist data
+  playlistId: string = ''; // Current playlist ID
 
   constructor(
     private route: ActivatedRoute,
@@ -21,7 +21,6 @@ export class DetailPlaylistComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Obtener el ID de la playlist desde los parámetros de la URL
     this.playlistId = this.route.snapshot.paramMap.get('id') || '';
 
     if (this.playlistId) {
@@ -29,35 +28,39 @@ export class DetailPlaylistComponent implements OnInit {
     }
   }
 
+  // Loads the playlist data by its ID
   loadPlaylist() {
     this.playlistService.getPlaylistById(this.playlistId).subscribe({
       next: (data) => {
         this.playlist = data;
       },
       error: (err) => {
-        console.error('Error loading playlist:', err);
         alert('Failed to load playlist. Check the console for details.');
       }
     });
   }
 
+  // Navigates back to the previous page
   goBack() {
-    window.history.back(); // Regresar a la página anterior
+    window.history.back();
   }
 
+  // Navigates to the video list page
   navigateToVideoList(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
 
+  // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']); 
+    this.router.navigate(['/login']);
   }
 }

@@ -10,6 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  // Sends a POST request to register a new user
   signup(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/video`, userData);
   }
