@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -7,18 +8,16 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ProfileService {
-  private apiUrl = 'http://localhost:3000/api';
-
   constructor(private http: HttpClient) {}
 
   // Retrieves all profiles with authentication headers
   getProfiles(): Observable<{ data: any[] }> {
-    return this.http.get<{ data: any[] }>(`${this.apiUrl}/profile`, { headers: this.getAuthHeaders() });
+    return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
 
   // Retrieves profiles and maps the response to extract the data array
   getProfilesPlaylist(): Observable<any[]> {
-    return this.http.get<{ data: any[] }>(`${this.apiUrl}/profile`).pipe(
+    return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`).pipe(
       map(response => response.data)
     );
   }
@@ -41,27 +40,27 @@ export class ProfileService {
 
   // Sends a PUT request to update a profile by its ID
   updateProfile(profile: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/profile/${profile._id}`, profile, { headers: this.getAuthHeaders() });
+    return this.http.put<any>(`${environment.apiUrl}/profile/${profile._id}`, profile, { headers: this.getAuthHeaders() });
   }
 
   // Sends a POST request to create a new profile
   createProfile(profile: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/profile`, profile, { headers: this.getAuthHeaders() });
+    return this.http.post<any>(`${environment.apiUrl}/profile`, profile, { headers: this.getAuthHeaders() });
   }
 
   // Sends a DELETE request to delete a profile by its ID
   deleteProfile(id: string): Observable<any> {
-    return this.http.delete<any>(`${this.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.delete<any>(`${environment.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() });
   }
 
   // Sends a GET request to retrieve a profile by its ID
   getProfileById(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.get<any>(`${environment.apiUrl}/profile/${id}`, { headers: this.getAuthHeaders() });
   }
 
   // Validates a profile's PIN by sending a POST request
   validatePin(profileId: string, pin: string): Observable<any> {
-    const url = `${this.apiUrl}/profile/validatePin/${profileId}`;
+    const url = `${environment.apiUrl}/profile/validatePin/${profileId}`;
     return this.http.post(url, { pin }, { headers: this.getAuthHeaders() });
   }
 }

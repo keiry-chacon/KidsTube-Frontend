@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { CountryService } from '../../services/country.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -30,17 +31,27 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 })
 export class SignUpComponent {
   signUpForm: FormGroup;
+  countries: string[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService) {
+  constructor(private fb: FormBuilder, 
+    private userService: UserService, 
+    private countryService: CountryService
+  ) {
     this.signUpForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       dateOfBirth: ['', [Validators.required, ageValidator]],
       email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [phoneNumberValidator]],
-      country: [''],
+      country: ['', Validators.required],
       password: ['', Validators.required],
       pin: ['', [pinValidator]],
+    });
+  }
+
+  ngOnInit(): void {
+    this.countryService.getCountries().subscribe(data => {
+      this.countries = data; 
     });
   }
 

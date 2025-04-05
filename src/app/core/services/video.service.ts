@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -6,8 +7,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class VideoService {
-  private apiUrl = 'http://localhost:3000/api';
-
   constructor(private http: HttpClient) {}
 
   // Retrieves the authentication token from session storage
@@ -23,26 +22,26 @@ export class VideoService {
 
   // Sends a POST request to create a new video
   createVideo(videoData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/video`, videoData, { headers: this.getAuthHeaders() });
+    return this.http.post(`${environment.apiUrl}/video`, videoData, { headers: this.getAuthHeaders() });
   }
 
   // Sends a GET request to retrieve all videos
   getVideos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/video`, { headers: this.getAuthHeaders() });
+    return this.http.get(`${environment.apiUrl}/video`, { headers: this.getAuthHeaders() });
   }
 
   // Sends a GET request to retrieve a video by its ID
   getVideoById(id: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.get(`${environment.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
   }
 
   // Sends a PUT request to update a video by its ID
   updateVideo(id: string, videoData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/video/${id}`, videoData, { headers: this.getAuthHeaders() });
+    return this.http.put(`${environment.apiUrl}/video/${id}`, videoData, { headers: this.getAuthHeaders() });
   }
 
   // Sends a DELETE request to delete a video by its ID
   deleteVideo(id: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
+    return this.http.delete(`${environment.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
   }
 }
