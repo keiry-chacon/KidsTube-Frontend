@@ -58,14 +58,17 @@ export class SignUpComponent {
   // Handles form submission to register a new user
   onSubmit() {
     if (this.signUpForm.valid) {
-      const formData = { ...this.signUpForm.value, status: 'active' };
+      const formData = { ...this.signUpForm.value, status: 'pending' };
 
       this.userService.signup(formData).subscribe({
         next: (response) => {
-          alert('Registration successful');
+          alert('Registration successful! Please check your email to verify your account.');
         },
         error: (err) => {
-          const errorMessage = err?.error?.message || 'Error registering. Please try again later.';
+          // Muestra los errores específicos del backend
+          const errorMessage = err.error?.errors?.join('\n') || 
+                              err.error?.message || 
+                              'Error registering. Please check your data.';
           alert(errorMessage);
         }
       });

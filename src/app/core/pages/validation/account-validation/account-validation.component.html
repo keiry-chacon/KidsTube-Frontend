@@ -1,0 +1,6 @@
+<div class="verification-container">
+    <div class="verification-card" [class.success]="isSuccess">
+      <h2>{{ message }}</h2>
+      <div *ngIf="isSuccess" class="success-icon">✓</div>
+    </div>
+  </div>

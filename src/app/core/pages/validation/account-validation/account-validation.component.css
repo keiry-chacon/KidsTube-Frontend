@@ -1,0 +1,73 @@
+/* Container for centering the content */
+.verification-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+  }
+  
+  /* Styling the card */
+  .verification-card {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+  
+  .verification-card.success {
+    border: 2px solid #48bb78;
+    background-color: #edf9f1;
+  }
+  
+  .verification-card h2 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  /* Success icon */
+  .success-icon {
+    font-size: 3rem;
+    color: #48bb78;
+    margin-top: 20px;
+    animation: fadeIn 1s ease-in;
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* Add a subtle hover effect for the card */
+  .verification-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 480px) {
+    .verification-card {
+      padding: 20px 25px;
+    }
+  
+    .verification-card h2 {
+      font-size: 1.2rem;
+    }
+  
+    .success-icon {
+      font-size: 2.5rem;
+    }
+  }
+  

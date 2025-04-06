@@ -50,4 +50,9 @@ export class UserService {
       { headers: this.getAuthHeaders() }
     );
   }
+
+  // Verify an account using the token
+  verifyAccount(token: string): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/user/verify/${token}`);
+  }
 }

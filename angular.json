@@ -59,6 +59,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+          "host": "0.0.0.0",
+          "port": 4200,
+          "disableHostCheck": true,
+          "headers": {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*"
+            }
+          },
           "configurations": {
             "production": {
               "buildTarget": "KidsTube-Frontend:build:production"
