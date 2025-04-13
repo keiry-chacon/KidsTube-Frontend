@@ -20,6 +20,7 @@ export class UpdatePlaylistComponent implements OnInit {
   videos: any[] = [];
   playlistId: string = '';
   currentPlaylist: any = null;
+  isMenuOpen: boolean = false; // Track menu state
 
   // Arrays to store selected profile and video IDs
   selectedProfiles: string[] = [];
@@ -49,7 +50,9 @@ export class UpdatePlaylistComponent implements OnInit {
       this.loadPlaylist();
     }
   }
-
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   // Loads all available profiles
   loadProfiles() {
     this.profileService.getProfiles().subscribe({

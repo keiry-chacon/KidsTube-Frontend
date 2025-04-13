@@ -15,6 +15,8 @@ export class ListPlaylistComponent implements OnInit {
   playlists: any[] = [];
   loading: boolean = true;
   error: string = '';
+  isMenuOpen: boolean = false; // Track menu state
+
 
   constructor(
     private playlistService: PlaylistService,
@@ -43,7 +45,9 @@ export class ListPlaylistComponent implements OnInit {
   createNewPlaylist() {
     this.router.navigate(['/createPlaylist']);
   }
-
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   // Navigates to the update playlist page for a specific playlist
   editPlaylist(id: string) {
     this.router.navigate(['/updatePlaylist', id]);

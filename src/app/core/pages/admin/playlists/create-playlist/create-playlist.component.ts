@@ -19,6 +19,7 @@ export class CreatePlaylistComponent implements OnInit {
   videos: any[] = [];
   selectedProfiles: string[] = []; // Array to store selected profile IDs
   selectedVideos: string[] = [];   // Array to store selected video IDs
+  isMenuOpen: boolean = false; // Track menu state
 
   constructor(
     private fb: FormBuilder,
@@ -60,7 +61,9 @@ export class CreatePlaylistComponent implements OnInit {
       },
     });
   }
-
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   // Toggles the selection of a profile
   toggleProfileSelection(profileId: string): void {
     const index = this.selectedProfiles.indexOf(profileId);

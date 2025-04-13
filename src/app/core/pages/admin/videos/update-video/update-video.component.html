@@ -1,13 +1,17 @@
 <div class="dark-background">
 
-  <!-- Menú de Hamburguesa -->
-  <div class="hamburger-menu">
-    <!-- Ícono del menú -->
-    <div class="menu-icon">
-      ☰ <!-- Ícono de hamburguesa -->
-    </div>
-  
-    <!-- Contenido del menú -->
+  <div class="menu-icon" (click)="toggleMenu()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f3952a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </div>
+  <div class="search-bar-container">
+    <input type="text" class="search-bar" placeholder="Search videos..." />
+  </div>
+  <div class="hamburger-menu" [class.closed]="isMenuOpen">
+    <div class="menu-spacer"></div>
     <div class="menu-items">
       <a class="menu-link" (click)="navigateToVideoList($event)">
         <i class="fas fa-home"></i> Videos
@@ -16,14 +20,13 @@
         <i class="fas fa-list"></i> Playlists
       </a>
     </div>
-  
-    <!-- Opción de cerrar sesión -->
+
     <div class="menu-footer">
-      <a class="menu-link" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </a>
+      <button class="logout-button" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </button>
     </div>
-  </div>
+  </div>    
   <div class="container p-4 border rounded bg-light shadow-sm">
     <h2 class="mb-4">Edit Video</h2>
     <form [formGroup]="videoForm" (ngSubmit)="updateVideo()">

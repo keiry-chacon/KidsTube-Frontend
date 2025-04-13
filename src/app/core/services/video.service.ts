@@ -34,7 +34,9 @@ export class VideoService {
   getVideoById(id: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
   }
-
+  getVideoByUser(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/video/user`, { headers: this.getAuthHeaders() });
+  }
   // Sends a PUT request to update a video by its ID
   updateVideo(id: string, videoData: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/video/${id}`, videoData, { headers: this.getAuthHeaders() });

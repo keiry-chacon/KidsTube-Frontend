@@ -1,13 +1,24 @@
 <div class="dark-background">
-
-  <!-- Menú de Hamburguesa -->
-  <div class="hamburger-menu">
-    <!-- Ícono del menú -->
-    <div class="menu-icon">
-      ☰ <!-- Ícono de hamburguesa -->
+  <!-- Contenedor superior (ícono del menú + barra de búsqueda) -->
+  <div class="top-bar">
+    <div class="menu-icon" (click)="toggleMenu()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f3952a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
     </div>
-  
-    <!-- Contenido del menú -->
+
+    <!-- Barra de búsqueda -->
+    <div class="search-bar-container">
+      <input type="text" class="search-bar" placeholder="Search videos..." (input)="filterVideos()" [(ngModel)]="searchQuery"   (ngModelChange)="onSearchChange($event)"
+      />
+    </div>
+  </div>
+
+  <!-- Menú hamburguesa -->
+  <div class="hamburger-menu" [class.closed]="isMenuOpen">
+    <div class="menu-spacer"></div>
     <div class="menu-items">
       <a class="menu-link" (click)="navigateToVideoList($event)">
         <i class="fas fa-home"></i> Videos
@@ -16,51 +27,62 @@
         <i class="fas fa-list"></i> Playlists
       </a>
     </div>
-  
-    <!-- Opción de cerrar sesión -->
+
     <div class="menu-footer">
-      <a class="menu-link" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </a>
+      <button class="logout-button" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </button>
     </div>
   </div>
 
-  <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
-    <fieldset class="border p-3 mb-3">
-      <legend>Video Information</legend>
-
-      <!-- Name Field -->
-      <div class="mb-3">
-        <label class="form-label">Video Name</label>
-        <input type="text" class="form-control" formControlName="name" required>
-        <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
-          Video name is required.
+  <!-- Lista de videos de YouTube -->
+  <div class="main-content">
+    <div class="video-grid">
+      <div *ngFor="let video of filteredVideos" class="video-card">
+        <img [src]="video.thumbnail" alt="{{ video.title }}" class="thumbnail" />
+        <div class="video-details">
+          <h3>{{ video.title }}</h3>
+          <p>{{ truncateDescription(video.description) }}</p>
+          <button class="add-button" (click)="populateForm(video)">
+            <i class="fas fa-plus"></i> Add
+          </button>
         </div>
       </div>
+    </div>
 
-      <!-- URL Field -->
-      <div class="mb-3">
-        <label class="form-label">Video URL</label>
-        <input type="url" class="form-control" formControlName="url" required>
-        <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
-          Video URL is required.
+    <!-- Formulario de Video Information -->
+    <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
+      <fieldset class="border p-3 mb-3">
+        <legend>Video Information</legend>
+
+        <div class="mb-3">
+          <label class="form-label">Video Name</label>
+          <input type="text" class="form-control" formControlName="name" required />
+          <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
+            Video name is required.
+          </div>
         </div>
-      </div>
 
-      <!-- Preview Thumbnail -->
-      <div *ngIf="thumbnailUrl" class="mb-3">
-        <label class="form-label">Preview Thumbnail</label>
-        <img [src]="thumbnailUrl" alt="Video Thumbnail" class="img-thumbnail w-100" />
-      </div>
+        <div class="mb-3">
+          <label class="form-label">Video URL</label>
+          <input type="url" class="form-control" formControlName="url" required />
+          <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
+            Video URL is required.
+          </div>
+        </div>
 
-      <!-- Description Field -->
-      <div class="mb-3">
-        <label class="form-label">Description</label>
-        <textarea class="form-control" formControlName="description"></textarea>
-      </div>
-    </fieldset>
+        <div *ngIf="thumbnailUrl" class="mb-3">
+          <label class="form-label">Preview Thumbnail</label>
+          <img [src]="thumbnailUrl" alt="Video Thumbnail" class="img-thumbnail w-100" />
+        </div>
 
-    <!-- Submit Button -->
-    <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
-  </form>
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" formControlName="description"></textarea>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
+    </form>
+  </div>
 </div>

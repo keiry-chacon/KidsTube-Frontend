@@ -1,13 +1,14 @@
 <div class="dark-background">
+  <div class="menu-icon" (click)="toggleMenu()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f3952a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </div>
 
-  <!-- Menú de Hamburguesa -->
-  <div class="hamburger-menu">
-    <!-- Ícono del menú -->
-    <div class="menu-icon">
-      ☰ <!-- Ícono de hamburguesa -->
-    </div>
-  
-    <!-- Contenido del menú -->
+  <div class="hamburger-menu" [class.closed]="isMenuOpen">
+    <div class="menu-spacer"></div>
     <div class="menu-items">
       <a class="menu-link" (click)="navigateToVideoList($event)">
         <i class="fas fa-home"></i> Videos
@@ -16,60 +17,58 @@
         <i class="fas fa-list"></i> Playlists
       </a>
     </div>
-  
-    <!-- Opción de cerrar sesión -->
+
     <div class="menu-footer">
-      <a class="menu-link" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </a>
+      <button class="logout-button" (click)="logout($event)">
+        <i class="fas fa-sign-out-alt"></i> Log out
+      </button>
     </div>
   </div>
+
   <div class="container p-4 border rounded bg-light shadow-sm">
-
-    <!-- Header -->
     <h2 class="mb-4">Video List</h2>
-
-    <!-- Create New Video Button -->
     <button class="btn btn-success mb-3" (click)="createNewVideo()">Create New Video</button>
-
-    <!-- Video List -->
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Thumbnail</th> <!-- Nueva columna para miniaturas -->
-          <th>Name</th>
-          <th>URL</th>
-          <th>Description</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let video of videos">
-          <td>
-            <!-- Miniatura del video o imagen predeterminada -->
-            <img 
-              [src]="getVideoThumbnail(video.url)" 
-              alt="Video Thumbnail" 
-              class="thumbnail me-3" 
-              onerror="this.src='/assets/videos/default-thumbnail.jpg'"
-            />
-          </td>
-          <td>{{ video.name }}</td>
-          <td><a [href]="video.url" target="_blank">{{ video.url }}</a></td>
-          <td>{{ video.description || 'No description' }}</td>
-          <td>
-            <button class="btn btn-primary btn-sm me-2" (click)="editVideo(video._id)">Edit</button>
-            <button class="btn btn-info btn-sm me-2" (click)="viewDetails(video._id)">Details</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteVideo(video._id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- No Videos Message -->
-    <div *ngIf="videos.length === 0" class="text-center">
-      <p>No videos found. Click "Create New Video" to add one.</p>
+    <div class="video-grid">
+      <div *ngFor="let video of videos; let i = index" class="video-card">
+        <img
+          [src]="getVideoThumbnail(video.url)"
+          alt="Video Thumbnail"
+          class="thumbnail"
+          onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+        />
+        <div class="video-details">
+          <h3>{{ video.name }}</h3>
+          <p *ngIf="!expandedDescriptions[i]">
+            {{ truncateDescription(video.description) }}
+            <span
+              *ngIf="video.description && video.description.length > 50"
+              class="show-more"
+              (click)="toggleDescription(i)"
+            >
+              Show more
+            </span>
+          </p>
+          <p *ngIf="expandedDescriptions[i]">
+            {{ video.description }}
+            <span class="show-less" (click)="toggleDescription(i)">Show less</span>
+          </p>
+          <div class="action-buttons">
+            <button class="add-button" (click)="addToPlaylist(video)">
+              <i class="fas fa-plus"></i>
+            </button>
+            <button class="edit-button" (click)="editVideo(video._id)">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button class="delete-button" (click)="deleteVideo(video._id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <div *ngIf="videos.length === 0" class="text-center">
+      <p>No videos found.</p>
+    </div>
   </div>
 </div>

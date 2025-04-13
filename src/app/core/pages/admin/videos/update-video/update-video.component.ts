@@ -14,6 +14,7 @@ import { VideoService } from '../../../../services/video.service';
 export class UpdateVideoComponent implements OnInit {
   videoForm!: FormGroup;
   videoId: string = '';
+  isMenuOpen: boolean = false; // Track menu state
 
   constructor(
     private route: ActivatedRoute,
@@ -39,7 +40,9 @@ export class UpdateVideoComponent implements OnInit {
       description: ['']
     });
   }
-
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
   // Loads the video data by its ID
   loadVideo() {
     this.videoService.getVideoById(this.videoId).subscribe({
