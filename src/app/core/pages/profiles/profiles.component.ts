@@ -90,7 +90,7 @@ export class ProfilesComponent implements OnInit {
 
   // Loads all profiles
   loadProfiles() {
-    this.profileService.getProfiles().subscribe({
+    this.profileService.getProfilesGraph().subscribe({
       next: (response: { data: any[] }) => {
         this.profiles = response.data.map(profile => {
           return {

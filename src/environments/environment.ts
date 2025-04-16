@@ -1,6 +1,7 @@
 export const environment = {
     production: false,
     apiUrl: 'http://localhost:3000/api',
+    apiUrl2: 'http://localhost:4000/graphql',
     frontUrl: 'https://localhost:4200',
     
     firebase: {

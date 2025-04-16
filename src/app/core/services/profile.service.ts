@@ -14,6 +14,25 @@ export class ProfileService {
   getProfiles(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
+  getProfilesGraph(): Observable<any> {
+    const query = `
+      query GetProfiles {
+        profiles {
+          id
+          fullName
+          avatar
+        }
+      }
+    `;
+
+    const requestBody = {
+      query,
+    };
+
+    return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
+      map((response) => response.data.profiles) 
+    );
+  }
 
   // Retrieves profiles and maps the response to extract the data array
   getProfilesPlaylist(): Observable<any[]> {
