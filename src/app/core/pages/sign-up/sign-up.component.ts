@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { UserService } from '../../services/user.service';
 import { CountryService } from '../../services/country.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -34,6 +35,7 @@ export class SignUpComponent {
   countries: string[] = [];
 
   constructor(private fb: FormBuilder, 
+    private authService: AuthenticationService,
     private userService: UserService, 
     private countryService: CountryService
   ) {
@@ -53,6 +55,11 @@ export class SignUpComponent {
     this.countryService.getCountries().subscribe(data => {
       this.countries = data; 
     });
+  }
+
+  signInWithGoogle() {
+    this.authService.googleSignUpOrLogin()
+      .catch(error => console.error('Google Sign-Up Error:', error));
   }
 
   // Handles form submission to register a new user
