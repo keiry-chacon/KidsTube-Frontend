@@ -24,12 +24,12 @@ export class UserService {
   login(userData: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/user/login`, userData).pipe(
       tap((response: any) => {
-        if (response.token && response.user) {
-          sessionStorage.setItem('token', response.token);
+        if (response.userId) {
+          sessionStorage.setItem('tempUserId', response.userId);
         }
       })
     );
-  }
+  }  
 
   // Retrieves the authentication token from session storage
   getToken(): string | null {
@@ -41,6 +41,10 @@ export class UserService {
     const token = this.getToken();
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
+
+  verify2FACode(userId: string, code: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/user/verify-2fa`, { userId, code });
+  }  
 
   // Validates the user's PIN by sending a POST request
   validateUserPin(pin: string): Observable<any> {

@@ -1,0 +1,32 @@
+<div class="dark-background">
+    <div class="verification-container" [@slideIn]>
+      <h1 class="kidstube-title">KidsTube</h1>
+      <h2 class="verification-title">Two-Step Verification</h2>
+      <p class="verification-instruction">Enter the code sent to your registered phone number via SMS.</p>
+  
+      <form [formGroup]="codeForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <input 
+            type="text" 
+            formControlName="code" 
+            placeholder="SMS Code" 
+            maxlength="6" 
+            pattern="[0-9]*" 
+            inputmode="numeric" 
+            required 
+            (input)="onInput($event)"
+          />          
+          <div *ngIf="codeForm.get('code')?.hasError('required') && codeForm.get('code')?.touched" class="error">
+            Code is required.
+          </div>
+          <div *ngIf="codeForm.get('code')?.hasError('pattern') && codeForm.get('code')?.touched" class="error">
+            Please enter a valid 6-digit code.
+          </div>
+        </div>
+        <button type="submit" [disabled]="codeForm.invalid">Verify</button>
+      </form>           
+  
+      <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+    </div>
+  </div>
+  

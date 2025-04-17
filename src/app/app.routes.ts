@@ -4,6 +4,7 @@ import { SignUpComponent } from '../app/core/pages/sign-up/sign-up.component';
 import { HomeComponent } from './home/home.component';
 import { ProfilesComponent } from './core/pages/profiles/profiles.component';
 import { AccountValidationComponent } from './core/pages/validation/account-validation/account-validation.component';
+import { VerifyCodeComponent } from './core/pages/validation/verify-code/verify-code.component';
 
 //Profiles
 import { ChildScreenComponent } from './core/pages/child-screen/child-screen.component';
@@ -27,6 +28,7 @@ import { VideoListComponent } from './core/pages/admin/videos/video-list/video-l
 export const routes: Routes = [
   { path: '', component: HomeComponent  }, 
   { path: 'login', component: LogInComponent },
+  { path: 'verify-code', component: VerifyCodeComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'profiles', component: ProfilesComponent },
   { path: 'user/verify/:token', component: AccountValidationComponent },

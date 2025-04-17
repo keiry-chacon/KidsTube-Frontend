@@ -43,9 +43,8 @@ export class LogInComponent {
       console.log('Sending data:', formData);
   
       this.userService.login(formData).subscribe({
-        next: (response) => {
-          this.router.navigate(['/profiles']);
-
+        next: () => {
+          this.router.navigate(['/verify-code']);
         },
         error: (err) => {
           this.errorMessage = err?.error?.message || 'Error logging in. Please try again later.';
@@ -56,6 +55,7 @@ export class LogInComponent {
       alert('Form is invalid. Please check the fields.');
     }
   }
+  
   
 
   goToSignUp() {
