@@ -15,20 +15,26 @@ export class ProfileService {
     return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
   getProfilesGraph(): Observable<any> {
+    const userId = this.getUserId();
+    if (!userId) {
+      throw new Error('User ID no encontrado en el session storage');
+    }
+  
     const query = `
-      query GetProfiles {
-        profiles {
-          id
-          fullName
-          avatar
-        }
+    query GetProfiles($userId: ID!) {
+      profiles(userId: $userId) {
+        id
+        fullName
+        avatar
       }
-    `;
-
+    }
+  `;
+  
     const requestBody = {
       query,
+      variables: { userId }, 
     };
-
+  
     return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
       map((response) => response.data.profiles) 
     );
@@ -45,7 +51,9 @@ export class ProfileService {
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }
-
+  getUserId(): string | null {
+    return sessionStorage.getItem('userId');
+  }
   // Retrieves the current profile ID from local storage
   getProfileId(): string | null {
     return localStorage.getItem('currentProfileId');

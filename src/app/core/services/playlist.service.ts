@@ -47,9 +47,25 @@ export class PlaylistService {
 
   // Sends a GET request to retrieve playlists associated with a specific profile ID
   getPlaylistsByProfileId(profileId: string): Observable<any> {
-    const url = `${environment.apiUrl}/playlist/profile/${profileId}`;
-    return this.http.get(url, { headers: this.getAuthHeaders() });
+    const url = `${environment.apiUrl2}`; 
+    const query = `
+      query GetPlaylistsByProfile {
+        playlistsByProfile(profileId: "${profileId}") {
+          id
+          name
+          createdBy
+          videos {
+            id
+            title
+            url
+          }
+        }
+      }
+    `;
+
+    return this.http.post(url, { query }, { headers: this.getAuthHeaders() });
   }
+
 
   // Sends a GET request to retrieve recommended videos
   getRecommendedVideos(): Observable<any> {

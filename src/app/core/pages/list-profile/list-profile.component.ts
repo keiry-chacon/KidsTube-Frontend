@@ -81,10 +81,15 @@ export class ListProfileComponent implements OnInit {
   }
 
   // Extracts the file name without its extension
-  getFileNameWithoutExtension(fileName: string): string {
-    return fileName.split('.').slice(0, -1).join('.');
+  
+  getFileNameWithoutExtension(filePath: string): string {
+    if (!filePath) return ''; // Si filePath es nulo o vacío, retorna una cadena vacía
+  
+    const fileName = filePath.split('/').pop(); // Extraer el nombre del archivo
+    if (!fileName) return ''; // Si fileName es undefined, retorna una cadena vacía
+  
+    return fileName.split('.').slice(0, -1).join('.'); // Eliminar la extensión
   }
-
   // Saves the new profile
   saveNewProfile() {
     const avatarName = this.newProfile.avatar.split('/').pop();

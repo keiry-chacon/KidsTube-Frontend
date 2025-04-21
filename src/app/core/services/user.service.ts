@@ -13,6 +13,7 @@ export class UserService {
   // Logs out the user by removing the authentication token from session storage
   logout() {
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('userId');
   }
 
   // Sends a POST request to register a new user
@@ -26,6 +27,9 @@ export class UserService {
       tap((response: any) => {
         if (response.userId) {
           sessionStorage.setItem('tempUserId', response.userId);
+        }
+        if (response.userId) {
+          sessionStorage.setItem('userId', response.userId); // Guarda el userId
         }
       })
     );

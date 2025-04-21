@@ -91,16 +91,24 @@ export class ProfilesComponent implements OnInit {
   // Loads all profiles
   loadProfiles() {
     this.profileService.getProfilesGraph().subscribe({
-      next: (response: { data: any[] }) => {
-        this.profiles = response.data.map(profile => {
+      next: (response: any) => {  
+        if (!response || !Array.isArray(response)) {
+          console.error('Los datos recibidos no son válidos:', response);
+          return;
+        }
+        this.profiles = response.map(profile => {
           return {
             ...profile,
-            avatar: `../../../assets/profiles/${profile.avatar}`
+            id: profile.id,
+            avatar: profile.avatar.includes('assets') ? profile.avatar : `../../../assets/profiles/${profile.avatar}`,
           };
         });
+  
         this.calculatePages();
       },
       error: (err: any) => {
+        console.error('Error al cargar perfiles:', err);
+        alert('Ocurrió un error al cargar los perfiles. Por favor, inténtalo de nuevo.');
       }
     });
   }
@@ -130,6 +138,7 @@ export class ProfilesComponent implements OnInit {
 
   // Selects a profile
   selectProfile(profile: any) {
+    
     if (!this.showManageProfiles) {
       this.selectedProfile = profile;
       this.openProfilePinDialog();
@@ -180,11 +189,11 @@ export class ProfilesComponent implements OnInit {
     if (!this.selectedProfile) {
       return;
     }
-    this.profileService.validatePin(this.selectedProfile._id, pinToValidate).subscribe({
+    this.profileService.validatePin(this.selectedProfile.id, pinToValidate).subscribe({
       next: (response) => {
         if (response.profile) {
           this.closePinDialog();
-          localStorage.setItem('currentProfileId', this.selectedProfile._id);
+          localStorage.setItem('currentProfileId', this.selectedProfile.id);
           this.router.navigate(['/child-screen']);
         } else {
           this.pinError = true;

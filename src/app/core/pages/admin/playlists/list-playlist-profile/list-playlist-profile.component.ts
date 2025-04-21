@@ -48,23 +48,26 @@ export class ListPlaylistProfileComponent {
   }
 
   // Loads playlists associated with the current profile
-  loadPlaylists() {
+  loadPlaylists(): void {
     if (!this.profileId) {
       this.router.navigate(['/profiles']);
       return;
     }
+
     this.playlistService.getPlaylistsByProfileId(this.profileId).subscribe({
-      next: (data: Playlist[]) => {
-        this.playlists = data.map((playlist: Playlist) => ({
+      next: (response: any) => {
+        const data = response.data.playlistsByProfile; // Extraer datos del backend
+        this.playlists = data.map((playlist: any) => ({
           ...playlist,
-          thumbnail: this.getFirstVideoThumbnail(playlist) || 'assets/images/default-thumbnail.jpg'
+          thumbnail: this.getFirstVideoThumbnail(playlist) || 'assets/images/default-thumbnail.jpg',
         }));
         this.loading = false;
       },
       error: (err: any) => {
+        console.error('Error loading playlists:', err);
         this.error = 'Failed to load playlists.';
         this.loading = false;
-      }
+      },
     });
   }
 
