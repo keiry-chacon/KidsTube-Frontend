@@ -11,8 +11,7 @@
 
     <!-- Barra de búsqueda -->
     <div class="search-bar-container">
-      <input type="text" class="search-bar" placeholder="Search videos..." (input)="filterVideos()" [(ngModel)]="searchQuery"   (ngModelChange)="onSearchChange($event)"
-      />
+      <input type="text" class="search-bar" placeholder="Search videos..." (input)="filterVideos()" [(ngModel)]="searchQuery" (ngModelChange)="onSearchChange($event)" />
     </div>
   </div>
 
@@ -27,7 +26,6 @@
         <i class="fas fa-list"></i> Playlists
       </a>
     </div>
-
     <div class="menu-footer">
       <button class="logout-button" (click)="logout($event)">
         <i class="fas fa-sign-out-alt"></i> Log out
@@ -43,46 +41,51 @@
         <div class="video-details">
           <h3>{{ video.title }}</h3>
           <p>{{ truncateDescription(video.description) }}</p>
-          <button class="add-button" (click)="populateForm(video)">
+          <button class="add-button" (click)="openModal(video)">
             <i class="fas fa-plus"></i> Add
           </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Formulario de Video Information -->
-    <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="container p-4 border rounded bg-light shadow-sm">
-      <fieldset class="border p-3 mb-3">
-        <legend>Video Information</legend>
+  <!-- Ventana modal -->
+  <div class="modal-overlay" *ngIf="showModal">
+    <div class="modal-container">
+      <button class="close-modal" (click)="closeModal()">×</button>
+      <form [formGroup]="videoForm" (ngSubmit)="onSubmit()" class="modal-form">
+        <fieldset class="border p-3 mb-3">
+          <legend>Video Information</legend>
 
-        <div class="mb-3">
-          <label class="form-label">Video Name</label>
-          <input type="text" class="form-control" formControlName="name" required />
-          <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
-            Video name is required.
+          <div class="mb-3">
+            <label class="form-label">Video Name</label>
+            <input type="text" class="form-control" formControlName="name" required />
+            <div *ngIf="videoForm.get('name')?.hasError('required') && videoForm.get('name')?.touched" class="text-danger">
+              Video name is required.
+            </div>
           </div>
-        </div>
 
-        <div class="mb-3">
-          <label class="form-label">Video URL</label>
-          <input type="url" class="form-control" formControlName="url" required />
-          <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
-            Video URL is required.
+          <div class="mb-3">
+            <label class="form-label">Video URL</label>
+            <input type="url" class="form-control" formControlName="url" required />
+            <div *ngIf="videoForm.get('url')?.hasError('required') && videoForm.get('url')?.touched" class="text-danger">
+              Video URL is required.
+            </div>
           </div>
-        </div>
 
-        <div *ngIf="thumbnailUrl" class="mb-3">
-          <label class="form-label">Preview Thumbnail</label>
-          <img [src]="thumbnailUrl" alt="Video Thumbnail" class="img-thumbnail w-100" />
-        </div>
+          <div *ngIf="thumbnailUrl" class="mb-3">
+            <label class="form-label">Preview Thumbnail</label>
+            <img [src]="thumbnailUrl" alt="Video Thumbnail" class="img-thumbnail w-100" />
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label">Description</label>
-          <textarea class="form-control" formControlName="description"></textarea>
-        </div>
-      </fieldset>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" formControlName="description"></textarea>
+          </div>
+        </fieldset>
 
-      <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
-    </form>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Create Video</button>
+      </form>
+    </div>
   </div>
 </div>

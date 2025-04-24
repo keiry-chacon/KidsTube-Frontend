@@ -38,7 +38,7 @@ export class VideoListComponent implements OnInit {
   }
 
   loadPlaylistVideos() {
-    this.videoService.getVideoByUser().subscribe({
+    this.videoService.getVideosByUser().subscribe({
       next: (data: any) => {
         console.log('Videos loaded:', data);
         this.videos = data; // Guarda los videos en el componente
@@ -67,17 +67,7 @@ export class VideoListComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  // Loads all videos
-  loadVideos() {
-    this.videoService.getVideos().subscribe({
-      next: (data) => {
-        this.videos = data;
-      },
-      error: (err: unknown) => {
-        alert('Failed to load videos. Check the console for details.');
-      }
-    });
-  }
+
 
   // Navigates to the edit page for a specific video
   editVideo(id: string) {
@@ -95,7 +85,7 @@ export class VideoListComponent implements OnInit {
       this.videoService.deleteVideo(id).subscribe({
         next: () => {
           alert('Video deleted successfully!');
-          this.loadVideos(); // Reload the list after deletion
+          this. loadPlaylistVideos(); 
         },
         error: (err) => {
           alert('Failed to delete video. Check the console for details.');

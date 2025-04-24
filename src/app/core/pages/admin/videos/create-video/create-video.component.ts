@@ -20,6 +20,8 @@ export class CreateVideoComponent implements OnInit {
   searchQuery: string = '';
   youtubeVideos: any[] = [];
   filteredVideos: any[] = [];
+  showForm = false;
+  showModal = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,11 +47,11 @@ export class CreateVideoComponent implements OnInit {
   onSubmit() {
     if (this.videoForm.valid) {
       const formData = this.videoForm.value;
-      console.log('Sending data:', formData);
 
       this.videoService.createVideo(formData).subscribe({
         next: (response) => {
           alert('Video created successfully!');
+          this.closeModal();
         },
         error: (err) => {
           const errorMessage = err?.error?.message || 'Error creating video. Try again later.';
@@ -96,16 +98,21 @@ export class CreateVideoComponent implements OnInit {
     });
   }
   
-  
-  // Autocompletar el formulario con los datos del video seleccionado
-  populateForm(video: any) {
+  closeModal(): void {
+    this.showModal = false;
+    // Limpia el formulario si es necesario
+  }
+  openModal(video: any): void {
+    this.showModal = true;
     this.videoForm.patchValue({
       name: video.title,
       url: `https://www.youtube.com/watch?v=${video.id}`,
       description: video.description
     });
-    this.thumbnailUrl = video.thumbnail;
+    this.thumbnailUrl = video.thumbnail; 
+  
   }
+  
 
   // Truncar descripciones largas
   truncateDescription(description: string): string {
