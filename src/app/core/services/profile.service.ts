@@ -15,14 +15,9 @@ export class ProfileService {
     return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
   getProfilesGraph(): Observable<any> {
-    const userId = this.getUserId();
-    if (!userId) {
-      throw new Error('User ID no encontrado en el session storage');
-    }
-  
     const query = `
-    query GetProfiles($userId: ID!) {
-      profiles(userId: $userId) {
+    query GetProfiles{
+      profiles {
         id
         fullName
         avatar
@@ -32,7 +27,6 @@ export class ProfileService {
   
     const requestBody = {
       query,
-      variables: { userId }, 
     };
   
     return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(

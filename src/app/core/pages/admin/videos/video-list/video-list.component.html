@@ -53,13 +53,10 @@
             <span class="show-less" (click)="toggleDescription(i)">Show less</span>
           </p>
           <div class="action-buttons">
-            <button class="add-button" (click)="addToPlaylist(video)">
-              <i class="fas fa-plus"></i>
-            </button>
-            <button class="edit-button" (click)="editVideo(video._id)">
+            <button class="edit-button" (click)="editVideo(video.id)">
               <i class="fas fa-pencil-alt"></i>
             </button>
-            <button class="delete-button" (click)="deleteVideo(video._id)">
+            <button class="delete-button" (click)="deleteVideo(video.id)">
               <i class="fas fa-trash"></i>
             </button>
           </div>

@@ -64,14 +64,14 @@ export class CreateVideoComponent implements OnInit {
   }
   loadPopularVideos() {
     this.youtubeService.getPopularVideos().subscribe({
-      next: (videos) => {
-        this.youtubeVideos = videos;
-        this.filteredVideos = videos; // Inicialmente muestra todos los videos
+      next: (response) => {
+        console.log('Videos populares:', response.data.popularVideos);
+        this.filterVideos = response.data.popularVideos;
       },
       error: (err) => {
-        console.error('Error loading popular videos:', err);
+        console.error('Error al cargar videos:', err);
       }
-    });
+      });
   }
   filterVideos() {
     if (!this.searchQuery) {

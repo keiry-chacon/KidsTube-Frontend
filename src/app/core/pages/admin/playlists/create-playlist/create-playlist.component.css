@@ -1,8 +1,7 @@
 /* Fondo oscuro */
 .dark-background {
-    background: 
-    linear-gradient(135deg, #f9f0d2, #f8d6a3),
-    url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    color: black;
+  background: #fafafa;
+    color: black;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -11,16 +10,21 @@
   
   /* Contenido principal */
   .main-content {
-    margin-left: 250px; /* Igual al ancho del menú lateral */
-    padding: 20px;
-    transition: margin-left 0.3s ease; /* Animación suave */
-    max-width: 600px; /* Ancho máximo del contenido */
+    margin-left: 250px; /* Espacio para el menú lateral */
+    padding: 40px 30px;
+    transition: margin-left 0.3s ease;
     width: 100%;
+    max-width: calc(100% - 250px); /* Ocupa el resto del espacio */
+    box-sizing: border-box;
   }
   
-  .container {
-    max-width: 600px;
-    margin-top: 20px;
+  .form-container {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 1050px;
   }
   
   .profiles-container {

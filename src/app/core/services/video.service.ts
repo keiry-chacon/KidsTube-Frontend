@@ -41,16 +41,11 @@ export class VideoService {
   }
 
   getVideosByUser(): Observable<any> {
-    const userId = this.getUserId();
-    if (!userId) {
-      throw new Error('User ID no encontrado en el session storage');
-    }
-
     const query = `
-      query GetVideosByUser($userId: ID!) {
-        videosByUser(userId: $userId) {
+      query GetVideosByUser {
+        videosByUser {
           id
-          title
+          name
           description
           url
           createdBy
@@ -60,14 +55,37 @@ export class VideoService {
 
     const requestBody = {
       query,
-      variables: { userId }, 
     };
 
     return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
         map((response: any) => response.data.videosByUser) 
       );
   }
-
+  getVideosByProfileId(profileId: string): Observable<any[]> {
+    const url = environment.apiUrl2;
+  
+    const graphqlQuery = {
+      query: `
+        query GetVideosByProfile($profileId: ID!) {
+          videosByProfile(profileId: $profileId) {
+            id
+            name
+            description
+            url
+          }
+        }
+      `,
+      variables: {
+        profileId
+      }
+    };
+  
+    return this.http.post(url, graphqlQuery, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      map((response: any) => response.data.VideosByProfile)
+    );
+  }
   // Sends a PUT request to update a video by its ID
   updateVideo(id: string, videoData: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/video/${id}`, videoData, { headers: this.getAuthHeaders() });

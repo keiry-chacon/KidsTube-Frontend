@@ -22,7 +22,22 @@ export class YoutubeService {
     return this.http.get<YoutubeVideo[]>(`${this.apiUrl}/search`, { params: { q: query } });
   }
 
-  getPopularVideos(): Observable<YoutubeVideo[]> {
-    return this.http.get<YoutubeVideo[]>(`${this.apiUrl}/popular`);
+  getPopularVideos(): Observable<any> {
+    const query = `
+      query {
+        popularVideos {
+          id
+          name
+          description
+          url
+          thumbnail
+          channelTitle
+        }
+      }
+    `;
+
+    return this.http.post<{ data: { popularVideos: YoutubeVideo[] } }>(this.apiUrl, {
+      query: query
+    });
   }
 }

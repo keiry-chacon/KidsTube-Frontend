@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -30,12 +30,14 @@ interface Playlist {
   styleUrl: './list-playlist-profile.component.css'
 })
 export class ListPlaylistProfileComponent {
-
+  @ViewChild('character') character!: ElementRef;
+  profiles: any[] = []; 
   playlists: Playlist[] = []; // Use the Playlist interface
   loading: boolean = true;
   error: string = '';
   profileId: string | null = null;
-
+  isMenuOpen: boolean = false; // Track menu state
+  ProfileName: string = '';
   constructor(
     private playlistService: PlaylistService,
     private profileService: ProfileService,
@@ -45,29 +47,83 @@ export class ListPlaylistProfileComponent {
   ngOnInit() {
     this.profileId = this.profileService.getProfileId();
     this.loadPlaylists();
-  }
+    this.loadProfileAvatar();  }
 
+  ngAfterViewInit() {
+    this.setupFloatingCharacter();
+  }
+  
+  setupFloatingCharacter() {
+    const element = this.character.nativeElement;
+    let x = 0, y = 0;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+  
+    // Añadimos el SVG del osito
+    element.innerHTML = `
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cabeza -->
+  <circle cx="32" cy="32" r="20" fill="#fffde7"/>
+  <!-- Orejas largas -->
+  <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+  <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+  <!-- Ojos expresivos -->
+  <circle cx="25" cy="30" r="3" fill="#444"/>
+  <circle cx="39" cy="30" r="3" fill="#444"/>
+  <!-- Nariz -->
+  <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
+  <!-- Boca -->
+  <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
+  `;
+  
+    // Escuchar movimiento del ratón
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+  
+    // Animación suave con requestAnimationFrame
+    const animate = () => {
+      x += (mouseX - x - 25) * 0.1;
+      y += (mouseY - y - 25) * 0.1;
+      element.style.transform = `translate(${x}px, ${y}px)`;
+      requestAnimationFrame(animate);
+    };
+  
+    animate();
+  }
+  loadProfileAvatar(): void {
+    const profileId = this.profileService.getProfileId(); 
+    if (profileId) {
+      this.profileService.getProfileById(profileId).subscribe({
+        next: (profile) => {
+          this.ProfileName = profile.fullName || 'Usuario'; 
+        },
+        error: (err) => {
+          console.error('Error loading profile:', err);
+          this.ProfileName = 'Usuario';
+        }
+      });
+    } else {
+      this.ProfileName = 'Usuario';
+    }
+  }
   // Loads playlists associated with the current profile
   loadPlaylists(): void {
-    if (!this.profileId) {
-      this.router.navigate(['/profiles']);
-      return;
-    }
-
+    if (!this.profileId) return;
+  
     this.playlistService.getPlaylistsByProfileId(this.profileId).subscribe({
-      next: (response: any) => {
-        const data = response.data.playlistsByProfile; // Extraer datos del backend
-        this.playlists = data.map((playlist: any) => ({
-          ...playlist,
-          thumbnail: this.getFirstVideoThumbnail(playlist) || 'assets/images/default-thumbnail.jpg',
-        }));
-        this.loading = false;
+      next: (playlists: Playlist[]) => {
+  
+       
+  
+        this.playlists = playlists;
+       
       },
-      error: (err: any) => {
+      error: (err) => {
         console.error('Error loading playlists:', err);
-        this.error = 'Failed to load playlists.';
-        this.loading = false;
-      },
+      }
     });
   }
 
@@ -113,5 +169,22 @@ export class ListPlaylistProfileComponent {
       console.log('Navigation success:', nav);
     }, err => {
     });
+  }
+  navigateToVideoList(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/video']);
+  }
+
+  // Navigates to the playlist list page
+  navigateToListPlaylist(event: Event): void {
+    event.preventDefault();
+    this.router.navigate(['/Playlist']);
+  }
+
+  // Logs out the user and clears session storage
+  logout(event: Event): void {
+    event.preventDefault();
+    sessionStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

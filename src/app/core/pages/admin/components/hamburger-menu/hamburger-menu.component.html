@@ -1,23 +1,25 @@
-<div class="hamburger-menu" [class.closed]="isMenuClosed">
-    <!-- Ícono del menú -->
-    <div class="menu-icon">
-      ☰ <!-- Ícono de hamburguesa -->
-    </div>
-  
-    <!-- Contenido del menú -->
-    <div class="menu-items">
-      <a class="menu-link" (click)="navigateToVideoList($event)">
-        <i class="fas fa-home"></i> Videos
-      </a>
-      <a class="menu-link" (click)="navigateToListPlaylist($event)">
-        <i class="fas fa-list"></i> Playlists
-      </a>
-    </div>
-  
-    <!-- Opción de cerrar sesión -->
-    <div class="menu-footer">
-      <a class="menu-link" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Cerrar sesión
-      </a>
-    </div>
+<div class="hamburger-menu" [class.closed]="isMenuOpen">
+  <!-- Header con estilo infantil -->
+  <div class="menu-header text-center">
+    <img src="https://i.pravatar.cc/80" alt="Avatar" class="menu-avatar rounded-circle shadow-sm mb-2">
+    <h4>¡Hola!</h4>
+    <p>Elige tu opción</p>
   </div>
+
+  <!-- Opciones del menú -->
+  <div class="menu-items">
+    <a class="menu-link" (click)="navigateToVideoList($event)">
+      🎬 Videos
+    </a>
+    <a class="menu-link" (click)="navigateToListPlaylist($event)">
+      🎵 Playlists
+    </a>
+  </div>
+
+  <!-- Botón de regreso -->
+  <div class="menu-footer">
+    <button class="logout-button" (click)="back($event)">
+      👈 Regresar
+    </button>
+  </div>
+</div>

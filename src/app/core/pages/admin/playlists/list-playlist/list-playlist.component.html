@@ -6,9 +6,7 @@
       <line x1="3" y1="18" x2="21" y2="18"></line>
     </svg>
   </div>
-  <div class="search-bar-container">
-    <input type="text" class="search-bar" placeholder="Search videos..." />
-  </div>
+
   <div class="hamburger-menu" [class.closed]="isMenuOpen">
     <div class="menu-spacer"></div>
     <div class="menu-items">
@@ -28,48 +26,41 @@
   </div>    
   <div class="container p-4 border rounded bg-light shadow-sm">
 
-    <!-- Header -->
     <h2 class="mb-4">Playlist List</h2>
-
-    <!-- Create New Playlist Button -->
     <button class="btn btn-success mb-3" (click)="createNewPlaylist()">Create New Playlist</button>
-
-    <!-- Playlist List -->
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <th>Thumbnail</th> <!-- Nueva columna para miniaturas -->
-          <th>Name</th>
-          <th>Videos</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let playlist of playlists">
-          <td>
-            <!-- Miniatura del primer video o imagen predeterminada -->
-            <img 
-              [src]="getPlaylistThumbnail(playlist.videos)" 
-              alt="Playlist Thumbnail" 
-              class="thumbnail me-3" 
-              onerror="this.src='/assets/videos/default-thumbnail.jpg'"
-            />
-          </td>
-          <td>{{ playlist.name }}</td>
-          <td>{{ playlist.videos.length }} videos</td>
-          <td>
-            <button class="btn btn-info btn-sm me-2" (click)="viewDetails(playlist._id)">Details</button>
-            <button class="btn btn-primary btn-sm me-2" (click)="editPlaylist(playlist._id)">Edit</button>
-            <button class="btn btn-danger btn-sm" (click)="deletePlaylist(playlist._id)">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- No Playlists Message -->
-    <div *ngIf="playlists.length === 0" class="text-center">
+    
+    <div class="video-grid">
+      <div *ngFor="let playlist of playlists" class="video-card">
+        <img
+          [src]="getPlaylistThumbnail(playlist.videos)"
+          alt="Playlist Thumbnail"
+          class="thumbnail"
+          onerror="this.src='/assets/videos/default-thumbnail.jpg'"
+        />
+        <div class="video-details">
+          <h3>{{ playlist.name }}</h3>
+          <p>{{ playlist.videos.length }} video(s)</p>
+          <div class="action-buttons">
+            
+            <button class="edit-button" title="Edit" (click)="editPlaylist(playlist.id)">
+              <i class="fas fa-pencil-alt"></i> Edit
+            </button>
+            <button class="delete-button" title="Delete" (click)="deletePlaylist(playlist.id)">
+              <i class="fas fa-trash"></i> Delete
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mensaje si no hay playlists -->
+    <div *ngIf="playlists.length === 0" class="text-center mt-4">
       <p>No playlists found. Click "Create New Playlist" to add one.</p>
     </div>
-
   </div>
+
+
+<!-- Mensaje si no hay playlists -->
+<div *ngIf="playlists.length === 0" class="text-center mt-4">
+  <p>No playlists found. Click "Create New Playlist" to add one.</p>
 </div>

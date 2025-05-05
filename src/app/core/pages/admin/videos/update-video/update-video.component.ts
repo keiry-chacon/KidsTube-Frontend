@@ -4,23 +4,46 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VideoService } from '../../../../services/video.service';
+import { YoutubeService } from '../../../../services/youtube.service';
+import { FormsModule } from '@angular/forms';
+interface YouTubeApiResponse {
+  items: YouTubeVideo[];
+}
 
+interface YouTubeVideo {
+  id: {
+    videoId: string;
+  };
+  snippet: {
+    title: string;
+    description: string;
+    thumbnails: {
+      default: { url: string };
+    };
+  };
+}
 @Component({
   selector: 'app-update-video',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,FormsModule],
   templateUrl: './update-video.component.html',
   styleUrls: ['./update-video.component.css']
 })
+
 export class UpdateVideoComponent implements OnInit {
   videoForm!: FormGroup;
   videoId: string = '';
   isMenuOpen: boolean = false; // Track menu state
-
+  youtubeVideos: any[] = [];
+  filteredVideos: any[] = [];
+  searchQuery: string = '';
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private videoService: VideoService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private youtubeService: YoutubeService,
+
   ) {}
 
   ngOnInit() {
@@ -53,6 +76,56 @@ export class UpdateVideoComponent implements OnInit {
         alert('Failed to load video. Check the console for details.');
       }
     });
+  }
+  onDblClickSelect(video: any) {
+    this.selectYouTubeVideo(video);
+    this.searchQuery = '';
+    this.filteredVideos = [];
+  }
+  filterVideos() {
+    if (!this.searchQuery) {
+      this.filteredVideos = this.youtubeVideos; // Mostrar todos si no hay búsqueda
+      return;
+    }
+    this.filteredVideos = this.youtubeVideos.filter((video) =>
+      video.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+    );
+  }
+  truncateDescription(description: string): string {
+    const maxLength = 100;
+    return description.length > maxLength ? `${description.slice(0, maxLength)}...` : description;
+  }
+  onSearchChange(query: string) {
+    if (!query) {
+      this.filteredVideos = this.youtubeVideos;
+      return;
+    }
+  
+    this.youtubeService.searchYouTubeVideos(query).subscribe({
+      next: (results) => {
+        this.filteredVideos = results;
+      },
+      error: (err) => {
+        console.error('Error fetching YouTube search results:', err);
+      }
+    });
+  }
+
+  selectYouTubeVideo(video: any) {
+    console.log('Video seleccionado:', video);
+  
+    const title = video.title || 'Sin título';
+    const description = video.description || '';
+    const url = `https://www.youtube.com/watch?v=${video.id}`;
+  
+    this.videoForm.patchValue({
+      name: title,
+      url: url,
+      description: description
+    });
+  
+    this.searchQuery = '';
+    this.filteredVideos = [];
   }
 
   // Handles form submission to update the video

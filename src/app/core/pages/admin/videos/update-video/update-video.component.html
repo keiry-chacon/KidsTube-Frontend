@@ -1,15 +1,13 @@
 <div class="dark-background">
-
   <div class="menu-icon" (click)="toggleMenu()">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#f3952a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+         fill="none" stroke="#f3952a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="3" y1="12" x2="21" y2="12"></line>
       <line x1="3" y1="6" x2="21" y2="6"></line>
       <line x1="3" y1="18" x2="21" y2="18"></line>
     </svg>
   </div>
-  <div class="search-bar-container">
-    <input type="text" class="search-bar" placeholder="Search videos..." />
-  </div>
+
   <div class="hamburger-menu" [class.closed]="isMenuOpen">
     <div class="menu-spacer"></div>
     <div class="menu-items">
@@ -20,58 +18,87 @@
         <i class="fas fa-list"></i> Playlists
       </a>
     </div>
-
     <div class="menu-footer">
       <button class="logout-button" (click)="logout($event)">
         <i class="fas fa-sign-out-alt"></i> Log out
       </button>
     </div>
-  </div>    
-  <div class="container p-4 border rounded bg-light shadow-sm">
-    <h2 class="mb-4">Edit Video</h2>
-    <form [formGroup]="videoForm" (ngSubmit)="updateVideo()">
-      <!-- Name Field -->
-      <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input type="text" class="form-control" id="name" formControlName="name" required>
-        <div *ngIf="videoForm.get('name')?.invalid && videoForm.get('name')?.touched" class="text-danger">
-          Video name is required.
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <div class="form-container">
+      <h2 class="mb-4">Edit Video</h2>
+
+      <!-- Barra de búsqueda de YouTube -->
+      <div class="search-bar mb-4">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search for a video on YouTube..." 
+          [(ngModel)]="searchQuery"
+          (input)="onSearchChange(searchQuery)"
+        />
+        
+        <!-- Resultados de búsqueda -->
+        <div class="search-results mt-2" *ngIf="filteredVideos.length > 0 && searchQuery">
+          <div 
+            *ngFor="let video of filteredVideos" 
+            class="search-result-item d-flex align-items-center p-2"
+            (click)="selectYouTubeVideo(video)"
+            (dblclick)="onDblClickSelect(video)"
+          >
+            <img [src]="video.thumbnail" alt="Thumbnail" width="80" class="me-2 rounded" />
+            <div class="result-info">
+              <strong>{{ video.title }}</strong>
+              <p>{{ truncateDescription(video.description) }}</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- URL Field -->
-      <div class="mb-3">
-        <label for="url" class="form-label">URL</label>
-        <input type="url" class="form-control" id="url" formControlName="url" required>
-        <div *ngIf="videoForm.get('url')?.invalid && videoForm.get('url')?.touched" class="text-danger">
-          Video URL is required.
+      <form [formGroup]="videoForm" (ngSubmit)="updateVideo()">
+        <!-- Name Field -->
+        <div class="mb-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" id="name" formControlName="name" class="form-control" required>
+          <div *ngIf="videoForm.get('name')?.invalid && videoForm.get('name')?.touched" class="text-danger">
+            Video name is required.
+          </div>
         </div>
-      </div>
 
-      <!-- Thumbnail Preview -->
-      <div class="mb-3">
-        <label class="form-label">Thumbnail Preview</label>
-        <div>
+        <!-- URL Field -->
+        <div class="mb-3">
+          <label for="url" class="form-label">URL</label>
+          <input type="url" id="url" formControlName="url" class="form-control" required>
+          <div *ngIf="videoForm.get('url')?.invalid && videoForm.get('url')?.touched" class="text-danger">
+            Video URL is required.
+          </div>
+        </div>
+
+        <!-- Miniatura Preview -->
+        <div class="mb-3 text-center">
+          <label class="form-label d-block">Thumbnail Preview</label>
           <img 
             [src]="getVideoThumbnail(videoForm.get('url')?.value)" 
             alt="Video Thumbnail" 
-            class="thumbnail me-3" 
+            class="thumbnail" 
             onerror="this.src='/assets/videos/default-thumbnail.jpg'"
           />
         </div>
-      </div>
 
-      <!-- Description Field -->
-      <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
-        <textarea class="form-control" id="description" formControlName="description"></textarea>
-      </div>
+        <!-- Description Field -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
+        </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="btn btn-primary w-100" [disabled]="videoForm.invalid">Update Video</button>
-
-      <!-- Cancel Button -->
-      <button type="button" class="btn btn-secondary mt-2 w-100" (click)="cancel()">Cancel</button>
-    </form>
+        <!-- Botones -->
+        <div class="d-grid gap-2">
+          <button type="submit" class="btn btn-primary" [disabled]="!videoForm.valid">Update Video</button>
+          <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

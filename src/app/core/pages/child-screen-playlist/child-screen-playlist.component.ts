@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef ,ElementRef,ViewChild} from '@angular/core';
 import { PlaylistService } from '../../services/playlist.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -44,6 +44,7 @@ export class ChildScreenPlaylistComponent implements OnInit {
   fadeOut: boolean = false;
   isLoading: boolean = true;
   profileId: string | null = null;
+  @ViewChild('character') character!: ElementRef;
 
   constructor(
     private route: ActivatedRoute,
@@ -65,7 +66,47 @@ export class ChildScreenPlaylistComponent implements OnInit {
     this.playlistId = this.route.snapshot.paramMap.get('playlistId') || '';
     this.loadSinglePlaylist();
   }
-
+  ngAfterViewInit() {
+    this.setupFloatingCharacter();
+  }
+  
+  setupFloatingCharacter() {
+    const element = this.character.nativeElement;
+    let x = 0, y = 0;
+    let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+  
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+    });
+  
+    function animate() {
+      x += (mouseX - x - 25) * 0.1;
+      y += (mouseY - y - 25) * 0.1;
+      element.style.transform = `translate(${x}px, ${y}px)`;
+      requestAnimationFrame(animate);
+    }
+  
+    animate();
+  
+    // Emoji de personaje o SVG
+    element.innerHTML = `
+      <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cabeza -->
+  <circle cx="32" cy="32" r="20" fill="#fffde7"/>
+  <!-- Orejas largas -->
+  <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+  <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+  <!-- Ojos expresivos -->
+  <circle cx="25" cy="30" r="3" fill="#444"/>
+  <circle cx="39" cy="30" r="3" fill="#444"/>
+  <!-- Nariz -->
+  <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
+  <!-- Boca -->
+  <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+</svg>
+    `;
+  }
   // Loads a single playlist by its ID
   loadSinglePlaylist(): void {
     if (!this.playlistId) return;

@@ -19,12 +19,19 @@ export class HamburgerMenuComponent {
 
     
   }
-
+  clickSound = new Audio('assets/sounds/click.mp3');
+  playSound() {
+    this.clickSound.currentTime = 0; // Reinicia el sonido si ya se está reproduciendo
+    this.clickSound.play().catch(() => {});
+  }
   toggleMenu(): void {
+    this.playSound();
+
     this.isMenuClosed = !this.isMenuClosed;
   }
 
   navigateTo(route: string): void {  
+    this.playSound();
       this.router.navigate([route]);
 
   }
@@ -40,6 +47,8 @@ export class HamburgerMenuComponent {
     this.loadProfileAvatar();
   }
   goBackToProfiles() {
+    this.playSound();
+
     this.router.navigate(['/profiles']); 
     }
   loadProfileAvatar(): void {

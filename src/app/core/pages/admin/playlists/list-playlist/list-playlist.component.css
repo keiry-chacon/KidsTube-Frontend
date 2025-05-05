@@ -1,82 +1,22 @@
+/* Fondo principal */
 .dark-background {
-  background: 
-  linear-gradient(135deg, #f9f0d2, #f8d6a3),
-  url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.1"><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z" fill="%23f3952a"/></svg>');    
-  color: black;
+  background: #fafafa;
+  color: #212121;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: flex-start;
 }
 
-.main-content {
-  margin-left: 250px;
-  padding: 40px;
-  transition: margin-left 0.3s ease;
-  max-width: 1100px;
-  width: 100%;
-}
-
-.container {
-  margin-right: 60px !important; /* Fuerza este valor */
-  max-width: 1100px;
-  margin-top: 60px;
-}
-
-.videos-container {
-  max-height: 600px;
-  overflow-y: auto;
-  border: 2px solid #ddd;
-  padding: 20px;
-  border-radius: 12px;
-}
-
-.video-item {
-  cursor: pointer;
-  padding: 15px;
-  border-radius: 12px;
-  transition: background-color 0.3s, transform 0.2s;
-  font-size: 18px;
-}
-
-.video-item:hover {
-  background-color: #f1f1f1;
-  transform: scale(1.03);
-}
-
-.thumbnail {
-  width: 120px;
-  height: 90px;
-  border-radius: 8px;
-  object-fit: cover;
-}
-
-.clickable-row {
-  cursor: pointer;
-  padding: 12px;
-  border-radius: 10px;
-  transition: background-color 0.3s;
-}
-
-.clickable-row:hover {
-  background-color: #f0f4f8;
-}
-
-.visually-hidden {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-
-
+/* Menú hamburguesa */
 .menu-icon {
   position: fixed;
   top: 20px;
   left: 20px;
   width: 40px;
   height: 40px;
-  background: #fbfbfc; 
-  color: #155EC2;
+  background: #fbfbfc;
+  color: #155ec2;
   border-radius: 8px;
   display: flex;
   align-items: center;
@@ -88,7 +28,7 @@
 }
 
 .menu-icon:hover {
-  background: #155EC2; 
+  background: #155ec2;
   transform: scale(1.05);
 }
 
@@ -103,7 +43,7 @@
   left: 0;
   width: 250px;
   height: 100vh;
-  background: #FAFAFA; 
+  background: #fafafa;
   color: #212121;
   display: flex;
   flex-direction: column;
@@ -118,7 +58,7 @@
 }
 
 .menu-spacer {
-  height: 80px; 
+  height: 80px;
 }
 
 .menu-items a {
@@ -139,20 +79,20 @@
 
 .menu-items a:hover {
   color: #fff;
-  background: #1A73E8; 
+  background: #1a73e8;
   transform: translateX(5px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .menu-footer {
   padding: 20px;
-  background: #FAFAFA; 
+  background: #fafafa;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
 .logout-button {
-  background: #EA4335; 
+  background: #ea4335;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -166,11 +106,129 @@
 }
 
 .logout-button:hover {
-  background: #D32F2F; 
+  background: #d32f2f;
   transform: scale(1.05);
 }
 
+/* Contenedor principal */
+.container {
+  margin-left: 250px;
+  max-width: 1200px;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: margin-left 0.3s ease;
+}
 
-.fas {
-  font-size: 18px;
+/* Grid de playlists */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+/* Tarjeta individual de playlist */
+.video-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Miniatura */
+.thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+/* Detalles dentro de la tarjeta */
+.video-details {
+  padding: 20px;
+}
+
+.video-details h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #212121;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: 600;
+}
+
+.video-details p {
+  margin-bottom: 16px;
+  font-size: 16px;
+  color: #616161;
+  line-height: 1.5;
+}
+
+/* Botones de acción */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.add-button,
+.edit-button,
+.delete-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #f5f5f5;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: none;
+}
+
+.add-button i,
+.edit-button i,
+.delete-button i {
+  font-size: 14px;
+}
+
+/* Colores específicos por botón */
+.add-button {
+  background-color: #e8f0fe;
+  border-color: #c6dafc;
+  color: #1a73e8;
+}
+
+.add-button:hover {
+  background-color: #d2e3fc;
+}
+
+.edit-button {
+  background-color: #fff8e1;
+  border-color: #ffe082;
+  color: #ff8f00;
+}
+
+.edit-button:hover {
+  background-color: #ffecb3;
+}
+
+.delete-button {
+  background-color: #ffebee;
+  border-color: #ef9a9a;
+  color: #d32f2f;
+}
+
+.delete-button:hover {
+  background-color: #ffcdd2;
 }

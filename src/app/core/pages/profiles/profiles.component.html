@@ -32,8 +32,8 @@
     <p class="pin-instruction">Please insert your PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredPin" placeholder="PIN" />
     <div class="pin-dialog-actions">
-      <button (click)="closePinDialog()">Cancel</button>
       <button class="accept-button" (click)="validateProfilePin()">Accept</button>
+      <button (click)="closePinDialog()">Cancel</button>
     </div>
     <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>
@@ -49,8 +49,8 @@
     <p class="pin-instruction">Please insert your user PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredUserPin" placeholder="PIN" />
     <div class="pin-dialog-actions">
-      <button (click)="closeUserPinDialog()">Cancel</button>
       <button class="accept-button" (click)="validateUserPin()">Accept</button>
+      <button (click)="closeUserPinDialog()">Cancel</button>
     </div>
     <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>

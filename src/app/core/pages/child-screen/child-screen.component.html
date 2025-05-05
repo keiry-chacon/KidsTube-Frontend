@@ -1,24 +1,27 @@
 <div class="dark-background">
-  <div class="video-container">
+  <!-- Menú hamburguesa -->
+  <app-hamburger-menu></app-hamburger-menu>
 
-    <div class="search-bar">
+  <!-- Contenido principal -->
+  <div class="main-content">
+
+    <!-- Barra de búsqueda -->
+    <div class="search-bar-container">
       <div class="search-input-container">
-        <input
-          type="text"
-          placeholder="Search video..."
-          [(ngModel)]="searchQuery"
-          (input)="filterVideos()"
-          class="search-input"
-        />
-        <div class="search-icon"></div>
+        <input type="text" placeholder="Search video..." [(ngModel)]="searchQuery" (input)="filterVideos()" class="search-input" />
+        <div class="search-icon">🔍</div>
       </div>
     </div>
-    <app-hamburger-menu></app-hamburger-menu>
+  
+    <!-- Personaje flotante -->
+    <div #character class="floating-character">🧸</div>
 
+    <!-- Mensaje si no hay resultados -->
     <div *ngIf="filteredVideos.length === 0 && searchQuery" class="no-results">
-      No videos found with "{{ searchQuery }}".
+      No se encontraron videos con "{{ searchQuery }}".
     </div>
 
+    <!-- Grilla de videos -->
     <div class="videos-grid" [class.fade-out]="fadeOut">
       <div *ngFor="let video of filteredVideos" class="video-item">
         <div class="thumbnail-wrapper" [class.hidden]="video.isPlaying" (click)="playVideo(video)">

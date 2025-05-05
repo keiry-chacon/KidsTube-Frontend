@@ -1,27 +1,32 @@
-<div class="dark-background">
-  <div class="menu-icon" (click)="toggleMenu()">
-    ☰ <!-- Ícono de hamburguesa -->
-  </div>
+<div class="menu-container">
+  <!-- Botón del menú -->
+  <button class="menu-icon" (click)="toggleMenu()" aria-label="Abrir menú">
+    🍭 <!-- Ícono dulce -->
+  </button>
 
-  <!-- Contenedor del menú lateral -->
-  <div class="hamburger-menu" [class.closed]="isMenuClosed">
+  <!-- Menú lateral -->
+  <nav class="hamburger-menu" [class.closed]="isMenuClosed" role="navigation" aria-label="Menú principal">
     <div class="menu-items">
-      <a (click)="navigateTo('/child-screen')">
-        <i class="fas fa-home"></i> Inicio
+      <!-- Opciones del menú -->
+      <a (click)="navigateTo('/child-screen')" role="menuitem">
+        <i class="fas fa-home" aria-hidden="true"></i> Inicio
       </a>
-      <a (click)="navigateTo('/listPlaylistProfile')">
-        <i class="fas fa-list"></i> Playlist
+      <a (click)="navigateTo('/listPlaylistProfile')" role="menuitem">
+        <i class="fas fa-list" aria-hidden="true"></i> Playlist
       </a>
-      
-      <!-- Avatar movido aquí dentro -->
-      <div class="menu-avatar-container" (click)="navigateTo('/profiles')">
+
+      <!-- Avatar del perfil -->
+      <div class="menu-avatar-container" (click)="navigateTo('/profiles')" role="menuitem" tabindex="0" aria-label="Ir a perfiles">
         <img *ngIf="profileAvatar" [src]="profileAvatar" class="profile-avatar" alt="Avatar del perfil">
-        <div *ngIf="!profileAvatar" class="avatar-placeholder">
+        <div *ngIf="!profileAvatar" class="avatar-placeholder" aria-hidden="true">
+          👧
         </div>
       </div>
-      <button class="back-button" (click)="goBackToProfiles()">
-        ← Volver
+
+      <!-- Botón de volver -->
+      <button class="back-button" (click)="goBackToProfiles()" aria-label="Volver a perfiles">
+        🏡 Volver
       </button>
     </div>
-  </div>
+  </nav>
 </div>

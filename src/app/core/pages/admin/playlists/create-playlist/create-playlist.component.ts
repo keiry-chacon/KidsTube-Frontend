@@ -129,6 +129,7 @@ export class CreatePlaylistComponent implements OnInit {
       this.playlistService.createPlaylist(formData).subscribe({
         next: (response) => {
           alert('Playlist created successfully!');
+          this.router.navigate(['/playlists']);
         },
         error: (err) => {
           const errorMessage = err?.error?.message || 'Error creating playlist. Try again later.';

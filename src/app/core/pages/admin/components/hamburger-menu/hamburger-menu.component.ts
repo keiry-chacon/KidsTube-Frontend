@@ -17,22 +17,31 @@ export class HamburgerMenuComponent {
     this.isMenuClosed = !this.isMenuClosed;
   }
 
-  // Navigates to the video list page
+  navigateToPlaylist(playlistId: string): void {
+    if (!playlistId) {
+      return;
+    }
+
+    this.router.navigate(['/child-screen-playlist', playlistId]).then(nav => {
+      console.log('Navigation success:', nav);
+    }, err => {
+    });
+  }
   navigateToVideoList(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/videoList']);
+    this.router.navigate(['/child-screen']);
   }
 
   // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();
-    this.router.navigate(['/listPlaylist']);
+    this.router.navigate(['/Playlist']);
   }
 
   // Logs out the user and clears session storage
-  logout(event: Event): void {
+  back(event: Event): void {
     event.preventDefault();
     sessionStorage.clear();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/list-profile']);
   }
 }
