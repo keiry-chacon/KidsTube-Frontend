@@ -37,9 +37,9 @@
   <div class="main-content">
     <div class="video-grid">
       <div *ngFor="let video of filteredVideos" class="video-card">
-        <img [src]="video.thumbnail" alt="{{ video.title }}" class="thumbnail" />
+        <img [src]="video.thumbnail" alt="{{ video.name }}" class="thumbnail" />
         <div class="video-details">
-          <h3>{{ video.title }}</h3>
+          <h3>{{ video.name }}</h3>
           <p>{{ truncateDescription(video.description) }}</p>
           <button class="add-button" (click)="openModal(video)">
             <i class="fas fa-plus"></i> Add

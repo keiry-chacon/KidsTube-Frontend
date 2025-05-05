@@ -56,7 +56,6 @@ export class CreatePlaylistComponent implements OnInit {
   loadVideos() {
     this.videoService.getVideos().subscribe({
       next: (data) => {
-        console.log('Videos loaded:', data); // Inspect data in the console
         this.videos = data;
       },
     });

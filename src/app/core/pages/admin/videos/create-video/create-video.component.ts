@@ -5,7 +5,14 @@ import { Router } from '@angular/router';
 import { VideoService } from '../../../../services/video.service';
 import { YoutubeService } from '../../../../services/youtube.service';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule aquí
-
+export interface YoutubeVideo {
+  id: string;
+  name: string;
+  url: string;
+  description: string;
+  thumbnail: string;
+  channelTitle: string;
+}
 @Component({
   selector: 'app-create-video',
   standalone: true,
@@ -22,6 +29,7 @@ export class CreateVideoComponent implements OnInit {
   filteredVideos: any[] = [];
   showForm = false;
   showModal = false;
+  popularVideos: any[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -64,10 +72,12 @@ export class CreateVideoComponent implements OnInit {
   }
   loadPopularVideos() {
     this.youtubeService.getPopularVideos().subscribe({
-      next: (response) => {
-        console.log('Videos populares:', response.data.popularVideos);
-        this.filterVideos = response.data.popularVideos;
+      next: (data: any) => {
+        this.filteredVideos = data ;
+        console.log('Datos recibidos:', data);
+
       },
+     
       error: (err) => {
         console.error('Error al cargar videos:', err);
       }
@@ -79,7 +89,7 @@ export class CreateVideoComponent implements OnInit {
       return;
     }
     this.filteredVideos = this.youtubeVideos.filter((video) =>
-      video.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      video.name.toLowerCase().includes(this.searchQuery.toLowerCase())
     );
   }
   onSearchChange(query: string) {
@@ -105,7 +115,7 @@ export class CreateVideoComponent implements OnInit {
   openModal(video: any): void {
     this.showModal = true;
     this.videoForm.patchValue({
-      name: video.title,
+      name: video.name,
       url: `https://www.youtube.com/watch?v=${video.id}`,
       description: video.description
     });

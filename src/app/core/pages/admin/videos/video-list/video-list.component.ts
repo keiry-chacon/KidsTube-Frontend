@@ -40,7 +40,6 @@ export class VideoListComponent implements OnInit {
   loadPlaylistVideos() {
     this.videoService.getVideosByUser().subscribe({
       next: (data: any) => {
-        console.log('Videos loaded:', data);
         this.videos = data; // Guarda los videos en el componente
         this.expandedDescriptions = Array(this.videos.length).fill(false); // Inicializa estados expandidos
       },
