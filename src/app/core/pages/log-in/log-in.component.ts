@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '../../services/authentication/authentication.service';
 import { UserService } from '../../services/user.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -29,7 +30,11 @@ export class LogInComponent {
   logInForm: FormGroup;
   errorMessage: string = '';
 
-  constructor(private fb: FormBuilder, private userService: UserService, private router: Router) {
+  constructor(
+    private fb: FormBuilder, 
+    private authenticationService: AuthenticationService,
+    private userService: UserService, 
+    private router: Router) {
     this.logInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -56,6 +61,18 @@ export class LogInComponent {
     }
   }
   
+
+  signInWithGoogle() {
+    this.authenticationService.googleLogin().subscribe({
+      next: () => {
+        // Ya internamente redirige según el perfil completo/incompleto
+      },
+      error: (err) => {
+        console.error('Google Login Error:', err);
+        alert('Error during Google login. Try again.');
+      }
+    });
+  }
   
 
   goToSignUp() {

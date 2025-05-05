@@ -1,0 +1,70 @@
+<div class="dark-background">
+    <div class="complete-profile-container" [@slideIn]>
+      <form [formGroup]="informationForm" (ngSubmit)="onSubmit()" class="w-40 mx-auto">
+        
+        <!-- Personal Information -->
+          <div class="mb-3">
+            <label class="form-label">Birthdate</label>
+            <input type="date" class="form-control" formControlName="dateOfBirth">
+            <!-- Error message for Birthdate -->
+            <div *ngIf="informationForm.get('dateOfBirth')?.hasError('required') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
+              Birthdate is required.
+            </div>
+            <div *ngIf="informationForm.get('dateOfBirth')?.hasError('underage') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
+              You must be at least 18 years old.
+            </div>
+          </div>
+  
+        <!-- Contact Information -->
+        <fieldset class="border p-3 mb-3">
+          <legend>Contact Information</legend>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Phone Number</label>
+              <input type="tel" class="form-control" formControlName="phoneNumber">
+              <!-- Error message for Phone Number -->
+              <div *ngIf="informationForm.get('phoneNumber')?.hasError('invalidPhoneNumber') && informationForm.get('phoneNumber')?.touched" class="text-danger">
+                Please enter a valid phone number.
+              </div>
+            </div>
+          </div>
+  
+          <!-- Country Selection -->
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Country</label>
+              <select class="form-control" formControlName="country" required>
+                <option value="" disabled selected>Select a country</option>
+                <option *ngFor="let country of countries" [value]="country">
+                  {{ country }}
+                </option>
+              </select>
+              <!-- Error message for Country -->
+              <div *ngIf="informationForm.get('country')?.hasError('required') && informationForm.get('country')?.touched" class="text-danger">
+                Country is required.
+              </div>
+            </div>
+          </div>
+        </fieldset>
+  
+        <!-- Security -->
+        <fieldset class="border p-3 mb-3">
+          <legend>Security</legend>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">PIN</label>
+              <input type="text" class="form-control" formControlName="pin">
+              <!-- Error message for PIN -->
+              <div *ngIf="informationForm.get('pin')?.hasError('invalidPin') && informationForm.get('pin')?.touched" class="text-danger">
+                The PIN must contain 6 digits.
+              </div>
+            </div>
+          </div>
+        </fieldset>
+  
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100" [disabled]="informationForm.invalid">Complete Profile</button>
+      </form>
+    </div>
+  </div>
+  

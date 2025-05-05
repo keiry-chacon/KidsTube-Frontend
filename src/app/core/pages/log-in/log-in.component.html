@@ -36,6 +36,25 @@
       <button type="submit" class="submit-button" [disabled]="logInForm.invalid">Log In</button>
     </form>
 
+    <!-- Google Sign-In Button -->
+    <div class="row mt-2 justify-content-center">
+      <a
+        (click)="signInWithGoogle()"
+        style="text-decoration: none; cursor: pointer"
+      >
+        <div class="card shadow text-center">
+          <div class="card-body">
+            <img
+              src="../../../../assets/images/logos/logo-google.png"
+              alt="Google Logo"
+              height="24px"
+              width="24px"
+            />
+          </div>
+        </div>
+      </a>
+    </div>
+
     <p class="signup-link">New to KidsTube? <button (click)="goToSignUp()" class="btn btn-link">Sign up now</button></p>
 
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>

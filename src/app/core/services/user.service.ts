@@ -63,4 +63,11 @@ export class UserService {
   verifyAccount(token: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}/user/verify/${token}`);
   }
+
+  updateProfile(data: any): Observable<any> {
+    return this.http.put(`${environment.apiUrl}/user/profile`, data, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
 }

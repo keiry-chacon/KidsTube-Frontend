@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfilesComponent } from './core/pages/profiles/profiles.component';
 import { AccountValidationComponent } from './core/pages/validation/account-validation/account-validation.component';
 import { VerifyCodeComponent } from './core/pages/validation/verify-code/verify-code.component';
+import { CompleteProfileComponent } from './core/pages/complete-profile/complete-profile.component';
 
 //Profiles
 import { ChildScreenComponent } from './core/pages/child-screen/child-screen.component';
@@ -32,6 +33,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignUpComponent },
   { path: 'profiles', component: ProfilesComponent },
   { path: 'user/verify/:token', component: AccountValidationComponent },
+  { path: 'complete-profile', component: CompleteProfileComponent },
 
   //Profiles
   {  path: 'child-screen', component: ChildScreenComponent },

@@ -1,0 +1,103 @@
+.dark-background {
+    background-image: url('/assets/fondo-kids.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .dark-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 1;
+    opacity: 1;
+  }
+  
+  .complete-profile-container {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(116, 112, 112, 0.336); 
+    padding: 30px; 
+    border: 2px solid #FFD166; 
+    border-radius: 12px; 
+    width: 1050px; 
+    height: 600px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    margin: 40px auto; 
+    overflow-y: auto; 
+  }
+  
+  .complete-profile-container.show {
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+  
+  .kidstube-title {
+    font-size: 2.5rem; 
+    font-weight: bold;
+    color: #f77c31;
+    margin-bottom: 20px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 140, 66, 0.7);
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    height: 100%; 
+    overflow-y: auto; 
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"] {
+    padding: 8px; 
+    margin-bottom: 10px; 
+    border: 1px solid #FFD166;
+    border-radius: 4px;
+    background-color: #fdfbfb;
+    color: #141414;
+    font-size: 14px; 
+    width: 90%;
+    max-width: 500px; 
+    margin-left: auto; 
+    margin-right: auto; 
+  }
+  
+  label.form-label {
+    font-size: 14px; 
+    margin-bottom: 4px; 
+  }
+  
+  button[type="submit"] {
+    background-color: #FF8C42;
+    color: #fff;
+    padding: 10px; 
+    border: none;
+    border-radius: 4px;
+    font-size: 14px; 
+    cursor: pointer;
+    margin-top: 20px;
+    width: 90%; 
+    max-width: 500px; 
+    margin-left: auto; 
+    margin-right: auto; 
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #FF7043;
+  }
+  
+  

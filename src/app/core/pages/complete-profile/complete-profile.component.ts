@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { CountryService } from '../../services/country.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; // Importa Router
 
 import { ageValidator } from '../../../Validators/age.validator'; 
 import { phoneNumberValidator } from '../../../Validators/phone-number.validator'; 
@@ -12,11 +13,11 @@ import { pinValidator } from '../../../Validators/pin.validator';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-complete-profile',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css'],
+  templateUrl: './complete-profile.component.html',
+  styleUrl: './complete-profile.component.css',
   animations: [
     trigger('slideIn', [
       state('void', style({
@@ -31,24 +32,22 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ]
 })
-export class SignUpComponent {
-  signUpForm: FormGroup;
+export class CompleteProfileComponent {
+  informationForm: FormGroup;
   countries: string[] = [];
 
-  constructor(private fb: FormBuilder, 
+  constructor(
+    private fb: FormBuilder, 
     private authenticationService: AuthenticationService,
     private authService: AuthService,
     private userService: UserService, 
-    private countryService: CountryService
+    private countryService: CountryService,
+    private router: Router // Inyecta Router
   ) {
-    this.signUpForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+    this.informationForm = this.fb.group({
       dateOfBirth: ['', [Validators.required, ageValidator]],
-      email: ['', [Validators.required, Validators.email]],
       phoneNumber: ['', [phoneNumberValidator]],
       country: ['', Validators.required],
-      password: ['', Validators.required],
       pin: ['', [pinValidator]],
     });
   }
@@ -59,24 +58,15 @@ export class SignUpComponent {
     });
   }
 
-  signInWithGoogle() {
-    this.authenticationService.googleSignUp().subscribe({
-      next: () => {
-      },
-      error: (err) => {
-        console.error('Google Sign-Up Error:', err);
-      }
-    });
-  }
-
-  // Handles form submission to register a new user
+  // Handles form submission to complete personal information
   onSubmit() {
-    if (this.signUpForm.valid) {
-      const formData = { ...this.signUpForm.value, status: 'pending' };
+    if (this.informationForm.valid) {
+      const formData = { ...this.informationForm.value, status: 'active' };
 
-      this.userService.signup(formData).subscribe({
+      this.userService.updateProfile(formData).subscribe({
         next: (response) => {
-          alert('Registration successful! Please check your email to verify your account.');
+          alert('Profile information complete!');
+          this.router.navigate(['/profiles']); // Redirecciona a login
         },
         error: (err) => {
           // Muestra los errores específicos del backend
