@@ -49,7 +49,9 @@ export class VideoListComponent implements OnInit {
     });
   }
 
-  
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']); 
+    }
   truncateDescription(description: string): string {
     const maxLength = 50;
     return description && description.length > maxLength

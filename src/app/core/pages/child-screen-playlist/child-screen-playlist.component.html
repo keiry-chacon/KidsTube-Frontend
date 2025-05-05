@@ -27,17 +27,19 @@
         <div class="thumbnail-wrapper" [class.hidden]="video.isPlaying" (click)="playVideo(video)">
           <img [src]="getThumbnail(video.url)" alt="Thumbnail" class="video-thumbnail">
         </div>
-
+    
         <div class="video-wrapper" [class.hidden]="!video.isPlaying">
           <iframe 
-            [src]="getSafeYouTubeUrl(video.url)" 
+            [src]="video.safeUrl" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen
             class="video-iframe"
+            (load)="onIframeLoad(video)"
           ></iframe>
+        
           <button class="close-btn" (click)="closeVideo(video)">❌</button>
         </div>
-
+    
         <div class="video-info">
           <h3>{{ video.name }}</h3>
           <p>{{ video.description }}</p>

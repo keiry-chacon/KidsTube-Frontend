@@ -6,6 +6,7 @@ import { HamburgerMenuComponent } from '../../../components/hamburger-menu/hambu
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { ProfileService } from '../../services/profile.service';
+import { ViewChildren, QueryList } from '@angular/core';
 
 interface Video {
   id: string;
@@ -17,6 +18,7 @@ interface Video {
   isPlaying?: boolean;
   isLoaded?: boolean;
   playlistName?: string;
+  safeUrl?: SafeResourceUrl; 
 }
 
 interface Playlist {
@@ -50,6 +52,8 @@ export class ChildScreenComponent implements OnInit {
   fadeOut: boolean = false;
   isLoading: boolean = true;
   @ViewChild('character') character!: ElementRef;
+  @ViewChildren('iframeElement') iframeElements!: QueryList<ElementRef>;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -102,19 +106,19 @@ export class ChildScreenComponent implements OnInit {
     // Emoji de personaje o SVG
     element.innerHTML = `
       <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <!-- Cabeza -->
-  <circle cx="32" cy="32" r="20" fill="#fffde7"/>
-  <!-- Orejas largas -->
-  <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
-  <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
-  <!-- Ojos expresivos -->
-  <circle cx="25" cy="30" r="3" fill="#444"/>
-  <circle cx="39" cy="30" r="3" fill="#444"/>
-  <!-- Nariz -->
-  <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
-  <!-- Boca -->
-  <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
-</svg>
+      <!-- Cabeza -->
+      <circle cx="32" cy="32" r="20" fill="#fffde7"/>
+      <!-- Orejas largas -->
+      <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+      <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+      <!-- Ojos expresivos -->
+      <circle cx="25" cy="30" r="3" fill="#444"/>
+      <circle cx="39" cy="30" r="3" fill="#444"/>
+      <!-- Nariz -->
+      <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
+      <!-- Boca -->
+      <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
     `;
   }
   // Loads all playlists associated with the current profile
@@ -156,10 +160,16 @@ export class ChildScreenComponent implements OnInit {
       playlistName,
       isPlaying: false,
       isLoaded: false,
-      thumbnail: video.thumbnail || this.getThumbnail(video.url)
+      thumbnail: video.thumbnail || this.getThumbnail(video.url),
+      safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(this.getEmbedUrl(video.url)) // Nueva propiedad
     }));
   }
-
+  
+  getEmbedUrl(url: string): string {
+    const videoId = this.extractVideoId(url);
+    return `https://www.youtube.com/embed/${videoId}`;
+  }
+  
   // Navigates to a specific playlist page
   navigateToPlaylist(playlistId: string): void {
     this.router.navigate(['/child', playlistId]);
@@ -189,14 +199,32 @@ export class ChildScreenComponent implements OnInit {
   // Plays the selected video
   playVideo(video: any): void {
     this.selectedVideo = video;
+  
+    this.filteredVideos.forEach(v => v !== video && (v.isPlaying = false));
+  
     video.isPlaying = true;
     video.isLoaded = false;
+  
+    this.cdr.detectChanges();
+  
+    setTimeout(() => {
+      const index = this.filteredVideos.findIndex(v => v === video);
+      const iframeElement = this.iframeElements.toArray()[index]?.nativeElement;
+  
+      if (iframeElement?.requestFullscreen) {
+        iframeElement.requestFullscreen().catch((err: any) => {
+          console.warn('Error al entrar en pantalla completa:', err);
+        });
+      }
+    }, 300);
   }
+  
 
   // Closes the currently playing video
   closeVideo(video: any): void {
     video.isPlaying = false;
     this.selectedVideo = null;
+    video.safeUrl = null;
   }
 
   // Handles iframe load events for videos
@@ -208,7 +236,7 @@ export class ChildScreenComponent implements OnInit {
   // Generates a safe YouTube URL for embedding
   getSafeYouTubeUrl(url: string): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`; // <-- aquí!
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 

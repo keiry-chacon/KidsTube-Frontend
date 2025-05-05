@@ -51,7 +51,9 @@ export class CreatePlaylistComponent implements OnInit {
       }
     });
   }
-
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']); 
+    }
   // Loads all available videos
   loadVideos() {
     this.videoService.getVideos().subscribe({

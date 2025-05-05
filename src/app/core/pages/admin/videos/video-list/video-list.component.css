@@ -237,3 +237,24 @@
 .show-less:hover {
   color: #155EC2; 
 }
+.back-button {
+  margin-top: auto;
+  background: #ff9800;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
+.back-button:hover {
+  background: #f4b400;
+  transform: scale(1.05) rotate(1deg);
+}
