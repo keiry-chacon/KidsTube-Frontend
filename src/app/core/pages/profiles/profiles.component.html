@@ -1,16 +1,25 @@
+<!-- Background video -->
 <video autoplay muted loop id="background-video">
   <source src="assets/video/background2.mp4" type="video/mp4">
   Your browser does not support videos.
 </video>
+
+<!-- Overlay for the background video -->
 <div id="background-overlay"></div>
 
+<!-- Profiles selection container -->
 <div class="profiles-container">
-  <button class="settings-button" (click)="goToSettings()">⚙️</button>
-  <h1>Who's watching now?</h1>
+  <!-- Settings button -->
+  <button class="settings-button" (click)="goToSettings()">
+    <span class="material-icons">settings</span>
+  </button>
+    <h1>Who's watching now?</h1>
 
+  <!-- Carousel for profile navigation -->
   <div class="carousel-container">
     <button class="carousel-nav prev" (click)="prevPage()" [disabled]="currentPage === 0">←</button>
 
+    <!-- Profiles list -->
     <div class="profiles-carousel">
       <div *ngFor="let profile of visibleProfiles" class="profile" (click)="selectProfile(profile)">
         <img [src]="profile.avatar" alt="{{ profile.fullName }}">
@@ -21,36 +30,39 @@
     <button class="carousel-nav next" (click)="nextPage()" [disabled]="currentPage === totalPages - 1">→</button>
   </div>
 
-  <button class="manage-profiles-button" (click)="ManageProfiles()">
-    Manage Profiles
-  </button>
+  <!-- Manage profiles button -->
+  <button class="manage-profiles-button" (click)="manageProfiles()">Manage Profiles</button>
 </div>
 
+<!-- PIN dialog for profile validation -->
 <div *ngIf="showPinDialog" class="pin-dialog">
   <div class="pin-dialog-content">
     <h2>Enter your PIN</h2>
     <p class="pin-instruction">Please insert your PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredPin" placeholder="PIN" />
     <div class="pin-dialog-actions">
-      <button class="accept-button" (click)="validateProfilePin()">Accept</button>
       <button (click)="closePinDialog()">Cancel</button>
+      <button class="accept-button" (click)="validateProfilePin()">Accept</button>
+
     </div>
     <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>
 </div>
 
+<!-- Error message for incorrect user PIN -->
 <div *ngIf="userPinError" class="text-danger mt-3">
   The entered PIN is incorrect. Please try again.
 </div>
 
+<!-- User PIN dialog -->
 <div *ngIf="showUserPinDialog" class="pin-dialog">
   <div class="pin-dialog-content">
     <h2>Enter your user PIN</h2>
     <p class="pin-instruction">Please insert your user PIN to continue.</p>
     <input type="password" [(ngModel)]="enteredUserPin" placeholder="PIN" />
     <div class="pin-dialog-actions">
-      <button class="accept-button" (click)="validateUserPin()">Accept</button>
       <button (click)="closeUserPinDialog()">Cancel</button>
+      <button class="accept-button" (click)="validateUserPin()">Accept</button>
     </div>
     <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
   </div>

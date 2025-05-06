@@ -14,23 +14,23 @@ export class ProfileService {
   getProfiles(): Observable<{ data: any[] }> {
     return this.http.get<{ data: any[] }>(`${environment.apiUrl}/profile`, { headers: this.getAuthHeaders() });
   }
+
+  // Retrieves profiles using a GraphQL query and maps the response to extract profile data
   getProfilesGraph(): Observable<any> {
     const query = `
-    query GetProfiles{
-      profiles {
-        id
-        fullName
-        avatar
+      query GetProfiles {
+        profiles {
+          id
+          fullName
+          avatar
+        }
       }
-    }
-  `;
-  
-    const requestBody = {
-      query,
-    };
-  
+    `;
+
+    const requestBody = { query };
+
     return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
-      map((response) => response.data.profiles) 
+      map((response) => response.data.profiles)
     );
   }
 
@@ -45,9 +45,12 @@ export class ProfileService {
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }
+
+  // Retrieves the user ID from session storage
   getUserId(): string | null {
     return sessionStorage.getItem('userId');
   }
+
   // Retrieves the current profile ID from local storage
   getProfileId(): string | null {
     return localStorage.getItem('currentProfileId');

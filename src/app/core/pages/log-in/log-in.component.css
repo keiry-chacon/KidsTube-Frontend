@@ -65,6 +65,56 @@
     z-index: 10; 
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+  margin: 0 10px;
+}
+
+.google-signin-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.google-signin-button {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.google-signin-button:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-1px);
+}
+
+.google-icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
 /* Estilo general para el formulario */
 form {
   display: flex;

@@ -19,62 +19,68 @@ export interface YoutubeVideo {
 export class YoutubeService {
 
   constructor(private http: HttpClient) {}
+
+  // Retrieves the authentication token from session storage
   getToken(): string | null {
     return sessionStorage.getItem('token');
   }
-// Generates authorization headers for authenticated requests
-getAuthHeaders(): { [header: string]: string } {
-  const token = this.getToken();
-  return token ? { Authorization: `Bearer ${token}` } : {};
-}
-searchYouTubeVideos(queryStr: string): Observable<any> {
-  const query = `
-    query searchVideos($query: String!) {
-      searchVideos(query: $query) {
-        id
-        name
-        description
-        url
-        thumbnail
-        channelTitle
-      }
-    }
-  `;
 
-  const requestBody = {
-    query,
-    variables: {
-      query: queryStr
-    }
-  };
+  // Generates authorization headers for authenticated requests
+  getAuthHeaders(): { [header: string]: string } {
+    const token = this.getToken();
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
 
-  return this.http.post<any>(`${environment.apiUrl2}`, requestBody, {
-    headers: this.getAuthHeaders()
-  }).pipe(
-    map(response => response.data.searchVideos)
-  );
-}
-
-  getPopularVideos(): Observable<any> {
+  // Sends a GraphQL query to search YouTube videos based on a query string
+  searchYouTubeVideos(queryStr: string): Observable<any> {
     const query = `
-     query {
-      popularVideos {
-        id
-        name
-        description
-        url
-        thumbnail
-        channelTitle
+      query searchVideos($query: String!) {
+        searchVideos(query: $query) {
+          id
+          name
+          description
+          url
+          thumbnail
+          channelTitle
+        }
       }
-    }
     `;
 
     const requestBody = {
-          query,
-        };
-      
-        return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
-          map((response) => response.data.popularVideos) 
-        );
+      query,
+      variables: {
+        query: queryStr
       }
+    };
+
+    return this.http.post<any>(`${environment.apiUrl2}`, requestBody, {
+      headers: this.getAuthHeaders()
+    }).pipe(
+      map(response => response.data.searchVideos)
+    );
+  }
+
+  // Sends a GraphQL query to retrieve popular YouTube videos
+  getPopularVideos(): Observable<any> {
+    const query = `
+      query {
+        popularVideos {
+          id
+          name
+          description
+          url
+          thumbnail
+          channelTitle
+        }
+      }
+    `;
+
+    const requestBody = {
+      query,
+    };
+
+    return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
+      map((response) => response.data.popularVideos)
+    );
+  }
 }

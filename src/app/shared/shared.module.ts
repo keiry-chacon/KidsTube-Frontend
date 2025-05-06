@@ -3,11 +3,9 @@ import { CommonModule } from '@angular/common';
 import { HamburgerMenuComponent } from '../components/hamburger-menu/hamburger-menu.component';
 
 @NgModule({
-  declarations: [
-    HamburgerMenuComponent 
-  ],
   imports: [
-    CommonModule
+    CommonModule,
+    HamburgerMenuComponent  
   ],
   exports: [
     HamburgerMenuComponent 

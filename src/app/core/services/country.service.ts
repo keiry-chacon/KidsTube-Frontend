@@ -10,11 +10,12 @@ import { catchError } from 'rxjs/operators';
 export class CountryService {  
   constructor(private http: HttpClient) { }
 
+  // Fetch the list of countries from the backend API
   getCountries(): Observable<string[]> {  
     return this.http.get<string[]>(`${environment.apiUrl}/countries`).pipe(
       catchError(error => {
         console.error('Error fetching countries:', error);
-        throw error;
+        throw error; // Re-throw the error after logging it
       })
     );
   }

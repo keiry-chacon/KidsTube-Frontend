@@ -27,9 +27,14 @@
       </a>
     </div>
     <div class="menu-footer">
-      <button class="logout-button" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Log out
-      </button>
+      <div class="menu-buttons">
+        <button class="back-button" (click)="goBackToProfiles()" aria-label="Go back to profiles">
+          🏡 Back
+        </button>
+        <button class="logout-button" (click)="logout($event)">
+          <i class="fas fa-sign-out-alt"></i> Log out
+        </button>
+      </div>
     </div>
   </div>
 

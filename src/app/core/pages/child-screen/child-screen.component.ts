@@ -140,6 +140,7 @@ export class ChildScreenComponent implements OnInit {
         this.filteredVideos = [...allVideos];
         this.isLoading = false;
         this.cdr.detectChanges();
+        console.log('filteredVideos:', this.filteredVideos);
       },
       error: (err) => {
         console.error('Error loading playlists:', err);
@@ -236,7 +237,7 @@ export class ChildScreenComponent implements OnInit {
   // Generates a safe YouTube URL for embedding
   getSafeYouTubeUrl(url: string): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`; // <-- aquí!
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 

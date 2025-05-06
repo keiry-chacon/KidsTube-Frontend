@@ -36,7 +36,7 @@ export class VerifyCodeComponent {
     private router: Router
   ) {
     this.codeForm = this.fb.group({
-      code: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]] // Ensures exactly 6 digits
+      code: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]]
     });
 
     this.tempToken = sessionStorage.getItem('tempUserId');
@@ -45,6 +45,7 @@ export class VerifyCodeComponent {
     }
   }
 
+  // Handle form submission for 2FA code verification
   onSubmit() {
     if (this.codeForm.valid && this.tempToken) {
       const code = this.codeForm.value.code;
@@ -55,13 +56,13 @@ export class VerifyCodeComponent {
           this.router.navigate(['/profiles']);
         },
         error: (err) => {
-          this.errorMessage = err.error.message || 'Código incorrecto o expirado.';
+          this.errorMessage = err.error.message || 'Incorrect or expired code.';
         },
       });      
     }
   }
 
-  // Prevent more than 6 digits from being entered
+  // Restrict input to exactly 6 digits
   onInput(event: any): void {
     const input = event.target as HTMLInputElement;
     let value = input.value.replace(/\D/g, '');
