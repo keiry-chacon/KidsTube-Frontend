@@ -1,35 +1,41 @@
 <div class="dark-background">
     <div class="complete-profile-container" [@slideIn]>
-      <form [formGroup]="informationForm" (ngSubmit)="onSubmit()" class="w-40 mx-auto">
-        
-        <!-- Personal Information -->
-          <div class="mb-3">
-            <label class="form-label">Birthdate</label>
-            <input type="date" class="form-control" formControlName="dateOfBirth">
-            <!-- Error message for Birthdate -->
-            <div *ngIf="informationForm.get('dateOfBirth')?.hasError('required') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
-              Birthdate is required.
-            </div>
-            <div *ngIf="informationForm.get('dateOfBirth')?.hasError('underage') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
-              You must be at least 18 years old.
-            </div>
-          </div>
   
-        <!-- Contact Information -->
+      <!-- Profile completion form -->
+      <form [formGroup]="informationForm" (ngSubmit)="onSubmit()" class="w-40 mx-auto">
+  
+        <!-- Personal Information Section -->
+        <div class="mb-3">
+          <label class="form-label">Birthdate</label>
+          <input type="date" class="form-control" formControlName="dateOfBirth">
+  
+          <!-- Validation messages for Birthdate -->
+          <div *ngIf="informationForm.get('dateOfBirth')?.hasError('required') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
+            Birthdate is required.
+          </div>
+          <div *ngIf="informationForm.get('dateOfBirth')?.hasError('underage') && informationForm.get('dateOfBirth')?.touched" class="text-danger">
+            You must be at least 18 years old.
+          </div>
+        </div>
+  
+        <!-- Contact Information Section -->
         <fieldset class="border p-3 mb-3">
           <legend>Contact Information</legend>
+  
+          <!-- Phone Number Field -->
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label">Phone Number</label>
               <input type="tel" class="form-control" formControlName="phoneNumber">
-              <!-- Error message for Phone Number -->
+  
+              <!-- Validation message for Phone Number -->
               <div *ngIf="informationForm.get('phoneNumber')?.hasError('invalidPhoneNumber') && informationForm.get('phoneNumber')?.touched" class="text-danger">
                 Please enter a valid phone number.
               </div>
             </div>
           </div>
   
-          <!-- Country Selection -->
+          <!-- Country Selection Dropdown -->
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label">Country</label>
@@ -39,7 +45,8 @@
                   {{ country }}
                 </option>
               </select>
-              <!-- Error message for Country -->
+  
+              <!-- Validation message for Country -->
               <div *ngIf="informationForm.get('country')?.hasError('required') && informationForm.get('country')?.touched" class="text-danger">
                 Country is required.
               </div>
@@ -47,14 +54,17 @@
           </div>
         </fieldset>
   
-        <!-- Security -->
+        <!-- Security Section -->
         <fieldset class="border p-3 mb-3">
           <legend>Security</legend>
+  
+          <!-- PIN Field -->
           <div class="row">
             <div class="col-md-6 mb-3">
               <label class="form-label">PIN</label>
               <input type="text" class="form-control" formControlName="pin">
-              <!-- Error message for PIN -->
+  
+              <!-- Validation message for PIN -->
               <div *ngIf="informationForm.get('pin')?.hasError('invalidPin') && informationForm.get('pin')?.touched" class="text-danger">
                 The PIN must contain 6 digits.
               </div>
@@ -63,7 +73,10 @@
         </fieldset>
   
         <!-- Submit Button -->
-        <button type="submit" class="btn btn-primary w-100" [disabled]="informationForm.invalid">Complete Profile</button>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="informationForm.invalid">
+          Complete Profile
+        </button>
+  
       </form>
     </div>
   </div>

@@ -1,19 +1,24 @@
 <div class="dark-background">
+  <!-- Login container with slide-in animation -->
   <div class="login-container" [@slideIn]>
+    <!-- Registration form -->
     <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="w-40 mx-auto">
       
-      <!-- Personal Information -->
+      <!-- Personal Information Section -->
       <fieldset class="border p-3 mb-3">
         <legend>Personal Information</legend>
         <div class="row">
+          <!-- First Name Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">Name</label>
             <input type="text" class="form-control" formControlName="firstName" required>
-            <!-- Error message for Name -->
+            <!-- Error message for First Name -->
             <div *ngIf="signUpForm.get('firstName')?.hasError('required') && signUpForm.get('firstName')?.touched" class="text-danger">
               Name is required.
             </div>
           </div>
+
+          <!-- Last Name Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">Last Name</label>
             <input type="text" class="form-control" formControlName="lastName" required>
@@ -24,10 +29,11 @@
           </div>
         </div>
 
+        <!-- Birthdate Field -->
         <div class="mb-3">
           <label class="form-label">Birthdate</label>
           <input type="date" class="form-control" formControlName="dateOfBirth">
-          <!-- Error message for Birthdate -->
+          <!-- Error messages for Birthdate -->
           <div *ngIf="signUpForm.get('dateOfBirth')?.hasError('required') && signUpForm.get('dateOfBirth')?.touched" class="text-danger">
             Birthdate is required.
           </div>
@@ -37,14 +43,15 @@
         </div>
       </fieldset>
 
-      <!-- Contact Information -->
+      <!-- Contact Information Section -->
       <fieldset class="border p-3 mb-3">
         <legend>Contact Information</legend>
         <div class="row">
+          <!-- Email Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">Email</label>
             <input type="email" class="form-control" formControlName="email" required>
-            <!-- Error message for Email -->
+            <!-- Error messages for Email -->
             <div *ngIf="signUpForm.get('email')?.hasError('required') && signUpForm.get('email')?.touched" class="text-danger">
               Email is required.
             </div>
@@ -52,6 +59,8 @@
               Please enter a valid email address.
             </div>
           </div>
+
+          <!-- Phone Number Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">Phone Number</label>
             <input type="tel" class="form-control" formControlName="phoneNumber">
@@ -80,10 +89,11 @@
         </div>
       </fieldset>
 
-      <!-- Security -->
+      <!-- Security Section -->
       <fieldset class="border p-3 mb-3">
         <legend>Security</legend>
         <div class="row">
+          <!-- Password Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">Password</label>
             <input type="password" class="form-control" formControlName="password" required>
@@ -92,6 +102,8 @@
               Password is required.
             </div>
           </div>
+
+          <!-- PIN Field -->
           <div class="col-md-6 mb-3">
             <label class="form-label">PIN</label>
             <input type="text" class="form-control" formControlName="pin">
@@ -108,23 +120,21 @@
 
     </form>
 
-    <!-- Google Sign In Button -->
-    <div class="row mt-2 justify-content-center">
-      <a
-        (click)="signInWithGoogle()"
-        style="text-decoration: none; cursor: pointer"
-      >
-        <div class="card shadow text-center">
-          <div class="card-body">
-            <img
-              src="../../../../assets/images/logos/logo-google.png"
-              alt="Google Logo"
-              height="24px"
-              width="24px"
-            />
-          </div>
-        </div>
-      </a>
-    </div>
+    <!-- OR Separator -->
+  <div class="separator">
+    <span>OR</span>
+  </div>
+
+  <!-- Google Sign-Up Button -->
+  <div class="google-signin-container">
+    <button type="button" class="google-signin-button" (click)="signInWithGoogle()">
+      <img
+        src="../../../../assets/images/logos/logo-google.png"
+        alt="Google Logo"
+        class="google-icon"
+      />
+      <span>Sign up with Google</span>
+    </button>
+  </div>
   </div>
 </div>

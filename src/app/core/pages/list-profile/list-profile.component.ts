@@ -45,9 +45,9 @@ export class ListProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.loadProfiles();
-    this.loadPredefinedImages();
-    this.openUserPinDialog();
+    this.loadProfiles(); // Loads all profiles when the component initializes
+    this.loadPredefinedImages(); // Loads predefined images for profile avatars
+    this.openUserPinDialog(); // Opens the PIN dialog to manage profiles
   }
 
   // Opens the dialog to add a new profile
@@ -55,8 +55,8 @@ export class ListProfileComponent implements OnInit {
     this.newProfile = {
       fullName: '',
       pin: '',
-      avatar: this.predefinedImages[0]?.fullPath || '', // Default avatar
-      avatarName: this.getFileNameWithoutExtension(this.predefinedImages[0]?.fileName) || 'Select avatar', // File name
+      avatar: this.predefinedImages[0]?.fullPath || '', // Default avatar if none is selected
+      avatarName: this.getFileNameWithoutExtension(this.predefinedImages[0]?.fileName) || 'Select avatar', // Default avatar name
     };
     this.showAddProfileDialog = true;
   }
@@ -71,32 +71,32 @@ export class ListProfileComponent implements OnInit {
     this.router.navigate(['/profiles']);
   }
 
-  // Selects a new profile image
+  // Selects a new profile image and sets the avatar for the new profile
   selectNewProfileImage(fullPath: string) {
-    const fileName = fullPath.split('/').pop() || 'Select avatar'; // Extract file name
+    const fileName = fullPath.split('/').pop() || 'Select avatar'; // Extracts the file name
 
-    this.newProfile.avatar = fullPath; // For the edit box
-    this.newProfile.avatarName = fileName;
-    this.dropdownOpen = false; // Close the dropdown menu
+    this.newProfile.avatar = fullPath; // Sets the avatar for the new profile
+    this.newProfile.avatarName = fileName; // Sets the avatar name
+    this.dropdownOpen = false; // Closes the dropdown menu
   }
 
   // Extracts the file name without its extension
-  
   getFileNameWithoutExtension(filePath: string): string {
-    if (!filePath) return ''; // Si filePath es nulo o vacío, retorna una cadena vacía
-  
-    const fileName = filePath.split('/').pop(); // Extraer el nombre del archivo
-    if (!fileName) return ''; // Si fileName es undefined, retorna una cadena vacía
-  
-    return fileName.split('.').slice(0, -1).join('.'); // Eliminar la extensión
+    if (!filePath) return ''; // If filePath is null or empty, returns an empty string
+
+    const fileName = filePath.split('/').pop(); // Extracts the file name
+    if (!fileName) return ''; // If fileName is undefined, returns an empty string
+
+    return fileName.split('.').slice(0, -1).join('.'); // Removes the file extension
   }
-  // Saves the new profile
+
+  // Saves the new profile to the service and reloads the profiles
   saveNewProfile() {
-    const avatarName = this.newProfile.avatar.split('/').pop();
-    this.newProfile.avatar = avatarName;
+    const avatarName = this.newProfile.avatar.split('/').pop(); // Extracts the file name for avatar
+    this.newProfile.avatar = avatarName; // Updates avatar name
     this.profileService.createProfile(this.newProfile).subscribe({
       next: (response) => {
-        this.loadProfiles();
+        this.loadProfiles(); 
         this.closeAddProfileDialog();
       },
       error: (err) => {
@@ -104,32 +104,32 @@ export class ListProfileComponent implements OnInit {
     });
   }
 
-  // Toggles the dropdown menu
+  // Toggles the visibility of the dropdown menu
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  // Confirms the deletion of a profile
+  // Shows the confirmation dialog for deleting a profile
   confirmDelete() {
     this.showConfirmDelete = true;
   }
 
-  // Cancels the deletion of a profile
+  // Cancels the profile deletion
   cancelDelete() {
     this.showConfirmDelete = false;
   }
 
-  // Deletes a profile
+  // Deletes a profile by sending the request to the service
   deleteProfile() {
     if (this.profileToDelete) {
       this.profileService.deleteProfile(this.profileToDelete._id).subscribe({
         next: () => {
-          alert('Profile deleted successfully.');
-          this.profiles = this.profiles.filter(p => p._id !== this.profileToDelete._id);
-          this.cancelDelete();
+          alert('Profile deleted successfully.'); // Alerts when deletion is successful
+          this.profiles = this.profiles.filter(p => p._id !== this.profileToDelete._id); // Removes deleted profile from the list
+          this.cancelDelete(); // Closes the delete confirmation dialog
         },
         error: (err) => {
-          alert('Error deleting profile. Please try again.');
+          alert('Error deleting profile. Please try again.'); // Alerts on error
         },
       });
     }
@@ -140,28 +140,29 @@ export class ListProfileComponent implements OnInit {
     this.profileToDelete = profile;
   }
 
-  // Selects an image for the profile
+  // Selects an image for the profile and updates avatar information
   selectImage(fullPath: string) {
     const fileName = fullPath.split('/').pop() || 'Select avatar';
 
     this.editedProfile.avatar = fullPath;
     this.editedProfile.avatarName = fileName;
 
-    this.dropdownOpen = false;
+    this.dropdownOpen = false; // Closes the dropdown menu
   }
 
-  // Loads all profiles
+  // Loads all profiles from the service
   loadProfiles() {
     this.profileService.getProfiles().subscribe({
       next: (response: { data: any[] }) => {
         this.profiles = response.data.map(profile => {
           return {
             ...profile,
-            avatar: `../../../assets/profiles/${profile.avatar}`
+            avatar: `../../../assets/profiles/${profile.avatar}` // Constructs the full avatar path
           };
         });
       },
       error: (err: any) => {
+        // Handle error if any
       }
     });
   }
@@ -171,7 +172,7 @@ export class ListProfileComponent implements OnInit {
     this.openUserPinDialog();
   }
 
-  // Opens the user PIN dialog
+  // Opens the user PIN dialog for validation
   openUserPinDialog() {
     this.showUserPinDialog = true;
     this.enteredUserPin = '';
@@ -183,26 +184,26 @@ export class ListProfileComponent implements OnInit {
     this.showUserPinDialog = false;
   }
 
-  // Validates the user PIN
+  // Validates the user PIN and proceeds with profile management
   validateUserPin(): void {
     const pinToValidate = this.enteredUserPin;
 
     if (!pinToValidate) {
-      this.userPinError = true;
+      this.userPinError = true; // Sets error if no PIN is entered
       return;
     }
 
     this.userService.validateUserPin(pinToValidate).subscribe({
       next: (response) => {
         if (response.user) {
-          this.closeUserPinDialog();
-          this.showManageProfiles = true;
+          this.closeUserPinDialog(); // Closes the dialog if PIN is valid
+          this.showManageProfiles = true; // Shows the profile management view
         } else {
-          this.userPinError = true;
+          this.userPinError = true; // Sets error if PIN is invalid
         }
       },
       error: (err) => {
-        this.userPinError = true;
+        this.userPinError = true; // Sets error on failure
       }
     });
   }
@@ -212,11 +213,11 @@ export class ListProfileComponent implements OnInit {
     this.showPinDialog = false;
   }
 
-  // Edits a profile
+  // Starts the profile editing process
   editProfile(profile: any) {
     if (!this.showManageProfiles) {
-      this.editedProfile = { ...profile };
-      this.showEditProfile = true;
+      this.editedProfile = { ...profile }; // Clones the profile to edit
+      this.showEditProfile = true; // Opens the edit profile view
     } else {
       console.warn('Profile editing is disabled while managing profiles.');
     }
@@ -234,38 +235,38 @@ export class ListProfileComponent implements OnInit {
     ];
 
     this.predefinedImages = imageNames.map(name => ({
-      fullPath: `../../../assets/profiles/${name}`, // Full path
-      fileName: name, // File name only
+      fullPath: `../../../assets/profiles/${name}`, // Full path of the image
+      fileName: name, // File name
     }));
   }
 
-  // Saves the edited profile
+  // Saves the edited profile to the service
   saveProfile() {
-    const avatarName = this.editedProfile.avatar.split('/').pop();
-    this.editedProfile.avatar = avatarName;
+    const avatarName = this.editedProfile.avatar.split('/').pop(); // Extracts avatar file name
+    this.editedProfile.avatar = avatarName; // Updates the avatar name
     this.profileService.updateProfile(this.editedProfile).subscribe({
       next: (response) => {
         const index = this.profiles.findIndex(p => p._id === this.editedProfile._id);
         if (index !== -1) {
-          this.editedProfile.avatar = `../../../../assets/profiles/${avatarName}`;
-          this.profiles[index] = { ...this.editedProfile };
+          this.editedProfile.avatar = `../../../../assets/profiles/${avatarName}`; // Updates avatar path
+          this.profiles[index] = { ...this.editedProfile }; // Updates the profile in the list
         }
-        this.showEditProfile = false;
+        this.showEditProfile = false; 
       },
       error: (err) => {
       }
     });
   }
 
-  // Cancels profile editing
+  // Cancels the profile editing process
   cancelEdit() {
     this.showEditProfile = false;
   }
 
-  // Opens the profile edit dialog
+  // Opens the profile edit dialog with the selected profile
   openEditProfile(profile: any) {
     this.editedProfile = { ...profile };
-    this.showEditProfile = true;
-    this.profileToDelete = profile;
+    this.showEditProfile = true; 
+    this.profileToDelete = profile; 
   }
 }

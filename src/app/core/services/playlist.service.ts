@@ -44,7 +44,9 @@ export class PlaylistService {
   deletePlaylist(id: string): Observable<any> {
     return this.http.delete(`${environment.apiUrl}/playlist/${id}`, { headers: this.getAuthHeaders() });
   }
-  getUserPlaylists(): Observable<any>  {
+
+  // Sends a GraphQL query to retrieve playlists associated with the current user
+  getUserPlaylists(): Observable<any> {
     const graphqlQuery = {
       query: `
         query {
@@ -67,14 +69,13 @@ export class PlaylistService {
     };
 
     return this.http.post(environment.apiUrl2, graphqlQuery, { headers: this.getAuthHeaders() });
-
   }
+
   // Sends a GET request to retrieve playlists associated with a specific profile ID
   getPlaylistsByProfileId(profileId: string): Observable<any> {
-    const url =  `${environment.apiUrl}/playlist/profile/${profileId}`;
+    const url = `${environment.apiUrl}/playlist/profile/${profileId}`;
     return this.http.get(url, { headers: this.getAuthHeaders() });
   }
-
 
   // Sends a GET request to retrieve recommended videos
   getRecommendedVideos(): Observable<any> {

@@ -10,7 +10,7 @@ import { tap } from 'rxjs/operators';
 export class UserService {
   constructor(private http: HttpClient) {}
 
-  // Logs out the user by removing the authentication token from session storage
+  // Logs out the user by removing the authentication token and user ID from session storage
   logout() {
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('userId');
@@ -21,19 +21,17 @@ export class UserService {
     return this.http.post(`${environment.apiUrl}/user`, userData);
   }
 
-  // Sends a POST request to log in a user and stores the token in session storage
+  // Sends a POST request to log in a user and stores the temporary or permanent user ID in session storage
   login(userData: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/user/login`, userData).pipe(
       tap((response: any) => {
         if (response.userId) {
-          sessionStorage.setItem('tempUserId', response.userId);
-        }
-        if (response.userId) {
-          sessionStorage.setItem('userId', response.userId); // Guarda el userId
+          sessionStorage.setItem('tempUserId', response.userId); // Store temporary user ID
+          sessionStorage.setItem('userId', response.userId); // Store permanent user ID
         }
       })
     );
-  }  
+  }
 
   // Retrieves the authentication token from session storage
   getToken(): string | null {
@@ -46,9 +44,10 @@ export class UserService {
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
+  // Verifies a two-factor authentication (2FA) code for the user
   verify2FACode(userId: string, code: string): Observable<any> {
     return this.http.post(`${environment.apiUrl}/user/verify-2fa`, { userId, code });
-  }  
+  }
 
   // Validates the user's PIN by sending a POST request
   validateUserPin(pin: string): Observable<any> {
@@ -59,15 +58,15 @@ export class UserService {
     );
   }
 
-  // Verify an account using the token
+  // Verifies an account using the provided token
   verifyAccount(token: string): Observable<any> {
     return this.http.get(`${environment.apiUrl}/user/verify/${token}`);
   }
 
+  // Updates the user's profile information with authenticated headers
   updateProfile(data: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/user/profile`, data, {
-      headers: this.getAuthHeaders()
+      headers: this.getAuthHeaders(),
     });
   }
-
 }

@@ -36,10 +36,12 @@ export class VideoService {
     return this.http.get(`${environment.apiUrl}/video/${id}`, { headers: this.getAuthHeaders() });
   }
 
+  // Retrieves the user ID from session storage
   getUserId(): string | null {
     return sessionStorage.getItem('userId');
   }
 
+  // Sends a GraphQL query to retrieve videos associated with the current user
   getVideosByUser(): Observable<any> {
     const query = `
       query GetVideosByUser {
@@ -53,17 +55,17 @@ export class VideoService {
       }
     `;
 
-    const requestBody = {
-      query,
-    };
+    const requestBody = { query };
 
     return this.http.post<any>(`${environment.apiUrl2}`, requestBody, { headers: this.getAuthHeaders() }).pipe(
-        map((response: any) => response.data.videosByUser) 
-      );
+      map((response: any) => response.data.videosByUser)
+    );
   }
+
+  // Sends a GraphQL query to retrieve videos associated with a specific profile ID
   getVideosByProfileId(profileId: string): Observable<any[]> {
     const url = environment.apiUrl2;
-  
+
     const graphqlQuery = {
       query: `
         query GetVideosByProfile($profileId: ID!) {
@@ -79,13 +81,14 @@ export class VideoService {
         profileId
       }
     };
-  
+
     return this.http.post(url, graphqlQuery, {
       headers: this.getAuthHeaders()
     }).pipe(
       map((response: any) => response.data.VideosByProfile)
     );
   }
+
   // Sends a PUT request to update a video by its ID
   updateVideo(id: string, videoData: any): Observable<any> {
     return this.http.put(`${environment.apiUrl}/video/${id}`, videoData, { headers: this.getAuthHeaders() });

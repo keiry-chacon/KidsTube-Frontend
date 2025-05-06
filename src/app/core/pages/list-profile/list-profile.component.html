@@ -1,43 +1,59 @@
 <div id="background-overlay"></div>
 
 <div class="profiles-container">
+  <!-- Back button to navigate to the previous profiles page -->
   <button class="back-button" (click)="goBackToProfiles()">
     ← Back
   </button>
+
   <h1>Manage Profiles</h1>
+
+  <!-- Container for profiles -->
   <div class="profiles">
+    <!-- Loops through the profiles and displays each profile -->
     <div *ngFor="let profile of profiles" class="profile">
       <img [src]="profile.avatar" alt="{{ profile.fullName }}">
       <p>{{ profile.fullName }}</p>
+      
+      <!-- Edit icon, shown only when managing profiles -->
       <button *ngIf="showManageProfiles" class="edit-icon" (click)="openEditProfile(profile)">✏️</button>
     </div>
+
+    <!-- Option to add a new profile, shown when managing profiles -->
     <div *ngIf="showManageProfiles" class="add-profile" (click)="openAddProfileDialog()">
       <div class="add-circle">+</div>
     </div>
   </div>
 
+  <!-- User PIN dialog for validating the user's PIN -->
   <div *ngIf="showUserPinDialog" class="pin-dialog">
     <div class="pin-dialog-content">
       <h2>Enter your user PIN</h2>
       <input type="password" [(ngModel)]="enteredUserPin" placeholder="PIN" />
-      <button (click)="validateUserPin()">Submit</button>
       <button (click)="goBackToProfiles()">Cancel</button>
+      <button (click)="validateUserPin()">Accept</button>
       <p *ngIf="pinError" class="error-message">Incorrect PIN. Please try again.</p>
     </div>
   </div>
 
+  <!-- Profile edit dialog -->
   <div *ngIf="showEditProfile" class="edit-profile">
+    <!-- Close the edit dialog -->
     <span class="close-icon" (click)="cancelEdit()">×</span>
     <h2>Edit Profile</h2>
+    
+    <!-- Editable fields for profile -->
     <input [(ngModel)]="editedProfile.fullName" placeholder="Full Name" />
     <input [(ngModel)]="editedProfile.pin" placeholder="PIN" type="password" />
 
+    <!-- Dropdown to select avatar -->
     <div class="custom-dropdown">
       <div class="selected-option" (click)="toggleDropdown()">
         <img *ngIf="editedProfile.avatar" [src]="editedProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
         <span>{{ getFileNameWithoutExtension(editedProfile.avatar) || 'Select avatar' }}</span>
       </div>
       <div *ngIf="dropdownOpen" class="dropdown-options">
+        <!-- Dropdown options for predefined images -->
         <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectImage(img.fullPath)">
           <img [src]="img.fullPath" alt="Avatar" class="avatar-preview" />
           <span>{{ getFileNameWithoutExtension(img.fileName) }}</span>
@@ -45,28 +61,37 @@
       </div>
     </div>
 
+    <!-- Save and delete profile buttons -->
     <button (click)="saveProfile()">Save</button>
     <button (click)="confirmDelete()">Delete Profile</button>
+
+    <!-- Confirmation dialog for deleting the profile -->
     <div *ngIf="showConfirmDelete" class="confirm-delete">
       <h3>Are you sure you want to delete this profile?</h3>
       <button (click)="deleteProfile()">Yes, delete</button>
       <button (click)="cancelDelete()">Cancel</button>
     </div>
   </div>
+
+  <!-- Add new profile dialog -->
   <div *ngIf="showAddProfileDialog" class="add-profile-dialog">
     <div class="add-profile-dialog-content">
+      <!-- Close the add profile dialog -->
       <span class="close-icon" (click)="closeAddProfileDialog()">×</span>
       <h2>Add New Profile</h2>
 
+      <!-- Fields for new profile -->
       <input [(ngModel)]="newProfile.fullName" placeholder="Full Name" />
       <input [(ngModel)]="newProfile.pin" placeholder="PIN" type="password" />
 
+      <!-- Dropdown to select avatar for new profile -->
       <div class="custom-dropdown">
         <div class="selected-option" (click)="toggleDropdown()">
           <img *ngIf="newProfile.avatar" [src]="newProfile.avatar" alt="Selected Avatar" class="avatar-preview" />
           <span>{{ newProfile.avatarName || 'Select avatar' }}</span>
         </div>
         <div *ngIf="dropdownOpen" class="dropdown-options">
+          <!-- Dropdown options for predefined images -->
           <div *ngFor="let img of predefinedImages" class="dropdown-option" (click)="selectNewProfileImage(img.fullPath)">
             <img [src]="img.fullPath" alt="Avatar" class="avatar-preview" />
             <span>{{ getFileNameWithoutExtension(img.fileName) }}</span>
@@ -74,6 +99,7 @@
         </div>
       </div>
 
+      <!-- Save and cancel buttons for adding new profile -->
       <button (click)="saveNewProfile()">Save</button>
       <button (click)="closeAddProfileDialog()">Cancel</button>
     </div>

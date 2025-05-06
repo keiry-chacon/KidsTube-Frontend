@@ -1,7 +1,13 @@
+<!-- Dark-themed background container -->
 <div class="dark-background">
+  <!-- Login container with slide-in animation -->
   <div class="login-container" [@slideIn]>
+    <!-- Application title -->
     <h1 class="kidstube-title">KidsTube</h1>
+
+    <!-- Login form with formGroup binding and submit handler -->
     <form [formGroup]="logInForm" (ngSubmit)="onSubmit()">
+      <!-- Email input group -->
       <div class="form-group">
         <label for="email">Email</label>
         <input
@@ -12,6 +18,7 @@
           required
           placeholder="Email"
         />
+        <!-- Email validation errors -->
         <div *ngIf="logInForm.get('email')?.hasError('required') && logInForm.get('email')?.touched" class="error">
           Email is required.
         </div>
@@ -19,6 +26,8 @@
           Please enter a valid email address.
         </div>
       </div>
+
+      <!-- Password input group -->
       <div class="form-group">
         <label for="password">Password</label>
         <input
@@ -29,35 +38,41 @@
           required
           placeholder="Password"
         />
+        <!-- Password validation error -->
         <div *ngIf="logInForm.get('password')?.hasError('required') && logInForm.get('password')?.touched" class="error">
           Password is required.
         </div>
       </div>
+
+      <!-- Submit button (disabled if form is invalid) -->
       <button type="submit" class="submit-button" [disabled]="logInForm.invalid">Log In</button>
     </form>
 
-    <!-- Google Sign-In Button -->
-    <div class="row mt-2 justify-content-center">
-      <a
-        (click)="signInWithGoogle()"
-        style="text-decoration: none; cursor: pointer"
-      >
-        <div class="card shadow text-center">
-          <div class="card-body">
-            <img
-              src="../../../../assets/images/logos/logo-google.png"
-              alt="Google Logo"
-              height="24px"
-              width="24px"
-            />
-          </div>
-        </div>
-      </a>
+    <!-- OR Separator -->
+    <div class="separator">
+      <span>Or</span>
     </div>
 
-    <p class="signup-link">New to KidsTube? <button (click)="goToSignUp()" class="btn btn-link">Sign up now</button></p>
+    <!-- Google Sign-In Button -->
+    <div class="google-signin-container">
+      <button type="button" class="google-signin-button" (click)="signInWithGoogle()">
+        <img
+          src="../../../../assets/images/logos/logo-google.png"
+          alt="Google Logo"
+          class="google-icon"
+        />
+        <span>Login with Google</span>
+      </button>
+    </div>
 
+
+    <!-- Sign-up redirect link -->
+    <p class="signup-link">
+      New to KidsTube? 
+      <button (click)="goToSignUp()" class="btn btn-link">Sign up now</button>
+    </p>
+
+    <!-- Error message display (if any) -->
     <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
 </div>
-

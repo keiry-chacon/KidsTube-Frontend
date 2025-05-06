@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./hamburger-menu.component.css']
 })
 export class HamburgerMenuComponent {
+  isMenuOpen: boolean = true;
   isMenuClosed: boolean = false;
 
   constructor(private router: Router) {}

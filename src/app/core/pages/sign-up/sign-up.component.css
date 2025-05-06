@@ -84,19 +84,78 @@ label.form-label {
 button[type="submit"] {
   background-color: #FF8C42;
   color: #fff;
-  padding: 10px; 
+  padding: 10px 20px; /* Ajusta el padding para que sea igual al de Google */
   border: none;
   border-radius: 4px;
-  font-size: 14px; 
+  font-size: 14px;
   cursor: pointer;
   margin-top: 20px;
-  width: 90%; 
-  max-width: 500px; 
-  margin-left: auto; 
-  margin-right: auto; 
+  width: 90%; /* Puedes ajustar este valor o dejarlo así */
+  max-width: 500px; /* Este es el mismo tamaño máximo que el de Google */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 button[type="submit"]:hover {
   background-color: #FF7043;
 }
 
+.separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.separator::before,
+.separator::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #ccc;
+  margin: 0 10px;
+}
+
+.google-signin-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.google-signin-button {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  color: #333;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.google-signin-button:hover {
+  background-color: #f1f1f1;
+  transform: translateY(-1px);
+}
+
+.google-icon {
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.buttons-outside-container {
+  position: relative;
+  z-index: 3;
+  margin-top: 20px;
+  width: 100%;
+  max-width: 1050px;
+  margin-left: auto;
+  margin-right: auto;
+}

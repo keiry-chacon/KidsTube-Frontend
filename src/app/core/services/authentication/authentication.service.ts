@@ -17,11 +17,13 @@ export class AuthenticationService {
     private router: Router
   ) {}
 
+  // Authenticate the user using Google's popup
   private authenticateWithGoogle(): Observable<any> {
     const provider = new GoogleAuthProvider();
     return from(signInWithPopup(this.auth, provider));
   }
 
+  // Extract relevant user information from the Google user object
   private extractUserInfo(user: any): {
     firstName: string;
     lastName: string;
@@ -39,7 +41,7 @@ export class AuthenticationService {
     const [firstName, lastName] = displayName.split(' ') || ['', ''];
     const email = user.email || '';
     const uid = user.uid;
-  
+
     return {
       firstName,
       lastName,
@@ -55,41 +57,52 @@ export class AuthenticationService {
     };
   }
 
-
+  // Register a new user with the extracted data
   private registerUser(userData: any): Observable<void> {
     Object.keys(userData).forEach(key => {
       if (userData[key] === null) {
         delete userData[key];
       }
     });
-  
+
     return this.http.post(`${environment.apiUrl}/user`, userData).pipe(
       map(() => undefined),
       catchError((error) => {
         if ((error as any).status === 409) {
-          return of(undefined);
+          return of(undefined); // Ignore conflict errors (user already exists)
         }
         throw error;
       })
     );
   }
-  
 
-  loginWithGoogle(username: string, password: string): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/user/login`, { username, password });
-  }
-
+  // Handle Google sign-up process
   googleSignUp(): Observable<void> {
     return this.authenticateWithGoogle().pipe(
       switchMap((res) => {
         if (res.user) {
           const user = res.user;
           const userData = this.extractUserInfo(user);
-          
+
           return this.registerUser(userData).pipe(
-            switchMap(() => {
-              // Después de registrar, hacemos login automáticamente
-              return this.googleLogin();
+            switchMap(() => from(user.getIdToken())), // Get the ID token for login
+            switchMap((idToken) =>
+              this.http.post(`${environment.apiUrl}/user/google-login`, { idToken })
+            ),
+            tap((response: any) => {
+              sessionStorage.setItem('token', response.token);
+              sessionStorage.setItem('user', JSON.stringify(response.user));
+
+              // Check if the user profile is incomplete
+              const isIncomplete = !response.user.phoneNumber ||
+                                 !response.user.dateOfBirth ||
+                                 !response.user.country ||
+                                 !response.user.pin;
+              if (isIncomplete) {
+                this.router.navigate(['/complete-profile']);
+              } else {
+                this.router.navigate(['/profiles']);
+              }
             })
           );
         }
@@ -97,8 +110,7 @@ export class AuthenticationService {
       }),
       catchError((err) => {
         if (err.error?.message === 'Email is already in use.') {
-          // Si el usuario ya existe, lo redirigimos al login
-          return this.googleLogin();
+          return this.googleLogin(); // If email is already registered, proceed with login
         }
         console.error('Error en Google signup:', err);
         throw err;
@@ -106,31 +118,29 @@ export class AuthenticationService {
     );
   }
 
-
-
+  // Handle Google login process
   googleLogin(): Observable<void> {
     return this.authenticateWithGoogle().pipe(
       switchMap((res) => {
         if (res.user) {
           return from(res.user.getIdToken()).pipe(
-            switchMap((idToken) => {
-              return this.http.post(`${environment.apiUrl}/user/google-login`, { idToken }).pipe(
-                tap((response: any) => {
-                  // Almacena el token y la información del usuario
-                  sessionStorage.setItem('token', response.token);
-                  sessionStorage.setItem('user', JSON.stringify(response.user));
-                  
-                  const isIncomplete = !response.user.phoneNumber || 
-                                     !response.user.dateOfBirth || 
-                                     !response.user.country || 
-                                     !response.user.pin;
-                  if (isIncomplete) {
-                    this.router.navigate(['/complete-profile']);
-                  } else {
-                    this.router.navigate(['/profiles']);
-                  }
-                })
-              );
+            switchMap((idToken) =>
+              this.http.post(`${environment.apiUrl}/user/google-login`, { idToken })
+            ),
+            tap((response: any) => {
+              sessionStorage.setItem('token', response.token);
+              sessionStorage.setItem('user', JSON.stringify(response.user));
+
+              // Check if the user profile is incomplete
+              const isIncomplete = !response.user.phoneNumber ||
+                                 !response.user.dateOfBirth ||
+                                 !response.user.country ||
+                                 !response.user.pin;
+              if (isIncomplete) {
+                this.router.navigate(['/complete-profile']);
+              } else {
+                this.router.navigate(['/profiles']);
+              }
             })
           );
         }
@@ -142,7 +152,4 @@ export class AuthenticationService {
       })
     );
   }
-  
-  
-  
 }

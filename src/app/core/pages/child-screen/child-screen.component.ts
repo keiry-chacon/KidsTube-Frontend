@@ -1,12 +1,19 @@
-import { Component, OnInit, ChangeDetectorRef ,ElementRef,ViewChild} from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
 import { PlaylistService } from '../../services/playlist.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HamburgerMenuComponent } from '../../../components/hamburger-menu/hamburger-menu.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/profile.service';
 
+// Interface for video data
 interface Video {
   id: string;
   name: string;
@@ -19,18 +26,22 @@ interface Video {
   playlistName?: string;
 }
 
+// Interface for playlist data
 interface Playlist {
   _id: string;
   name: string;
   videos: Video[];
   thumbnail?: string;
 }
+
+// Interface for playlist API response
 export interface PlaylistResponse {
   id: string;
   name: string;
   videos: Video[];
   associatedProfiles: string[];
 }
+
 @Component({
   selector: 'app-child-screen',
   standalone: true,
@@ -41,15 +52,21 @@ export interface PlaylistResponse {
 export class ChildScreenComponent implements OnInit {
   playlistId: string | null = null;
   profileId: string | null = null;
+
   playlists: Playlist[] = [];
   playlistVideos: Video[] = [];
   filteredVideos: Video[] = [];
+
   selectedVideo: Video | null = null;
   currentPlaylist: Playlist | null = null;
+
   searchQuery: string = '';
   fadeOut: boolean = false;
   isLoading: boolean = true;
+
+  // Reference to the floating character element
   @ViewChild('character') character!: ElementRef;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -59,12 +76,13 @@ export class ChildScreenComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  // Lifecycle hook: initializes the component
   ngOnInit(): void {
     this.profileId = this.profileService.getProfileId();
     this.initializeComponent();
   }
 
-  // Initializes the component by loading playlists and videos
+  // Loads profile playlists and video data
   initializeComponent(): void {
     this.isLoading = true;
     this.searchQuery = '';
@@ -75,62 +93,60 @@ export class ChildScreenComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
- 
+
+  // Lifecycle hook: called after the view is initialized
   ngAfterViewInit() {
     this.setupFloatingCharacter();
   }
 
+  // Sets up animation for floating character following the mouse
   setupFloatingCharacter() {
     const element = this.character.nativeElement;
     let x = 0, y = 0;
     let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-  
+
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
     });
-  
+
     function animate() {
       x += (mouseX - x - 25) * 0.1;
       y += (mouseY - y - 25) * 0.1;
       element.style.transform = `translate(${x}px, ${y}px)`;
       requestAnimationFrame(animate);
     }
-  
+
     animate();
-  
-    // Emoji de personaje o SVG
+
+    // Character SVG or emoji
     element.innerHTML = `
       <svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-  <!-- Cabeza -->
-  <circle cx="32" cy="32" r="20" fill="#fffde7"/>
-  <!-- Orejas largas -->
-  <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
-  <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
-  <!-- Ojos expresivos -->
-  <circle cx="25" cy="30" r="3" fill="#444"/>
-  <circle cx="39" cy="30" r="3" fill="#444"/>
-  <!-- Nariz -->
-  <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
-  <!-- Boca -->
-  <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
-</svg>
+        <circle cx="32" cy="32" r="20" fill="#fffde7"/>
+        <ellipse cx="22" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+        <ellipse cx="42" cy="10" rx="8" ry="16" fill="#fff0c0"/>
+        <circle cx="25" cy="30" r="3" fill="#444"/>
+        <circle cx="39" cy="30" r="3" fill="#444"/>
+        <path d="M32 36 L30 39 L34 39 Z" fill="#d97767"/>
+        <path d="M28 44 Q32 50 36 44" stroke="#444" stroke-width="2" fill="none" stroke-linecap="round"/>
+      </svg>
     `;
   }
-  // Loads all playlists associated with the current profile
+
+  // Loads all playlists linked to the current profile
   loadAllProfilePlaylists(): void {
     if (!this.profileId) return;
-  
+
     this.playlistService.getPlaylistsByProfileId(this.profileId).subscribe({
       next: (playlists: Playlist[]) => {
-        console.log('Playlists recibidas:', playlists); 
-  
+        console.log('Received playlists:', playlists);
+
         const allVideos = playlists.flatMap((playlist: Playlist) =>
           this.prepareVideos(playlist.videos, playlist.name)
         );
-  
-        console.log('allVideos:', allVideos); 
-  
+
+        console.log('All videos:', allVideos);
+
         this.playlists = playlists;
         this.playlistVideos = allVideos;
         this.filteredVideos = [...allVideos];
@@ -143,13 +159,16 @@ export class ChildScreenComponent implements OnInit {
       }
     });
   }
+
+  // Truncates long video descriptions
   truncateDescription(description: string): string {
     const maxLength = 50;
     return description && description.length > maxLength
       ? `${description.slice(0, maxLength)}...`
       : description;
   }
-  // Prepares video data for display, including thumbnails and playlist names
+
+  // Prepares video objects for display with extra metadata
   prepareVideos(videos: Video[], playlistName: string): Video[] {
     return videos.map((video: Video) => ({
       ...video,
@@ -160,19 +179,19 @@ export class ChildScreenComponent implements OnInit {
     }));
   }
 
-  // Navigates to a specific playlist page
+  // Navigates to a specific playlist
   navigateToPlaylist(playlistId: string): void {
     this.router.navigate(['/child', playlistId]);
   }
 
-  // Navigates to the all videos page
+  // Navigates to the "All Videos" view
   navigateToAllVideos(): void {
     if (this.profileId) {
       this.router.navigate(['/child', { profileId: this.profileId }]);
     }
   }
 
-  // Filters videos based on the search query
+  // Filters the video list based on user input
   filterVideos(): void {
     this.fadeOut = true;
     setTimeout(() => {
@@ -186,47 +205,47 @@ export class ChildScreenComponent implements OnInit {
     }, 300);
   }
 
-  // Plays the selected video
-  playVideo(video: any): void {
+  // Starts video playback
+  playVideo(video: Video): void {
     this.selectedVideo = video;
     video.isPlaying = true;
     video.isLoaded = false;
   }
 
-  // Closes the currently playing video
-  closeVideo(video: any): void {
+  // Stops video playback
+  closeVideo(video: Video): void {
     video.isPlaying = false;
     this.selectedVideo = null;
   }
 
-  // Handles iframe load events for videos
-  onIframeLoad(video: any): void {
+  // Called when the video iframe finishes loading
+  onIframeLoad(video: Video): void {
     video.isLoaded = true;
     this.cdr.detectChanges();
   }
 
-  // Generates a safe YouTube URL for embedding
+  // Returns a secure embed URL for a YouTube video
   getSafeYouTubeUrl(url: string): SafeResourceUrl {
     const videoId = this.extractVideoId(url);
     const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=0`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
   }
 
-  // Extracts the YouTube video ID from a URL
+  // Extracts YouTube video ID from a URL
   extractVideoId(url: string): string {
     const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&?]+)/;
     const match = url.match(regex);
     return match ? match[1] : '';
   }
 
-  // Retrieves the thumbnail URL for a video
+  // Gets the thumbnail URL for a video
   getThumbnail(url: string): string {
     const videoId = this.extractVideoId(url);
     return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
   }
 
-  // Retrieves the thumbnail of the first video in a playlist
-  getFirstVideoThumbnail(playlist: any): string {
+  // Gets the thumbnail of the first video in a playlist
+  getFirstVideoThumbnail(playlist: Playlist): string {
     if (!playlist.videos?.length) return 'assets/images/default-thumbnail.jpg';
     return playlist.videos[0].thumbnail || this.getThumbnail(playlist.videos[0].url);
   }

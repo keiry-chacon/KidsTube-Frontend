@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication/authentication.service';
-import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { CountryService } from '../../services/country.service';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // Importa Router
+import { Router } from '@angular/router';
 
 import { ageValidator } from '../../../Validators/age.validator'; 
 import { phoneNumberValidator } from '../../../Validators/phone-number.validator'; 
@@ -26,9 +25,9 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
       })),
       state('*', style({
         opacity: 1,
-        transform: 'translateX(0)' // Ends in its original position
+        transform: 'translateX(0)' // Returns to original position
       })),
-      transition('void => *', animate('0.6s ease')) // Duration and easing for the animation
+      transition('void => *', animate('0.6s ease')) // Animation duration and easing
     ])
   ]
 })
@@ -37,42 +36,46 @@ export class CompleteProfileComponent {
   countries: string[] = [];
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private authenticationService: AuthenticationService,
-    private authService: AuthService,
-    private userService: UserService, 
+    private userService: UserService,
     private countryService: CountryService,
-    private router: Router // Inyecta Router
+    private router: Router
   ) {
+    // Initializes the form with validation rules
     this.informationForm = this.fb.group({
-      dateOfBirth: ['', [Validators.required, ageValidator]],
-      phoneNumber: ['', [phoneNumberValidator]],
-      country: ['', Validators.required],
-      pin: ['', [pinValidator]],
+      dateOfBirth: ['', [Validators.required, ageValidator]],       // Custom validator to check age
+      phoneNumber: ['', [phoneNumberValidator]],                    // Custom validator to check phone format
+      country: ['', Validators.required],                           // Required field
+      pin: ['', [pinValidator]]                                     // Custom validator to validate pin
     });
   }
 
   ngOnInit(): void {
+    // Loads country list from the backend
     this.countryService.getCountries().subscribe(data => {
-      this.countries = data; 
+      this.countries = data;
     });
   }
 
-  // Handles form submission to complete personal information
-  onSubmit() {
+  // Submits the form data to update the user profile
+  onSubmit(): void {
     if (this.informationForm.valid) {
-      const formData = { ...this.informationForm.value, status: 'active' };
+      const formData = {
+        ...this.informationForm.value,
+        status: 'active' // Adds status to the form data
+      };
 
       this.userService.updateProfile(formData).subscribe({
         next: (response) => {
           alert('Profile information complete!');
-          this.router.navigate(['/profiles']); // Redirecciona a login
+          this.router.navigate(['/profiles']); // Redirects to profiles page
         },
         error: (err) => {
-          // Muestra los errores específicos del backend
+          // Displays backend-specific validation errors if available
           const errorMessage = err.error?.errors?.join('\n') || 
-                              err.error?.message || 
-                              'Error registering. Please check your data.';
+                               err.error?.message || 
+                               'Error registering. Please check your data.';
           alert(errorMessage);
         }
       });
