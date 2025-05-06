@@ -39,7 +39,10 @@ export class ListPlaylistComponent implements OnInit {
       }
     });
   }
-
+  // Navigates back to the profiles page
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']);
+  }
   // Navigates to the create playlist page
   createNewPlaylist() {
     this.router.navigate(['/createPlaylist']);

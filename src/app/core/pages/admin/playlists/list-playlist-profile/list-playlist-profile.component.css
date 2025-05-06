@@ -6,14 +6,12 @@
   color: #495057;
 }
 
-/* Contenido principal */
 .main-content {
   margin-left: 260px;
   width: calc(100% - 260px);
   padding: 40px 20px;
 }
 
-/* Header */
 .header-container {
   margin-bottom: 30px;
   text-align: center;
@@ -43,7 +41,6 @@
   font-weight: 500;
 }
 
-/* Grilla de playlists */
 .playlist-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -52,7 +49,6 @@
   margin: auto;
 }
 
-/* Tarjeta */
 .playlist-card {
   background: white;
   border-radius: 16px;
@@ -68,7 +64,6 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Miniatura */
 .playlist-thumbnail {
   position: relative;
   height: 140px;
@@ -172,7 +167,6 @@
   color: #ad1457;
 }
 
-/* Mensaje sin resultados */
 .no-results {
   font-size: 1.1rem;
   color: #868e96;
@@ -185,7 +179,6 @@
   to { opacity: 1; transform: scale(1); }
 }
 
-/* Personaje flotante */
 .floating-character {
   position: fixed;
   top: 0;

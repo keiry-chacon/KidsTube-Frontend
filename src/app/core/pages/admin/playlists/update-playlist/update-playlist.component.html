@@ -21,13 +21,17 @@
       </a>
     </div>
     <div class="menu-footer">
-      <button class="logout-button" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Log out
-      </button>
+      <div class="menu-buttons">
+        <button class="back-button" (click)="goBackToProfiles()" aria-label="Go back to profiles">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button class="logout-button" (click)="logout($event)">
+          <i class="fas fa-sign-out-alt"></i> Log out
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Contenido principal -->
   <div class="main-content">
     <form [formGroup]="playlistForm" (ngSubmit)="onSubmit()" class="form-container">
       <!-- Playlist Name -->
@@ -92,7 +96,6 @@
         </div>
       </fieldset>
 
-      <!-- Botones -->
       <div class="d-grid gap-2">
         <button type="submit" class="btn btn-primary" [disabled]="playlistForm.invalid">
           Update Playlist

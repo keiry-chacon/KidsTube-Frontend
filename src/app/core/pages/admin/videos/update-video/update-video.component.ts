@@ -127,7 +127,10 @@ export class UpdateVideoComponent implements OnInit {
     this.searchQuery = '';
     this.filteredVideos = [];
   }
-
+  // Navigates back to the profiles page
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']);
+  }
   // Handles form submission to update the video
   updateVideo() {
     if (this.videoForm.valid) {

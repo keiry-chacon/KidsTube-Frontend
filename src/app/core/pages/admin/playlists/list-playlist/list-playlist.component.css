@@ -1,4 +1,3 @@
-/* Fondo principal */
 .dark-background {
   background: #fafafa;
   color: #212121;
@@ -8,7 +7,6 @@
   align-items: flex-start;
 }
 
-/* Menú hamburguesa */
 .menu-icon {
   position: fixed;
   top: 20px;
@@ -90,9 +88,15 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   text-align: center;
 }
+.menu-footer {
+  padding: 20px;
+  background: #FAFAFA; 
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
 
 .logout-button {
-  background: #ea4335;
+  background: #EA4335; 
   color: white;
   border: none;
   padding: 10px 20px;
@@ -106,11 +110,33 @@
 }
 
 .logout-button:hover {
-  background: #d32f2f;
+  background: #D32F2F; 
   transform: scale(1.05);
 }
+.menu-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espacio entre los botones */
+  margin-top: auto;
+  padding: 10px 0;
+}
+.back-button {
+  margin-top: auto;
+  background: #999999;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
 
-/* Contenedor principal */
 .container {
   margin-left: 250px;
   max-width: 1200px;
@@ -121,14 +147,12 @@
   transition: margin-left 0.3s ease;
 }
 
-/* Grid de playlists */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
 }
 
-/* Tarjeta individual de playlist */
 .video-card {
   background-color: #ffffff;
   border-radius: 16px;
@@ -141,7 +165,6 @@
   transform: translateY(-5px);
 }
 
-/* Miniatura */
 .thumbnail {
   width: 100%;
   height: 200px;
@@ -150,7 +173,6 @@
   border-top-right-radius: 16px;
 }
 
-/* Detalles dentro de la tarjeta */
 .video-details {
   padding: 20px;
 }
@@ -170,7 +192,6 @@
   line-height: 1.5;
 }
 
-/* Botones de acción */
 .action-buttons {
   display: flex;
   gap: 8px;
@@ -202,7 +223,6 @@
   font-size: 14px;
 }
 
-/* Colores específicos por botón */
 .add-button {
   background-color: #e8f0fe;
   border-color: #c6dafc;

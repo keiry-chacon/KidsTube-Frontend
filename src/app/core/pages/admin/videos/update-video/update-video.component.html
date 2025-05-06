@@ -19,18 +19,21 @@
       </a>
     </div>
     <div class="menu-footer">
-      <button class="logout-button" (click)="logout($event)">
-        <i class="fas fa-sign-out-alt"></i> Log out
-      </button>
+      <div class="menu-buttons">
+        <button class="back-button" (click)="goBackToProfiles()" aria-label="Go back to profiles">
+          <i class="fas fa-arrow-left"></i> Back
+        </button>
+        <button class="logout-button" (click)="logout($event)">
+          <i class="fas fa-sign-out-alt"></i> Log out
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- Contenido principal -->
   <div class="main-content">
     <div class="form-container">
       <h2 class="mb-4">Edit Video</h2>
 
-      <!-- Barra de búsqueda de YouTube -->
       <div class="search-bar mb-4">
         <input 
           type="text" 
@@ -40,7 +43,6 @@
           (input)="onSearchChange(searchQuery)"
         />
         
-        <!-- Resultados de búsqueda -->
         <div class="search-results mt-2" *ngIf="filteredVideos.length > 0 && searchQuery">
           <div 
             *ngFor="let video of filteredVideos" 

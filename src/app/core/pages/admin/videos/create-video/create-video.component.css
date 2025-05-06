@@ -1,4 +1,3 @@
-/* Fondo principal */
 .dark-background {
   background: #FAFAFA; 
   color: #212121;
@@ -9,7 +8,6 @@
   position: relative;
 }
 
-/* Barra superior (ícono de hamburguesa + barra de búsqueda) */
 .top-bar {
   position: fixed;
   top: 0;
@@ -68,7 +66,6 @@
   box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.3);
 }
 
-/* Menú hamburguesa */
 .hamburger-menu {
   position: fixed;
   top: 0;
@@ -141,7 +138,6 @@
   transform: scale(1.05);
 }
 
-/* Contenedor principal */
 .main-content {
   margin-left: 250px; 
   padding: 20px;
@@ -153,12 +149,11 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); 
 }
 
-/* Lista de videos */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
-  margin-top: 100px; /* Espacio para la barra superior */
+  margin-top: 100px; 
 }
 
 .video-card {
@@ -213,7 +208,6 @@
   color: #155EC2; 
 }
 
-/* Botones de acción */
 .action-buttons {
   display: flex;
   gap: 8px;
@@ -276,7 +270,6 @@
 }
 
 
-/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -296,9 +289,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   width: 100%;
-  max-width: 500px; /* Ancho máximo del modal */
-  max-height: 90vh; /* Altura máxima del modal (90% de la altura de la ventana) */
-  overflow-y: auto; /* Añade scroll si el contenido es demasiado largo */
+  max-width: 500px; 
+  max-height: 90vh; 
+  overflow-y: auto; 
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
 }
@@ -323,26 +316,22 @@
   margin-top: 0;
 }
 
-/* Campo de descripción */
 .modal-form textarea {
-  resize: none; /* Evita que el campo de texto sea redimensionable */
-  height: 150px; /* Altura fija para el campo de descripción */
-  width: 100%; /* Asegura que ocupe todo el ancho del modal */
+  resize: none; 
+  height: 150px; 
+  width: 100%; 
 }
 
-/* Botón de envío */
 .modal-form .btn-primary {
-  margin-top: 20px; /* Espacio entre el formulario y el botón */
-  display: block; /* Asegura que el botón ocupe toda la anchura */
+  margin-top: 20px; 
+  display: block; 
 }
 
-/* Estilo para el preview de la miniatura */
 .modal-form img {
-  max-width: 100%; /* Asegura que la imagen no se salga del contenedor */
-  height: auto; /* Mantener proporciones correctas */
+  max-width: 100%; 
+  height: auto; 
 }
 
-/* Animación de entrada */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -357,12 +346,11 @@
 .menu-buttons {
   display: flex;
   justify-content: space-between;
-  gap: 10px; /* Espacio entre los botones */
+  gap: 10px; 
   margin-top: auto;
   padding: 10px 0;
 }
 
-/* Botón de regresar */
 .back-button {
   margin-top: auto;
   background: #999999;

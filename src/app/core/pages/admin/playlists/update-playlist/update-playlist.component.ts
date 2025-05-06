@@ -178,7 +178,10 @@ export class UpdatePlaylistComponent implements OnInit {
     event.preventDefault();
     this.router.navigate(['/videoList']);
   }
-
+  // Navigates back to the profiles page
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']);
+  }
   // Navigates to the playlist list page
   navigateToListPlaylist(event: Event): void {
     event.preventDefault();

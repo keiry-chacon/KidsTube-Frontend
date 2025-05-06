@@ -29,7 +29,7 @@
     <div class="menu-footer">
       <div class="menu-buttons">
         <button class="back-button" (click)="goBackToProfiles()" aria-label="Go back to profiles">
-          🏡 Back
+          <i class="fas fa-arrow-left"></i> Back
         </button>
         <button class="logout-button" (click)="logout($event)">
           <i class="fas fa-sign-out-alt"></i> Log out
@@ -38,7 +38,6 @@
     </div>
   </div>
 
-  <!-- Lista de videos de YouTube -->
   <div class="main-content">
     <div class="video-grid">
       <div *ngFor="let video of filteredVideos" class="video-card">
@@ -54,7 +53,6 @@
     </div>
   </div>
 
-  <!-- Ventana modal -->
   <div class="modal-overlay" *ngIf="showModal">
     <div class="modal-container">
       <button class="close-modal" (click)="closeModal()">×</button>
