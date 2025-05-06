@@ -1,61 +1,45 @@
 <div class="dark-background">
-  <!-- Hamburger menu component -->
+  <!-- Menú hamburguesa -->
   <app-hamburger-menu></app-hamburger-menu>
 
-  <!-- Main content container -->
+  <!-- Contenido principal -->
   <div class="main-content">
 
-    <!-- Search bar -->
+    <!-- Barra de búsqueda -->
     <div class="search-bar-container">
       <div class="search-input-container">
-        <input 
-          type="text" 
-          placeholder="Search video..." 
-          [(ngModel)]="searchQuery" 
-          (input)="filterVideos()" 
-          class="search-input" 
-        />
+        <input type="text" placeholder="Buscar video..." [(ngModel)]="searchQuery" (input)="filterVideos()" class="search-input" />
         <div class="search-icon">🔍</div>
       </div>
     </div>
 
-    <!-- Floating character (animated) -->
+    <!-- Personaje flotante -->
     <div #character class="floating-character">🧸</div>
 
-    <!-- No results message -->
+    <!-- Mensaje si no hay resultados -->
     <div *ngIf="filteredVideos.length === 0 && searchQuery" class="no-results">
-      No videos found for "{{ searchQuery }}".
+      No se encontraron videos con "{{ searchQuery }}".
     </div>
 
-    <!-- Grid displaying video thumbnails or players -->
+    <!-- Grilla de videos -->
     <div class="videos-grid" [class.fade-out]="fadeOut">
       <div *ngFor="let video of filteredVideos" class="video-item">
-        
-        <!-- Thumbnail view (shown when video is not playing) -->
-        <div 
-          class="thumbnail-wrapper" 
-          [class.hidden]="video.isPlaying" 
-          (click)="playVideo(video)"
-        >
-          <img 
-            [src]="getThumbnail(video.url)" 
-            alt="Thumbnail" 
-            class="video-thumbnail"
-          >
+        <div class="thumbnail-wrapper" [class.hidden]="video.isPlaying" (click)="playVideo(video)">
+          <img [src]="getThumbnail(video.url)" alt="Thumbnail" class="video-thumbnail">
         </div>
-
-        <!-- Video player view (iframe) -->
+    
         <div class="video-wrapper" [class.hidden]="!video.isPlaying">
           <iframe 
-            [src]="getSafeYouTubeUrl(video.url)" 
+            [src]="video.safeUrl" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
             allowfullscreen
             class="video-iframe"
+            (load)="onIframeLoad(video)"
           ></iframe>
+        
           <button class="close-btn" (click)="closeVideo(video)">❌</button>
         </div>
-
-        <!-- Video title and description -->
+    
         <div class="video-info">
           <h3>{{ video.name }}</h3>
           <p>{{ video.description }}</p>

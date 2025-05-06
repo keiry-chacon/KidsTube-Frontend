@@ -157,6 +157,11 @@ export class CreateVideoComponent implements OnInit {
     this.router.navigate(['/listPlaylist']);
   }
 
+  // Navigates back to the profiles page
+  goBackToProfiles() {
+    this.router.navigate(['/profiles']);
+  }
+
   // Logs out the user and clears session storage
   logout(event: Event): void {
     event.preventDefault();

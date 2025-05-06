@@ -275,6 +275,7 @@
   background-color: #ffcdd2;
 }
 
+
 /* Modal overlay */
 .modal-overlay {
   position: fixed;
@@ -352,3 +353,30 @@
     transform: scale(1);
   }
 }
+
+.menu-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px; /* Espacio entre los botones */
+  margin-top: auto;
+  padding: 10px 0;
+}
+
+/* Botón de regresar */
+.back-button {
+  margin-top: auto;
+  background: #999999;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+}
+
